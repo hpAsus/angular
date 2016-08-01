@@ -1,0 +1,28 @@
+<div layout="column" class="loginBox md-whiteframe-z1">
+    <md-toolbar>
+        <h2 class="md-toolbar-tools"><span>Sign In</span></h2>
+    </md-toolbar>
+    <md-content layout="column" class="md-padding">
+
+        <form name="loginForm" class="loginForm" ng-submit="vm.submitLoginForm()">
+
+            <md-input-container>
+                <label>Email {{vm.test}}</label>
+                <input type="email" name="email" ng-model="vm.user.email"/>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Password</label>
+                <input type="password" name="password" ng-model="vm.user.password"/>
+            </md-input-container>
+
+            <div layout="row" layout-align="center center" style="padding-top:20px;">
+                <md-button type="submit" class="md-raised md-primary">Sign In</md-button>
+                <div flex="flex"></div>
+                <md-button ui-sref="forgot" md-no-ink="md-no-ink">Forgot Password</md-button>
+            </div>
+
+        </form>
+
+    </md-content>
+</div>

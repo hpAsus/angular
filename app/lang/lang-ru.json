@@ -1,0 +1,13 @@
+{
+  "GENERAL": {
+    "PROJECT_TITLE": "Ангуляръ Прожект"
+  },
+  "INTRODUCTION": "ruTEXTru",
+  "INDEX": {
+    "INTRODUCTION_TEXT": "Комон эври бади, челы!!!"
+  },
+  "AUTH": {
+    "SIGNIN": "Войти",
+    "FORGOT": "Забыли пароль?"
+  }
+}

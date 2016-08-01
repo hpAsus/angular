@@ -1,0 +1,22 @@
+<div layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <a ui-sref="home"><span>{{ 'GENERAL.PROJECT_TITLE' | translate }}</span></a>
+            <!-- fill up the space between left and right area -->
+            <span flex></span>
+            <md-button ui-sref="createcard">Greeting Card Creator</md-button>
+            <span flex></span>
+            <span ng-controller="langCtrl">
+                <!--<span>Active: {{activeLanguage}}</span>-->
+                <md-button ng-click="switchLang('en')">English</md-button>
+                <md-button ng-click="switchLang('ru')">Русский</md-button>
+            </span>
+            <span flex></span>
+            <md-button ui-sref="login">{{ 'AUTH.SIGNIN' | translate }}</md-button>
+            <md-button ui-sref="forgot">{{ 'AUTH.FORGOT' | translate }}</md-button>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <div ui-view></div>
+    </md-content>
+</div>

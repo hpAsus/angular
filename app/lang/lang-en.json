@@ -1,0 +1,13 @@
+{
+  "GENERAL": {
+    "PROJECT_TITLE": "Angular Project"
+  },
+  "INTRODUCTION": "ENTEXT",
+  "INDEX": {
+    "INTRODUCTION_TEXT": "Come together and meet great people!"
+  },
+  "AUTH": {
+    "SIGNIN": "Sign In",
+    "FORGOT": "Forgot password"
+  }
+}
