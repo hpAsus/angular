@@ -5,6 +5,7 @@ var port = process.env.PORT || 8000;
 
 var path = require('path');
 var fs = require('fs');
+var md5 = require('md5');
 var express = require('express');
 var app = express();
 var router = express.Router();
@@ -49,19 +50,26 @@ passport.deserializeUser(function (user, done) {
 // =====================================================================================================================
 var User = require('./server/user.js');
 
-var user = new User({name: 'Peter'});
-var olga = new User({name: 'Olga'});
+//var user = new User({name: 'Peter'});
+var user = new User({
+    email: 'olga@mail.ru',
+    password: md5('123'),
+    name: 'Olga',
+    birthdate: '08-04-1984',
+    age: 32,
+    bio: 'Nice beaver!'
+});
 //console.log(user);
 //console.log(user.get('name'));
 //console.log(user.get('name'));
-//olga.create();
+//user.create();
 //console.log(user.listAll());
 
 // CONFIGS
 // =====================================================================================================================
 
 // Body parser
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Error handling
@@ -106,12 +114,35 @@ router.route('/login')
     .post(function (req, res) {
         var email = req.body.email;
         var pass = req.body.password;
+        //console.log('POST data: ', req.body);
 
-        //res.send(username + ' ' + password);
-        res.json({
-            'username': email,
-            'password': pass
+        console.log('We are here!');
+        //console.log('checkUser: ', user.checkUser(email, md5(pass)));
+
+        var check = user.checkUserPromised(email, md5(pass));
+        console.log(check);
+
+        check.then(function (result) {
+            console.log(result);
+            console.log('Cool equal passwords');
         });
+        check.catch(function (err) {
+            console.log('Invalid password ', err);
+        });
+
+        //if (user.checkUser(email, md5(pass))) {
+        //    //console.log('Cool! Time to autorize');
+        //    res.status(200);
+        //} else {
+        //    res.status(401);
+        //}
+        ////console.log(email);
+        ////console.log(pass);
+        //
+        //res.json({
+        //    'username': email,
+        //    'password': pass
+        //});
     });
 router.route('/users')
 
