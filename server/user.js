@@ -47,17 +47,41 @@ User.prototype.create = function () {
             db.insert(self.data, function (err, newData) {
                 if (err) {
                     console.log('[Error] ', err);
-                    return -1;
                 } else {
                     console.log('[SUCCESS] Added new record: ', newData);
-                    return newData;
                 }
             });
         } else {
             console.log('[ERROR] Already have such record!');
-            return -1;
         }
     });
+};
+
+// Check user
+// =====================================================================================================================
+User.prototype.checkUser = function (email, password) {
+    var passInDb = null;
+    var equalPasswords = false;
+
+    // search for user with email
+    db.find({
+        email: email
+    }, function (err, found) {
+        if (found.length === 1) {
+
+            //if found compare passwords
+            passInDb = found[0].password;
+            console.log('passInDb === password ', passInDb === password);
+
+            if (passInDb === password) {
+                equalPasswords = true;
+            }
+        } else {
+            console.log('[Error]');
+        }
+    });
+
+    return equalPasswords;
 };
 
 // List all user

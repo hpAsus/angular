@@ -5,6 +5,7 @@ var port = process.env.PORT || 8000;
 
 var path = require('path');
 var fs = require('fs');
+var md5 = require('md5');
 var express = require('express');
 var app = express();
 var router = express.Router();
@@ -50,7 +51,14 @@ passport.deserializeUser(function (user, done) {
 var User = require('./server/user.js');
 
 var user = new User({name: 'Peter'});
-var olga = new User({name: 'Olga'});
+var olga = new User({
+    email: 'olga@mail.ru',
+    password: md5('123'),
+    name: 'Olga',
+    birthdate: '08-04-1984',
+    age: 32,
+    bio: 'Nice beaver!'
+});
 //console.log(user);
 //console.log(user.get('name'));
 //console.log(user.get('name'));
@@ -61,7 +69,7 @@ var olga = new User({name: 'Olga'});
 // =====================================================================================================================
 
 // Body parser
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Error handling
@@ -106,8 +114,19 @@ router.route('/login')
     .post(function (req, res) {
         var email = req.body.email;
         var pass = req.body.password;
+        //console.log('POST data: ', req.body);
 
-        //res.send(username + ' ' + password);
+        console.log('checkUser: ', user.checkUser(email, md5(pass)));
+
+        if (user.checkUser(email, md5(pass))) {
+            //console.log('Cool! Time to autorize');
+            res.status(200);
+        } else {
+            res.status(401);
+        }
+        //console.log(email);
+        //console.log(pass);
+
         res.json({
             'username': email,
             'password': pass
