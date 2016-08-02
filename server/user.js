@@ -1,9 +1,6 @@
-// DEPENDENCIES
-// =====================================================================================================================
 var schemas = require("./schemas.js"); // Database scheme
 var db = require("./db.js"); //Database class
 var _ = require("lodash");
-var Promise = require('promise-polyfill');
 
 // USER MODEL Structure
 // =====================================================================================================================
@@ -62,65 +59,29 @@ User.prototype.create = function () {
 
 // Check user
 // =====================================================================================================================
-User.prototype.checkUserPromised = function (email, password) {
-
-    return new Promise(function (resolve, reject) {
-
-        db.findOne({
-            email: email
-        }, function (err, found) {
-
-            console.log('found', found);
-            if (found) {
-                if (found.password === password) {
-                    console.log('Equal passwords!');
-                    resolve("Equal passwords!");
-                } else {
-                    reject(new Error("Invalid password"));
-                }
-            }
-        });
-
-    });
-};
-
 User.prototype.checkUser = function (email, password) {
     var passInDb = null;
-    var self = this;
-    var equalPasswords = null;
-    var user = null;
+    var equalPasswords = false;
 
+    // search for user with email
+    db.find({
+        email: email
+    }, function (err, found) {
+        if (found.length === 1) {
 
+            //if found compare passwords
+            passInDb = found[0].password;
+            console.log('passInDb === password ', passInDb === password);
 
-    /*// search for user with email
-     db.findOne({
-     email: email
-     }, function (err, found) {
+            if (passInDb === password) {
+                equalPasswords = true;
+            }
+        } else {
+            console.log('[Error]');
+        }
+    });
 
-     if (found) {
-     user = found;
-     //if found compare passwords
-     //passInDb = found.password;
-     //console.log('passInDb === password ', passInDb === password);
-     //checkEquality(found, password);
-
-     //if (passInDb === password) {
-     //    console.log('self.equalPasswords: ');
-     //    self.equalPasswords = true;
-     //}
-     } else {
-     console.log('[Error]');
-     }
-     });*/
-
-
-    /*function checkEquality(found, password) {
-     if (found === password) {
-     equalPasswords = true;
-     }
-     }*/
-    //console.log('equalPasswords: ', equalPasswords);
-    //return self.equalPasswords;
+    return equalPasswords;
 };
 
 // List all user

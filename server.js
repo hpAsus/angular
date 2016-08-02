@@ -50,8 +50,8 @@ passport.deserializeUser(function (user, done) {
 // =====================================================================================================================
 var User = require('./server/user.js');
 
-//var user = new User({name: 'Peter'});
-var user = new User({
+var user = new User({name: 'Peter'});
+var olga = new User({
     email: 'olga@mail.ru',
     password: md5('123'),
     name: 'Olga',
@@ -62,7 +62,7 @@ var user = new User({
 //console.log(user);
 //console.log(user.get('name'));
 //console.log(user.get('name'));
-//user.create();
+//olga.create();
 //console.log(user.listAll());
 
 // CONFIGS
@@ -116,33 +116,21 @@ router.route('/login')
         var pass = req.body.password;
         //console.log('POST data: ', req.body);
 
-        console.log('We are here!');
-        //console.log('checkUser: ', user.checkUser(email, md5(pass)));
+        console.log('checkUser: ', user.checkUser(email, md5(pass)));
 
-        var check = user.checkUserPromised(email, md5(pass));
-        console.log(check);
+        if (user.checkUser(email, md5(pass))) {
+            //console.log('Cool! Time to autorize');
+            res.status(200);
+        } else {
+            res.status(401);
+        }
+        //console.log(email);
+        //console.log(pass);
 
-        check.then(function (result) {
-            console.log(result);
-            console.log('Cool equal passwords');
+        res.json({
+            'username': email,
+            'password': pass
         });
-        check.catch(function (err) {
-            console.log('Invalid password ', err);
-        });
-
-        //if (user.checkUser(email, md5(pass))) {
-        //    //console.log('Cool! Time to autorize');
-        //    res.status(200);
-        //} else {
-        //    res.status(401);
-        //}
-        ////console.log(email);
-        ////console.log(pass);
-        //
-        //res.json({
-        //    'username': email,
-        //    'password': pass
-        //});
     });
 router.route('/users')
 
