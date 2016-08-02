@@ -1,8 +1,8 @@
-app.controller('loginCtrl', ['CONST_VALIDATORS', '$http', '$httpParamSerializerJQLike', function(CONST_VALIDATORS, $http, $httpParamSerializerJQLike) {
+app.controller('loginCtrl', ['CONST_VALIDATORS', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', function(CONST_VALIDATORS, $http, $httpParamSerializerJQLike, $state, $mdToast) {
     this.user = {};
 
     this.submitLoginForm = function () {
-        console.log('userObject: ',  this.user);
+        //console.log('userObject: ',  this.user);
 
         $http({
             method: 'POST',
@@ -13,11 +13,15 @@ app.controller('loginCtrl', ['CONST_VALIDATORS', '$http', '$httpParamSerializerJ
             }
         }).then(function successCallback(response) {
 
-            console.log(response);
+            console.log('[SUCCESS] ',response);
 
-        }, function errorCallback(response) {
+            $state.go('profile');
 
-            console.log(response);
+        }, function errorCallback(err) {
+
+            $mdToast.show($mdToast.simple().position('top right').textContent('Invalid email or password!'));
+
+            console.log('[ERROR] ', err);
 
         });
     }

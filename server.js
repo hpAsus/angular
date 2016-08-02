@@ -22,36 +22,36 @@ var accessLogStream = fs.createWriteStream(path.join(rootDir, 'access.log'), {fl
 
 // PASSPORT
 // =====================================================================================================================
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy(
-    function (username, password, done) {
-
-        // todo: insert NeDB check here. For now, just a simple hardcoded check.
-        console.log('checking password');
-        if (username === 'foo' && password === 'bar') {
-            done(null, {user: username});
-        }
-        else {
-            done(null, false, {message: 'Incorrect password.'});
-        }
-    }
-));
-
-passport.serializeUser(function (user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-    done(null, user);
-});
+//var passport = require('passport');
+//var LocalStrategy = require('passport-local').Strategy;
+//passport.use(new LocalStrategy(
+//    function (username, password, done) {
+//
+//        // todo: insert NeDB check here. For now, just a simple hardcoded check.
+//        console.log('checking password');
+//        if (username === 'foo' && password === 'bar') {
+//            done(null, {user: username});
+//        }
+//        else {
+//            done(null, false, {message: 'Incorrect password.'});
+//        }
+//    }
+//));
+//
+//passport.serializeUser(function (user, done) {
+//    done(null, user);
+//});
+//
+//passport.deserializeUser(function (user, done) {
+//    done(null, user);
+//});
 
 // USER MODEL
 // =====================================================================================================================
 var User = require('./server/user.js');
-
 var user = new User({name: 'Peter'});
-var olga = new User({
+
+var testuser = new User({
     email: 'olga@mail.ru',
     password: md5('123'),
     name: 'Olga',
@@ -59,11 +59,7 @@ var olga = new User({
     age: 32,
     bio: 'Nice beaver!'
 });
-//console.log(user);
-//console.log(user.get('name'));
-//console.log(user.get('name'));
-//olga.create();
-//console.log(user.listAll());
+//testuser.create();
 
 // CONFIGS
 // =====================================================================================================================
@@ -86,16 +82,16 @@ app.use(session({
 }));
 
 //Passport
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 // Morgan logging middleware
-app.use(morgan('combined', {
-    skip: function (req, res) {
-        return res.statusCode < 400
-    }, // skip requests wit status code < 400
-    stream: accessLogStream
-}));
+//app.use(morgan('combined', {
+//    skip: function (req, res) {
+//        return res.statusCode < 400
+//    }, // skip requests wit status code < 400
+//    stream: accessLogStream
+//}));
 
 
 app.use(
@@ -106,32 +102,52 @@ app.use(
 // ROUTES FOR API
 // =====================================================================================================================
 
-// API / USERS
+// API / login
 // ==================================
 router.route('/login')
 
     //User login
     .post(function (req, res) {
+
+        console.log('authenticated', req.session.authenticated);
+
+        //Parsing body vars with bodyParser
         var email = req.body.email;
         var pass = req.body.password;
-        //console.log('POST data: ', req.body);
 
-        console.log('checkUser: ', user.checkUser(email, md5(pass)));
+        // Check username
+        var isUserValid = user.checkUser(email, md5(pass));
 
-        if (user.checkUser(email, md5(pass))) {
-            //console.log('Cool! Time to autorize');
-            res.status(200);
-        } else {
-            res.status(401);
-        }
-        //console.log(email);
-        //console.log(pass);
+        // Check promised result
+        isUserValid.then(function (userObj) {
 
-        res.json({
-            'username': email,
-            'password': pass
+            //password is correct, we can authorize userObj
+            req.session.authenticated = true;
+            req.session.user = userObj;
+
+            //console.log('Promise resolved:');
+            //console.log(req.session);
+
+            res.sendStatus(200);
+
         });
+
+        // Catch errors
+        isUserValid.catch(function(err) {
+            console.log(err);
+            //not authorized
+            res.sendStatus(401);
+        });
+
     });
+
+router.route('/logout').get(function (req, res) {
+    delete req.session.authenticated;
+    res.redirect('/');
+});
+
+// API / USERS
+// ==================================
 router.route('/users')
 
     //Create user
@@ -144,7 +160,7 @@ router.route('/users')
     })
 
     // Get list of users
-    .get(passport.authenticate('local'), function (req, res) {
+    .get(function (req, res) {
 
         //passport.authenticate('local');
 

@@ -60,28 +60,23 @@ User.prototype.create = function () {
 // Check user
 // =====================================================================================================================
 User.prototype.checkUser = function (email, password) {
-    var passInDb = null;
-    var equalPasswords = false;
 
-    // search for user with email
-    db.find({
-        email: email
-    }, function (err, found) {
-        if (found.length === 1) {
-
-            //if found compare passwords
-            passInDb = found[0].password;
-            console.log('passInDb === password ', passInDb === password);
-
-            if (passInDb === password) {
-                equalPasswords = true;
+    return new Promise(function (resolve, reject) {
+        db.findOne({
+            email: email
+        }, function (err, found) {
+            if (found) {
+                if (found.password === password) {
+                    resolve(found);
+                } else {
+                    reject(new Error('Invalid password'));
+                }
+            } else {
+                reject(new Error('User not found'));
             }
-        } else {
-            console.log('[Error]');
-        }
-    });
+        });
 
-    return equalPasswords;
+    });
 };
 
 // List all user

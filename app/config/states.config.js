@@ -20,6 +20,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'createCardCtrl',
             controllerAs: 'vm'
         })
+        .state('profile', {
+            url: '/profile',
+            parent: 'root',
+            templateUrl: 'app/tpl/profile.tpl.html'
+        })
         .state('auth', {
             abstract: true,
             url: '/auth',

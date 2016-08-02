@@ -9,5 +9,8 @@
   "AUTH": {
     "SIGNIN": "Sign In",
     "FORGOT": "Forgot password"
+  },
+  "PROFILE": {
+    "TITLE": "Profile page"
   }
 }
