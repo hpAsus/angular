@@ -37,6 +37,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'loginCtrl',
             controllerAs: 'vm'
         })
+        .state('logout', {
+            url: '/logout',
+            parent: 'auth',
+            controller: 'logoutCtrl'
+        })
         .state('forgot', {
             url: '/reset',
             parent: 'auth',

@@ -6,6 +6,20 @@ var nodemon = require('gulp-nodemon');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
+function browserSyncInit(port, baseDir) {
+    var browser = browserSync.create();
+    browser.init({
+        port: port,
+        server: {
+            baseDir: baseDir
+        },
+        browser: "google chrome",
+        localOnly: true,
+        notify: false
+    });
+    return browser;
+}
+
 // Default Gulp task
 gulp.task('default', ['browser-sync'], function () {
 
@@ -20,25 +34,20 @@ gulp.task('sass', function () {
         .pipe(browserSync.reload({stream: true}));
 });
 
-gulp.task('browser-sync', ['nodemon'], function () {
-
-    //browserSync.init(null, {
-    //    proxy: "localhost:8000",
-    //    files: ["./**/*.*"],
-    //    browser: "google chrome",
-    //    port: 8000
-    //});
-
-    browserSync({
-        proxy: "localhost:8000",
-        files: ["./**/*.*"],
+gulp.task('browser-sync', ['nodemon'],function() {
+    browserSync.init({
+        proxy: "localhost:9000",
+        port: 9001,
         browser: "google chrome",
-        port: 8000,
+        localOnly: true,
         notify: false
     });
 });
+
 gulp.task('nodemon', function (cb) {
     var started = false;
+
+    //var browser = browserSyncInit(9000, ['app']);
 
     gulp.watch('app/src/scss/**/*.+(scss|sass)', ['sass']);
     gulp.watch('app/**/*.html', browserSync.reload);

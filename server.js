@@ -1,7 +1,7 @@
 // BASE SETUP
 // =====================================================================================================================
 var rootDir = __dirname;
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 9000;
 
 var path = require('path');
 var fs = require('fs');
@@ -108,8 +108,6 @@ router.route('/login')
 
     //User login
     .post(function (req, res) {
-
-        console.log('authenticated', req.session.authenticated);
 
         //Parsing body vars with bodyParser
         var email = req.body.email;

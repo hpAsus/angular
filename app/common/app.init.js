@@ -6,3 +6,5 @@ angular.element(document).ready(function() {
 });
 
 var app = angular.module('app', ['ui.router', 'pascalprecht.translate', 'ngMaterial']);
+
+var auth = angular.module('app.auth',[]);

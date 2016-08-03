@@ -8,7 +8,8 @@
   },
   "AUTH": {
     "SIGNIN": "Sign In",
-    "FORGOT": "Forgot password"
+    "FORGOT": "Forgot password",
+    "LOGOUT": "Log out"
   },
   "PROFILE": {
     "TITLE": "Profile page"
