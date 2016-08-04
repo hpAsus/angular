@@ -76,7 +76,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 app.use(session({
     secret: 'angular secret key',
-    //resave: false,
+    resave: false,
     maxAge: 0.1*60*1000,
     saveUninitialized: true,
     cookie: {}

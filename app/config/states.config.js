@@ -21,41 +21,41 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             controller: 'createCardCtrl',
             controllerAs: 'vm',
         })
+
         // Profile pages
         .state('profile', {
             abstract: true,
             parent: 'root',
             url: '/profile',
-            templateUrl: 'app/tpl/profile.tpl.html',
+            templateUrl: 'app/profile/tpl/profile.tpl.html',
             controller: 'profileCtrl',
             controllerAs: 'vm'
         })
         .state('viewProfile', {
             url: '/view',
             parent: 'profile',
-            templateUrl: 'app/tpl/profileView.tpl.html',
+            templateUrl: 'app/profile/tpl/profileView.tpl.html',
             controller: 'profileViewCtrl',
             controllerAs: 'vm'
         })
         .state('editProfile', {
             url: '/edit',
             parent: 'profile',
-            templateUrl: 'app/tpl/profileEdit.tpl.html',
+            templateUrl: 'app/profile/tpl/profileEdit.tpl.html',
             controller: 'profileEditCtrl',
             controllerAs: 'vm'
         })
 
         // Login pages
-        // todo:auth??????
         .state('auth', {
             abstract: true,
             url: '/auth',
-            templateUrl: 'app/tpl/auth.tpl.html'
+            templateUrl: 'app/auth/tpl/auth.tpl.html'
         })
         .state('login', {
             url: '/signin',
             parent: 'auth',
-            templateUrl: 'app/tpl/login.tpl.html',
+            templateUrl: 'app/auth/tpl/login.tpl.html',
             controller: 'loginCtrl',
             controllerAs: 'vm'
         })
@@ -67,7 +67,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('forgot', {
             url: '/reset',
             parent: 'auth',
-            templateUrl: 'app/tpl/forgotPassword.tpl.html',
+            templateUrl: 'app/auth/tpl/forgotPassword.tpl.html',
             controller: 'forgotCtrl',
             controllerAs: 'vm'
         });
