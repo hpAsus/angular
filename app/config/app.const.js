@@ -1,5 +1,5 @@
 // App constants
-app.constant('CONST_VALIDATORS', {
+angular.module('app').constant('CONST_VALIDATORS', {
     // Age validator
     'AGE_MINIMUM': 18,
     'AGE_MAXIMUM': 65,

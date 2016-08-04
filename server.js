@@ -76,9 +76,10 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 
 app.use(session({
     secret: 'angular secret key',
-    resave: false,
+    //resave: false,
+    maxAge: 0.1*60*1000,
     saveUninitialized: true,
-    cookie: {secure: true}
+    cookie: {}
 }));
 
 //Passport
@@ -99,11 +100,15 @@ app.use(
     express.static(rootDir) //position of static content in a filesystem
 );
 
-// ROUTES FOR API
-// =====================================================================================================================
 
 // API / login
-// ==================================
+// =====================================================================================================================
+router.route('/test')
+    .get(function (req, res) {
+        res.json({
+            "SESSION": req.session.authenticated
+        });
+    });
 router.route('/login')
 
     //User login
@@ -139,13 +144,16 @@ router.route('/login')
 
     });
 
+
+
+
 router.route('/logout').get(function (req, res) {
     delete req.session.authenticated;
     res.redirect('/');
 });
 
 // API / USERS
-// ==================================
+// =====================================================================================================================
 router.route('/users')
 
     //Create user
@@ -169,7 +177,7 @@ router.route('/users')
     });
 
 // API / USER (SINGLES)
-// ==================================
+// =====================================================================================================================
 router.route('/users/:user_id')
 
     // Getting a single user
@@ -198,7 +206,7 @@ router.route('/users/:user_id')
 app.use('/api', router); //all of the routes will be prefixed with /api
 
 // START THE SERVER
-// =============================================================================
+// =====================================================================================================================
 app.listen(port);
 
 console.log('Magic happens on port ' + port);

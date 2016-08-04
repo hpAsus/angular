@@ -1,4 +1,4 @@
-app.config(['$translateProvider', function($translateProvider) {
+angular.module('app').config(['$translateProvider', function($translateProvider) {
     //$translateProvider.translations('en', {
     //    "APP_TITLE": "Some title",
     //    "INTRODUCTION_TEXT": "Come together and meet great people!"

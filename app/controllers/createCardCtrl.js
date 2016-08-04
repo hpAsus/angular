@@ -1,4 +1,4 @@
-app.controller('createCardCtrl', ['$scope', 'CONST_VALIDATORS', function($scope, CONST_VALIDATORS) {
+angular.module('app').controller('createCardCtrl', ['$scope', 'CONST_VALIDATORS', function($scope, CONST_VALIDATORS) {
     var vm = this;
 
     //Sending some constants to view

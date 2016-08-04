@@ -1,6 +1,6 @@
 // Language controller
 // =====================================================================================================================
-app.controller('langCtrl', ["$scope", "$translate", function($scope, $translate){
+angular.module('app').controller('langCtrl', ["$scope", "$translate", function($scope, $translate){
     var active = $translate.preferredLanguage();
 
     $scope.switchLang = function(key) {

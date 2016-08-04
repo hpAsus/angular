@@ -1,4 +1,4 @@
-app.directive('atMenuToggle', ['CONST_VALIDATORS', function (CONST_VALIDATORS) {
+angular.module('app').directive('atMenuToggle', ['CONST_VALIDATORS', function (CONST_VALIDATORS) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs, ctrl) {

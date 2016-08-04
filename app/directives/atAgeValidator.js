@@ -1,4 +1,4 @@
-app.directive('atAgeValidator', ['CONST_VALIDATORS', function(CONST_VALIDATORS) {
+angular.module('app').directive('atAgeValidator', ['CONST_VALIDATORS', function(CONST_VALIDATORS) {
     return {
         require: 'ngModel',
         restrict: 'A',

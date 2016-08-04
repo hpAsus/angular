@@ -30,7 +30,7 @@ gulp.task('sass', function () {
     return gulp.src('app/src/scss/**/*.+(scss|sass)')
         .pipe(sass())
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-        .pipe(gulp.dest('app/dist/css'))
+        .pipe(gulp.dest('app/assets/css'))
         .pipe(browserSync.reload({stream: true}));
 });
 
@@ -46,8 +46,6 @@ gulp.task('browser-sync', ['nodemon'],function() {
 
 gulp.task('nodemon', function (cb) {
     var started = false;
-
-    //var browser = browserSyncInit(9000, ['app']);
 
     gulp.watch('app/src/scss/**/*.+(scss|sass)', ['sass']);
     gulp.watch('app/**/*.html', browserSync.reload);

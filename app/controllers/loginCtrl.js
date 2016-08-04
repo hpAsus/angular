@@ -1,4 +1,4 @@
-app.controller('loginCtrl', ['CONST_VALIDATORS', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', function(CONST_VALIDATORS, $http, $httpParamSerializerJQLike, $state, $mdToast) {
+angular.module('app').controller('loginCtrl', ['CONST_VALIDATORS', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', function(CONST_VALIDATORS, $http, $httpParamSerializerJQLike, $state, $mdToast) {
     this.user = {};
 
     this.submitLoginForm = function () {
@@ -15,7 +15,7 @@ app.controller('loginCtrl', ['CONST_VALIDATORS', '$http', '$httpParamSerializerJ
 
             console.log('[SUCCESS] ',response);
 
-            $state.go('profile');
+            $state.go('viewProfile');
 
         }, function errorCallback(err) {
 

@@ -1,5 +1,5 @@
 //Config for ui router
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+angular.module('app').config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
 
@@ -16,15 +16,37 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         .state('createcard', {
             url: '/create',
             parent: 'root',
+
             templateUrl: 'app/tpl/createCard.tpl.html',
             controller: 'createCardCtrl',
+            controllerAs: 'vm',
+        })
+        // Profile pages
+        .state('profile', {
+            abstract: true,
+            parent: 'root',
+            url: '/profile',
+            templateUrl: 'app/tpl/profile.tpl.html',
+            controller: 'profileCtrl',
             controllerAs: 'vm'
         })
-        .state('profile', {
-            url: '/profile',
-            parent: 'root',
-            templateUrl: 'app/tpl/profile.tpl.html'
+        .state('viewProfile', {
+            url: '/view',
+            parent: 'profile',
+            templateUrl: 'app/tpl/profileView.tpl.html',
+            controller: 'profileViewCtrl',
+            controllerAs: 'vm'
         })
+        .state('editProfile', {
+            url: '/edit',
+            parent: 'profile',
+            templateUrl: 'app/tpl/profileEdit.tpl.html',
+            controller: 'profileEditCtrl',
+            controllerAs: 'vm'
+        })
+
+        // Login pages
+        // todo:auth??????
         .state('auth', {
             abstract: true,
             url: '/auth',
