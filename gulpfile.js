@@ -39,8 +39,8 @@ gulp.task('browser-sync', ['nodemon'],function() {
         proxy: "localhost:9000",
         port: 9001,
         browser: "google chrome",
-        localOnly: true,
-        notify: false
+        localOnly: true
+        //notify: false
     });
 });
 
@@ -49,7 +49,7 @@ gulp.task('nodemon', function (cb) {
 
     gulp.watch('app/src/scss/**/*.+(scss|sass)', ['sass']);
     gulp.watch('app/**/*.html', browserSync.reload);
-    gulp.watch('app/js/**/*.js', browserSync.reload);
+    gulp.watch('app/**/*.js', browserSync.reload);
 
     return nodemon({
         script: 'server.js',

@@ -1,4 +1,4 @@
-var appRunFunc = function($rootScope, $state, $http) {
+var appRunFunc = function($rootScope, $state, $http, $httpParamSerializerJQLike) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
         var stateIsProtected = toState.data && toState.data.secure;
@@ -7,35 +7,33 @@ var appRunFunc = function($rootScope, $state, $http) {
 
             // check user credentials
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: '/api/checkuser',
-                data: $httpParamSerializerJQLike(this.user),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).success(function (res) {
 
-                //if (res.success) {
-                //    $state.go('viewProfile');
-                //} else {
-                //
-                //    // Show toast with error message
-                //    $mdToast.show($mdToast.simple().position('top right').textContent(res.error.message));
-                //}
+                // in case of user is not authenticated
+                if (!res.success || !res.success.authenticated) {
+                    event.preventDefault();
+                    $state.go('login');
+                }
+
             }).error(function (err) {
 
-                // Something wrong with serverside, show error toast
-                //$mdToast.show($mdToast.simple().position('top right').textContent('Server is taking a coffee. Try again later'));
+                // in case of any serverside error go to login page
+                if (err) {
+                    event.preventDefault();
+                    $state.go('login');
+                }
 
             });
 
-            if (true) {
-                event.preventDefault();
-                $state.go('login');
-            }
+
 
         }
     });
 };
 
-angular.module('app').run(['$rootScope', '$state', '$http', appRunFunc]);
+angular.module('app').run(['$rootScope', '$state', '$http', '$httpParamSerializerJQLike', appRunFunc]);

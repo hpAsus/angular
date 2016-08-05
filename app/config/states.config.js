@@ -49,6 +49,9 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('viewProfile', {
             url: '/view',
             parent: 'profile',
+            data: {
+                secure: true
+            },
             templateUrl: 'app/profile/tpl/profileView.tpl.html',
             controller: 'profileViewCtrl',
             controllerAs: 'vm'

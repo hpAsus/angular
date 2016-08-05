@@ -101,14 +101,18 @@ router.route('/login')
 
     });
 
-router.route('/checksession')
+router.route('/checkuser')
     .get(function (req, res) {
 
-        //console.log(req.session.authenticated);
+        if (req.session.authenticated) {
+            res.json({
+                success: true,
+                authenticated: req.session.authenticated
+            });
+        }
+        console.log();
 
-        //res.json({
-        //    "SESSION": req.session
-        //});
+
     });
 //router.route('/logout').get(function (req, res) {
 //    delete req.session.authenticated;
