@@ -1,39 +1,33 @@
-angular.module('app').controller('loginCtrl', [
-    '$http',
-    '$httpParamSerializerJQLike',
-    '$state',
-    '$mdToast',
-    '$authService',
-    function ($http, $httpParamSerializerJQLike, $state, $mdToast, $authService) {
-        this.user = {};
+var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast) {
+    this.user = {};
 
-        this.submitLoginForm = function () {
-            //console.log('userObject: ',  this.user);
+    this.submitLoginForm = function () {
+        $http({
+            method: 'POST',
+            url: '/api/login',
+            data: $httpParamSerializerJQLike(this.user),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function (res) {
 
-
-            $state.go('viewProfile');
-
-            $authService.authenticate(this.user, this.password);
-            $http({
-                method: 'POST',
-                url: '/api/login',
-                data: $httpParamSerializerJQLike(this.user),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(function successCallback(response) {
-
-                console.log('[SUCCESS] ', response);
-
+            if (res.success) {
                 $state.go('viewProfile');
+            } else {
 
-            }, function errorCallback(err) {
+                // Show toast with error message
+                $mdToast.show($mdToast.simple().position('top right').textContent(res.error.message));
+            }
+        }).error(function (err) {
 
-                $mdToast.show($mdToast.simple().position('top right').textContent('Invalid email or password!'));
+            // Something wrong with serverside, show error toast
+            $mdToast.show($mdToast.simple().position('top right').textContent('Server is taking a coffee. Try again later'));
 
-                console.log('[ERROR] ', err);
+        });
 
-            });
-        }
+    }
 
-    }]);
+};
+
+
+angular.module('app').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', loginUser]);

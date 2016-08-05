@@ -16,10 +16,25 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('createcard', {
             url: '/create',
             parent: 'root',
+            //resolve: {
+            //    test: true,
+            //    auth: ['$state', function ($state) {
+            //        if (true) {
+            //            //console.log(true);
+            //            $state.go('login');
+            //        }
+            //        //return '111';
+            //    }]
+            //},
+            //
+            //test: 'test',
+            data: {
+                secure: true
+            },
 
             templateUrl: 'app/tpl/createCard.tpl.html',
             controller: 'createCardCtrl',
-            controllerAs: 'vm',
+            controllerAs: 'vm'
         })
 
         // Profile pages

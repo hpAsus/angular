@@ -14,44 +14,11 @@ var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-// Logging with morgan
-// =====================================================================================================================
-var morgan = require('morgan');
-var accessLogStream = fs.createWriteStream(path.join(rootDir, 'access.log'), {flags: 'a'});
-
-
-// PASSPORT
-// =====================================================================================================================
-//var passport = require('passport');
-//var LocalStrategy = require('passport-local').Strategy;
-//passport.use(new LocalStrategy(
-//    function (username, password, done) {
-//
-//        // todo: insert NeDB check here. For now, just a simple hardcoded check.
-//        console.log('checking password');
-//        if (username === 'foo' && password === 'bar') {
-//            done(null, {user: username});
-//        }
-//        else {
-//            done(null, false, {message: 'Incorrect password.'});
-//        }
-//    }
-//));
-//
-//passport.serializeUser(function (user, done) {
-//    done(null, user);
-//});
-//
-//passport.deserializeUser(function (user, done) {
-//    done(null, user);
-//});
 
 // USER MODEL
 // =====================================================================================================================
 var User = require('./server/user.js');
-var user = new User({name: 'Peter'});
-
-var testuser = new User({
+var user = new User({
     email: 'olga@mail.ru',
     password: md5('123'),
     name: 'Olga',
@@ -59,7 +26,7 @@ var testuser = new User({
     age: 32,
     bio: 'Nice beaver!'
 });
-//testuser.create();
+//user.create();
 
 // CONFIGS
 // =====================================================================================================================
@@ -77,22 +44,13 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(session({
     secret: 'angular secret key',
     resave: false,
-    maxAge: 0.1*60*1000,
+    rolling: true,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {
+        maxAge: 1*60*1000
+    }
 }));
 
-//Passport
-//app.use(passport.initialize());
-//app.use(passport.session());
-
-// Morgan logging middleware
-//app.use(morgan('combined', {
-//    skip: function (req, res) {
-//        return res.statusCode < 400
-//    }, // skip requests wit status code < 400
-//    stream: accessLogStream
-//}));
 
 
 app.use(
@@ -103,15 +61,9 @@ app.use(
 
 // API / login
 // =====================================================================================================================
-router.route('/test')
-    .get(function (req, res) {
-        res.json({
-            "SESSION": req.session.authenticated
-        });
-    });
-router.route('/login')
 
-    //User login
+
+router.route('/login')
     .post(function (req, res) {
 
         //Parsing body vars with bodyParser
@@ -124,84 +76,45 @@ router.route('/login')
         // Check promised result
         isUserValid.then(function (userObj) {
 
-            //password is correct, we can authorize userObj
+            //password is correct, we can authorize user
             req.session.authenticated = true;
-            req.session.user = userObj;
+            req.session.login = userObj.email;
+            req.session.username = userObj.name;
 
-            //console.log('Promise resolved:');
-            //console.log(req.session);
-
-            res.sendStatus(200);
-
+            res.send({
+                success: true
+            });
         });
 
         // Catch errors
         isUserValid.catch(function(err) {
-            console.log(err);
             //not authorized
-            res.sendStatus(401);
+            res.send({
+                success: false,
+                error: {
+                    code: 401,
+                    message: err.toString()
+                }
+            });
+            res.sendStatus(403);
         });
 
     });
 
-
-
-
-router.route('/logout').get(function (req, res) {
-    delete req.session.authenticated;
-    res.redirect('/');
-});
-
-// API / USERS
-// =====================================================================================================================
-router.route('/users')
-
-    //Create user
-    .post(function (req, res) {
-
-        console.log('Saving new user!');
-        res.json({
-            STATUS: 'Creating new user!'
-        });
-    })
-
-    // Get list of users
+router.route('/checksession')
     .get(function (req, res) {
 
-        //passport.authenticate('local');
+        //console.log(req.session.authenticated);
 
-        console.log('searching for the users');
-        res.json({
-            STATUS: 'Getting list of users!'
-        });
+        //res.json({
+        //    "SESSION": req.session
+        //});
     });
+//router.route('/logout').get(function (req, res) {
+//    delete req.session.authenticated;
+//    res.redirect('/');
+//});
 
-// API / USER (SINGLES)
-// =====================================================================================================================
-router.route('/users/:user_id')
-
-    // Getting a single user
-    .get(function (req, res) {
-        res.json({
-            STATUS: 'Getting single user info',
-            user_id: req.params.user_id
-        });
-    })
-
-    //updating user info
-    .put(function (req, res) {
-        res.json({
-            STATUS: 'Updating a single user info',
-            user_id: req.params.user_id
-        })
-    })
-    //deleting user info
-    .delete(function (req, res) {
-        res.json({
-            STATUS: 'Deleting a single user',
-            user_id: req.params.user_id
-        })
-    });
 
 app.use('/api', router); //all of the routes will be prefixed with /api
 

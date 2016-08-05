@@ -10,7 +10,6 @@ var User = function (data) {
 
 User.prototype.data = {};
 
-
 // Get value by name
 // =====================================================================================================================
 User.prototype.get = function (name) {
@@ -60,11 +59,11 @@ User.prototype.create = function () {
 // Check user
 // =====================================================================================================================
 User.prototype.checkUser = function (email, password) {
-
     return new Promise(function (resolve, reject) {
         db.findOne({
             email: email
         }, function (err, found) {
+
             if (found) {
                 if (found.password === password) {
                     resolve(found);
@@ -92,5 +91,4 @@ User.prototype.listAll = function () {
 };
 // Exports
 // =====================================================================================================================
-console.log(User);
 module.exports = User;
