@@ -2,6 +2,39 @@
 // =====================================================================================================================
 var express = require('express');
 var apiRouter = express.Router();
+//var User = require('./user.js');
+//var user = new User();
+//var md5 = require('md5');
+
+// API / USER DATA
+// =====================================================================================================================
+apiRouter.route('/getuserdata')
+    .get(function(req,res) {
+
+        if(req.session.authenticated) {
+
+            res.send({
+                success: true,
+                user: req.session.user
+            });
+
+        } else {
+
+            res.send({
+                success: false,
+                error: {
+                    code: 401,
+                    message: 'You are not authorized!'
+                }
+            });
+        }
+    });
+
+apiRouter.route('/test')
+    .get(function(req,res) {
+
+       res.sendStatus(200);
+    });
 
 // API / USERS
 // =====================================================================================================================

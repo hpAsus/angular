@@ -1,10 +1,9 @@
 (function () {
 
-    var appRunFunc = function ($rootScope, $state, $http, $httpParamSerializerJQLike) {
+    var appRunFunc = function ($rootScope, $state) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            var stateIsProtected = toState.data && toState.data.secure;
 
-            console.log($rootScope.loggedIn);
+            var stateIsProtected = toState.data && toState.data.secure;
 
             // todo: THis check should be more complicated)
 
@@ -15,5 +14,5 @@
         });
     };
 
-    angular.module('app').run(['$rootScope', '$state', '$http', '$httpParamSerializerJQLike', appRunFunc]);
+    angular.module('app').run(['$rootScope', '$state', appRunFunc]);
 })();

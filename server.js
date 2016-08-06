@@ -66,7 +66,7 @@ app.use('/', router);
 app.use('/api', apiRouter);
 
 // check all API routes for all requests - user should be authenticated
-app.all('/api/*', function (req, res) {
+app.all('/api/*', function (req, res, next) {
     if (req.session.authenticated) {
         next();
     } else {

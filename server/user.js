@@ -1,4 +1,4 @@
-var schemas = require("./schemas.js"); // Database scheme
+var schemas = require("./db-schema.js"); // Database scheme
 var db = require("./db.js"); //Database class
 var _ = require("lodash");
 

@@ -1,7 +1,11 @@
 (function () {
 
-    var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast, $rootScope) {
+    var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast, $rootScope, userData) {
         this.user = {};
+
+        if (userData) {
+            $state.go('home');
+        }
 
         this.submitLoginForm = function () {
             $http({
@@ -40,6 +44,6 @@
 
     };
 
-    angular.module('app').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', '$rootScope', loginUser]);
+    angular.module('app').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', '$rootScope', 'userData', loginUser]);
 
 })();

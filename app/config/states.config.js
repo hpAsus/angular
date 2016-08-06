@@ -7,7 +7,17 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('root', {
             abstract: true,
             templateUrl: 'app/root/layout.tpl.html',
-            controller: 'rootCtrl as root'
+            controller: 'rootCtrl as root',
+            resolve: {
+              userData: function($http) {
+                return $http({
+                    method: 'GET',
+                    url: '/api/getuserdata'
+                }).then(function(res) {
+                    return res.data.user;
+                });
+              }
+            }
         })
         .state('home', {
             url: '/',
@@ -63,6 +73,16 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('login', {
             url: '/signin',
             parent: 'auth',
+            resolve: {
+                userData: function($http) {
+                    return $http({
+                        method: 'GET',
+                        url: '/api/getuserdata'
+                    }).then(function(res) {
+                        return res.data.user;
+                    });
+                }
+            },
             templateUrl: 'app/auth/login/login.tpl.html',
             controller: 'loginCtrl',
             controllerAs: 'vm'
