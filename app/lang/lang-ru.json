@@ -9,7 +9,8 @@
   "AUTH": {
     "SIGNIN": "Войти",
     "FORGOT": "Забыли пароль?",
-    "LOGOUT": "Выйти"
+    "LOGOUT": "Выйти",
+    "USERGREETING": "Привет, {{user}}!"
   },
   "PROFILE": {
     "TITLE": "Профиль пользователя"

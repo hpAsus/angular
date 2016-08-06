@@ -39,8 +39,8 @@ gulp.task('browser-sync', ['nodemon'],function() {
         proxy: "localhost:9000",
         port: 9001,
         browser: "google chrome",
-        localOnly: true
-        //notify: false
+        localOnly: true,
+        notify: false
     });
 });
 

@@ -15,7 +15,6 @@
     "angular-translate-loader-static-files": "2.11.1",
     "angular-ui-router": "0.3.1",
     "body-parser": "1.15.2",
-    "bootstrap": "3.3.6",
     "errorhandler": "1.4.3",
     "express": "4.14.0",
     "express-session": "1.14.0",
@@ -23,11 +22,7 @@
     "md5": "2.1.0",
     "method-override": "2.3.6",
     "moment": "2.14.1",
-    "morgan": "1.7.0",
     "nedb": "1.8.0",
-    "passport": "0.3.2",
-    "passport-http": "0.3.0",
-    "passport-local": "1.0.0",
     "promise-polyfill": "6.0.1"
   },
   "devDependencies": {

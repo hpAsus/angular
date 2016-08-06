@@ -26,32 +26,44 @@
     <script src="node_modules/moment/min/moment.min.js"></script>
 
     <!-- App bootstrap & config -->
-    <script src="app/common/app.init.js"></script>
+    <script src="app/common/app.module.js"></script>
     <script src="app/common/app.run.js"></script>
     <script src="app/config/app.const.js"></script>
     <script src="app/config/translate.config.js"></script>
     <script src="app/config/material.config.js"></script>
     <script src="app/config/states.config.js"></script>
 
-
-
-    <!-- Controllers -->
-    <script src="app/controllers/createCardCtrl.js"></script>
+    <!-- Common -->
     <script src="app/common/langCtrl.js"></script>
-    <script src="app/auth/loginCtrl.js"></script>
-    <script src="app/auth/forgotCtrl.js"></script>
+    <script src="app/root/rootCtrl.js"></script>
 
+    <!-- Auth module -->
+    <script src="app/auth/auth.module.js"></script>
+    <script src="app/auth/login/loginCtrl.js"></script>
+    <script src="app/auth/forgot/forgotCtrl.js"></script>
+    <script src="app/auth/logout/logoutCtrl.js"></script>
+
+    <!-- Profile -->
+    <script src="app/profile/profile.module.js"></script>
     <script src="app/profile/profileCtrl.js"></script>
-    <script src="app/profile/profileViewCtrl.js"></script>
-    <script src="app/profile/profileEditCtrl.js"></script>
-
-    <script src="app/auth/logoutCtrl.js"></script>
-
-    <!-- Directives -->
+    <script src="app/profile/view/profileViewCtrl.js"></script>
+    <script src="app/profile/edit/profileEditCtrl.js"></script>
+    <!-- Profile Validators -->
     <script src="app/profile/validators/atAgeValidator.js"></script>
     <script src="app/profile/validators/atDateValidator.js"></script>
     <script src="app/profile/validators/atGreetingsValidator.js"></script>
     <script src="app/profile/validators/atNameValidator.js"></script>
+
+
+    <!-- Controllers -->
+    <script src="app/controllers/createCardCtrl.js"></script>
+
+
+
+
+
+
+
 
 </body>
 </html>

@@ -1,6 +1,11 @@
+// API Router
+// =====================================================================================================================
+var express = require('express');
+var apiRouter = express.Router();
+
 // API / USERS
 // =====================================================================================================================
-router.route('/users')
+apiRouter.route('/users')
 
     //Create user
     .post(function (req, res) {
@@ -24,7 +29,7 @@ router.route('/users')
 
 // API / USER (SINGLES)
 // =====================================================================================================================
-router.route('/users/:user_id')
+apiRouter.route('/users/:user_id')
 
     // Getting a single user
     .get(function (req, res) {
@@ -49,3 +54,7 @@ router.route('/users/:user_id')
         })
     });
 
+
+// Exports
+// =====================================================================================================================
+module.exports = apiRouter;

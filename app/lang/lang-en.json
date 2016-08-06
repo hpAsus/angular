@@ -9,7 +9,8 @@
   "AUTH": {
     "SIGNIN": "Sign In",
     "FORGOT": "Forgot password",
-    "LOGOUT": "Log out"
+    "LOGOUT": "Log out",
+    "USERGREETING": "Hello, {{user}}"
   },
   "PROFILE": {
     "TITLE": "Profile page"

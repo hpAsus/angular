@@ -12,12 +12,18 @@
                 <md-button ng-click="switchLang('ru')">Русский</md-button>
             </span>
             <span flex></span>
-            <md-button ui-sref="login">{{ 'AUTH.SIGNIN' | translate }}</md-button>
-            <md-button ui-sref="forgot">{{ 'AUTH.FORGOT' | translate }}</md-button>
-            <md-button ui-sref="logout">{{ 'AUTH.LOGOUT' | translate }}</md-button>
+            <md-button ui-sref="login" ng-show="!root.isLoggedIn">{{ 'AUTH.SIGNIN' | translate }}</md-button>
+            <span ng-show="root.isLoggedIn">
+                <md-button ui-sref="viewProfile" translate-values="{ user: {{root.user.email}} }"> {{'AUTH.USERGREETING' | translate}} </md-button>
+                <md-button ui-sref="logout">{{ 'AUTH.LOGOUT' | translate }}</md-button>
+            </span>
         </div>
     </md-toolbar>
     <md-content>
         <div ui-view></div>
+        {{root.user.name}}
+        {{root.user.email}}
+        <md-button ui-sref="viewProfile" translate-values="{ user: {root.user.email} }"> {{'AUTH.USERGREETING' | translate}} </md-button>
+        {{root.user}}
     </md-content>
 </div>

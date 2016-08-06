@@ -56,9 +56,9 @@ User.prototype.create = function () {
     });
 };
 
-// Check user
+// Check User
 // =====================================================================================================================
-User.prototype.checkUser = function (email, password) {
+User.prototype.authenticate = function (email, password) {
     return new Promise(function (resolve, reject) {
         db.findOne({
             email: email
@@ -78,17 +78,24 @@ User.prototype.checkUser = function (email, password) {
     });
 };
 
-// List all user
+// Destroy User Session
 // =====================================================================================================================
-User.prototype.listAll = function () {
-    db.find({name: {$exists: true}}, function (err, found) {
-        if (!err) {
-            return found;
-        } else {
-            console.log(err);
-        }
+User.prototype.destroySession = function() {
+    return new Promise(function (resolve, reject) {
+
     });
 };
+// List All User
+// =====================================================================================================================
+//User.prototype.listAll = function () {
+//    db.find({name: {$exists: true}}, function (err, found) {
+//        if (!err) {
+//            return found;
+//        } else {
+//            console.log(err);
+//        }
+//    });
+//};
 // Exports
 // =====================================================================================================================
 module.exports = User;

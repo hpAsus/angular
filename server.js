@@ -8,7 +8,8 @@ var fs = require('fs');
 var md5 = require('md5');
 var express = require('express');
 var app = express();
-var router = express.Router();
+var router = require('./server/router.js');
+var apiRouter = require('./server/router_api.js');
 var errorhandler = require('errorhandler');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
@@ -47,10 +48,9 @@ app.use(session({
     rolling: true,
     saveUninitialized: true,
     cookie: {
-        maxAge: 1*60*1000
+        maxAge: 1 * 60 * 1000
     }
 }));
-
 
 
 app.use(
@@ -58,72 +58,23 @@ app.use(
     express.static(rootDir) //position of static content in a filesystem
 );
 
-
-// API / login
+// Router Settings
 // =====================================================================================================================
+app.use('/', router);
 
+// All of the API routes will be prefixed with '/api'
+app.use('/api', apiRouter);
 
-router.route('/login')
-    .post(function (req, res) {
-
-        //Parsing body vars with bodyParser
-        var email = req.body.email;
-        var pass = req.body.password;
-
-        // Check username
-        var isUserValid = user.checkUser(email, md5(pass));
-
-        // Check promised result
-        isUserValid.then(function (userObj) {
-
-            //password is correct, we can authorize user
-            req.session.authenticated = true;
-            req.session.login = userObj.email;
-            req.session.username = userObj.name;
-
-            res.send({
-                success: true
-            });
-        });
-
-        // Catch errors
-        isUserValid.catch(function(err) {
-            //not authorized
-            res.send({
-                success: false,
-                error: {
-                    code: 401,
-                    message: err.toString()
-                }
-            });
-            res.sendStatus(403);
-        });
-
-    });
-
-router.route('/checkuser')
-    .get(function (req, res) {
-
-        if (req.session.authenticated) {
-            res.json({
-                success: true,
-                authenticated: req.session.authenticated
-            });
-        }
-        console.log();
-
-
-    });
-//router.route('/logout').get(function (req, res) {
-//    delete req.session.authenticated;
-//    res.redirect('/');
-//});
-
-
-app.use('/api', router); //all of the routes will be prefixed with /api
+// check all API routes for all requests - user should be authenticated
+app.all('/api/*', function (req, res) {
+    if (req.session.authenticated) {
+        next();
+    } else {
+        res.sendStatus(401);
+    }
+});
 
 // START THE SERVER
 // =====================================================================================================================
 app.listen(port);
-
 console.log('Magic happens on port ' + port);

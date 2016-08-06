@@ -6,74 +6,64 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
     $stateProvider
         .state('root', {
             abstract: true,
-            templateUrl: 'app/tpl/layout.tpl.html'
+            templateUrl: 'app/root/layout.tpl.html',
+            controller: 'rootCtrl as root'
         })
         .state('home', {
             url: '/',
             parent: 'root',
-            templateUrl: 'app/tpl/index.tpl.html'
+            templateUrl: 'app/index/index.tpl.html'
         })
         .state('createcard', {
             url: '/create',
             parent: 'root',
-            //resolve: {
-            //    test: true,
-            //    auth: ['$state', function ($state) {
-            //        if (true) {
-            //            //console.log(true);
-            //            $state.go('login');
-            //        }
-            //        //return '111';
-            //    }]
-            //},
-            //
-            //test: 'test',
             data: {
                 secure: true
             },
-
             templateUrl: 'app/tpl/createCard.tpl.html',
             controller: 'createCardCtrl',
             controllerAs: 'vm'
         })
 
-        // Profile pages
+// Profile Pages
+// =====================================================================================================================
         .state('profile', {
             abstract: true,
             parent: 'root',
             url: '/profile',
-            templateUrl: 'app/profile/tpl/profile.tpl.html',
+            data: {
+                secure: true
+            },
+            templateUrl: 'app/profile/profile.tpl.html',
             controller: 'profileCtrl',
             controllerAs: 'vm'
         })
         .state('viewProfile', {
             url: '/view',
             parent: 'profile',
-            data: {
-                secure: true
-            },
-            templateUrl: 'app/profile/tpl/profileView.tpl.html',
+            templateUrl: 'app/profile/view/profileView.tpl.html',
             controller: 'profileViewCtrl',
             controllerAs: 'vm'
         })
         .state('editProfile', {
             url: '/edit',
             parent: 'profile',
-            templateUrl: 'app/profile/tpl/profileEdit.tpl.html',
+            templateUrl: 'app/profile/edit/profileEdit.tpl.html',
             controller: 'profileEditCtrl',
             controllerAs: 'vm'
         })
 
-        // Login pages
+// Auth Pages
+// =====================================================================================================================
         .state('auth', {
             abstract: true,
             url: '/auth',
-            templateUrl: 'app/auth/tpl/auth.tpl.html'
+            templateUrl: 'app/auth/auth.tpl.html'
         })
         .state('login', {
             url: '/signin',
             parent: 'auth',
-            templateUrl: 'app/auth/tpl/login.tpl.html',
+            templateUrl: 'app/auth/login/login.tpl.html',
             controller: 'loginCtrl',
             controllerAs: 'vm'
         })
@@ -85,7 +75,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('forgot', {
             url: '/reset',
             parent: 'auth',
-            templateUrl: 'app/auth/tpl/forgotPassword.tpl.html',
+            templateUrl: 'app/auth/forgot/forgot.tpl.html',
             controller: 'forgotCtrl',
             controllerAs: 'vm'
         });
