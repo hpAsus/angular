@@ -7,7 +7,8 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         .state('root', {
             abstract: true,
             templateUrl: 'app/root/root.tpl.html',
-            controller: 'rootCtrl as root',
+            controller: 'rootCtrl',
+            controllerAs: 'root',
             resolve: {
               userData: function($http) {
                 return $http({
@@ -30,35 +31,54 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
         //    data: {
         //        secure: true
         //    },
-        //    templateUrl: 'app/tpl/createCard.tpl.html',
+        //    templateUrl: 'app/createCard/createCard.tpl.html',
         //    controller: 'createCardCtrl',
         //    controllerAs: 'vm'
         //})
+
+// Dashboard
+// =====================================================================================================================
+        .state('dashboard', {
+            abstract: true,
+            resolve: {
+                userData: function($http) {
+                    return $http({
+                        method: 'GET',
+                        url: '/api/getuserdata'
+                    }).then(function(res) {
+                        return res.data.user;
+                    });
+                }
+            },
+            data: {
+                secure: true
+            },
+            templateUrl: 'app/dashboard/dashboard.tpl.html',
+            controller: 'dashboardCtrl',
+            controllerAs: 'dashboard'
+        })
 
 // Profile Pages
 // =====================================================================================================================
         .state('profile', {
             abstract: true,
-            parent: 'root',
+            parent: 'dashboard',
             url: '/profile',
-            data: {
-                secure: true
-            },
-            templateUrl: 'app/profile/profile.tpl.html',
+            templateUrl: 'app/dashboard/profile/profile.tpl.html',
             controller: 'profileCtrl',
             controllerAs: 'vm'
         })
         .state('viewProfile', {
             url: '/view',
             parent: 'profile',
-            templateUrl: 'app/profile/view/profileView.tpl.html',
+            templateUrl: 'app/dashboard/profile/view/profileView.tpl.html',
             controller: 'profileViewCtrl',
             controllerAs: 'vm'
         })
         .state('editProfile', {
             url: '/edit',
             parent: 'profile',
-            templateUrl: 'app/profile/edit/profileEdit.tpl.html',
+            templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
             controller: 'profileEditCtrl',
             controllerAs: 'vm'
         })

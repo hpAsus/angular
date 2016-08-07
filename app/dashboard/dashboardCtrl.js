@@ -1,9 +1,13 @@
+// Main Dashboard Controller
+// =====================================================================================================================
 (function () {
 
-    var rootCtrl = function ($scope, userData, localStorageService) {
+    var dashboardCtrlFunc = function ($scope, userData, localStorageService) {
 
         // if we have session on serverside - pass data to local variables
         if (userData) {
+
+            console.log(userData);
 
             // update on localstorage
             localStorageService.set('loggedIn', true);
@@ -17,6 +21,6 @@
 
     };
 
-    angular.module('app').controller('rootCtrl', ['$scope', 'userData', 'localStorageService', rootCtrl]);
+    angular.module('app').controller('dashboardCtrl', ['$scope', 'userData', 'localStorageService', dashboardCtrlFunc]);
 
 })();

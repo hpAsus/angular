@@ -1,0 +1,27 @@
+<div layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <a ui-sref="home"><span>{{ 'GENERAL.PROJECT_TITLE' | translate }}</span></a>
+            <!-- fill up the space between left and right area -->
+
+            <span flex></span>
+            <span ng-controller="langCtrl">
+                <!--<span>Active: {{activeLanguage}}</span>-->
+                <md-button ng-click="switchLang('en')">English</md-button>
+                <md-button ng-click="switchLang('ru')">Русский</md-button>
+            </span>
+            <span flex></span>
+            <md-button ui-sref="login" ng-show="!dashboard.loggedIn">{{ 'AUTH.SIGNIN' | translate }}</md-button>
+            <span ng-show="dashboard.loggedIn">
+                <md-button ui-sref="viewProfile" translate="AUTH.USERGREETING" translate-values="{ username: dashboard.user.email }" aria-label="Profile"></md-button>
+                <md-button ui-sref="logout">{{ 'AUTH.LOGOUT' | translate }}</md-button>
+            </span>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <div ui-view></div>
+    </md-content>
+</div>
+
+<!--<span flex></span>-->
+<!--<md-button ui-sref="createcard">Greeting Card</md-button>-->
