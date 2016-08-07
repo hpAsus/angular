@@ -15,6 +15,14 @@ gulp.task('nodemon', function (cb) {
         // nodemon our expressjs server
         script: 'server.js',
 
+        ignore: [
+            '.gitignore',
+            'gitignore',
+            'app/**',
+            'data/**',
+            'node_modules/**'
+        ],
+
         // watch core server file(s) that require server restart on change
         watch: ['server.js', '/server/**/*.js']
     })
@@ -41,8 +49,8 @@ gulp.task('browser-sync', ['nodemon'], function () {
         // informs browser-sync to use the following port for the proxied app
         // notice that the default port is 3000, which would clash with our expressjs
         port: 4000,
-
-        browser: 'google chrome'
+        browser: 'google chrome',
+        notify: false
     });
 });
 

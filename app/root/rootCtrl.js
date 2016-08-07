@@ -1,19 +1,22 @@
 (function () {
 
-    var rootCtrl = function ($scope, $rootScope, userData) {
+    var rootCtrl = function ($scope, $rootScope, userData, localStorageService) {
 
-        console.log(userData);
+        // if we have session on serverside - pass data to local variables
         if (userData) {
 
-            $rootScope.loggedIn = true;
-            $rootScope.user = userData;
+            // update on localstorage
+            localStorageService.set('loggedIn', true);
+            localStorageService.set('user', angular.toJson(userData));
 
-            this.loggedIn = true;
-            this.user = userData;
+            // set locals
+            this.loggedIn = localStorageService.get('loggedIn');
+            this.user = angular.fromJson(localStorageService.get('user'));
+
         }
 
     };
 
-    angular.module('app').controller('rootCtrl', ['$scope', '$rootScope', 'userData', rootCtrl]);
+    angular.module('app').controller('rootCtrl', ['$scope', '$rootScope', 'userData', 'localStorageService', rootCtrl]);
 
 })();

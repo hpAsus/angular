@@ -1,6 +1,6 @@
 (function () {
 
-    var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast, $rootScope, userData) {
+    var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast, userData, localStorageService) {
         this.user = {};
 
         if (userData) {
@@ -20,8 +20,8 @@
                 if (res.success) {
 
                     // setting user data to $rootScope
-                    $rootScope.user = res.user;
-                    $rootScope.loggedIn = true;
+                    localStorageService.set('loggedIn', true);
+                    localStorageService.set('user', angular.toJson(res.user));
 
                     $state.go('viewProfile');
 
@@ -44,6 +44,6 @@
 
     };
 
-    angular.module('app').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', '$rootScope', 'userData', loginUser]);
+    angular.module('app').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', 'localStorageService', loginUser]);
 
 })();

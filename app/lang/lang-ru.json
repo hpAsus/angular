@@ -10,7 +10,7 @@
     "SIGNIN": "Войти",
     "FORGOT": "Забыли пароль?",
     "LOGOUT": "Выйти",
-    "USERGREETING": "Привет, {{user}}!"
+    "USERGREETING": "Привет, {{username}}!"
   },
   "PROFILE": {
     "TITLE": "Профиль пользователя"

@@ -3,8 +3,7 @@
         <div class="md-toolbar-tools">
             <a ui-sref="home"><span>{{ 'GENERAL.PROJECT_TITLE' | translate }}</span></a>
             <!-- fill up the space between left and right area -->
-            <span flex></span>
-            <md-button ui-sref="createcard">Greeting Card</md-button>
+
             <span flex></span>
             <span ng-controller="langCtrl">
                 <!--<span>Active: {{activeLanguage}}</span>-->
@@ -14,16 +13,15 @@
             <span flex></span>
             <md-button ui-sref="login" ng-show="!root.loggedIn">{{ 'AUTH.SIGNIN' | translate }}</md-button>
             <span ng-show="root.loggedIn">
-                <md-button ui-sref="viewProfile" translate-values="{ user: {{root.user.email}} }"> {{'AUTH.USERGREETING' | translate}} </md-button>
+                <md-button ui-sref="viewProfile" translate="AUTH.USERGREETING" translate-values="{ username: root.user.email }" aria-label="Profile"></md-button>
                 <md-button ui-sref="logout">{{ 'AUTH.LOGOUT' | translate }}</md-button>
             </span>
         </div>
     </md-toolbar>
     <md-content>
         <div ui-view></div>
-        {{root.user.name}}
-        {{root.user.email}}
-        <md-button ui-sref="viewProfile" translate-values="{ user: {root.user.email} }"> {{'AUTH.USERGREETING' | translate}} </md-button>
-        {{root.user}}
     </md-content>
 </div>
+
+<!--<span flex></span>-->
+<!--<md-button ui-sref="createcard">Greeting Card</md-button>-->

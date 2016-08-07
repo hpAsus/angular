@@ -10,7 +10,7 @@
     "SIGNIN": "Sign In",
     "FORGOT": "Forgot password",
     "LOGOUT": "Log out",
-    "USERGREETING": "Hello, {{user}}"
+    "USERGREETING": "Hello, {{username}}"
   },
   "PROFILE": {
     "TITLE": "Profile page"

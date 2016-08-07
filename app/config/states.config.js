@@ -6,7 +6,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
     $stateProvider
         .state('root', {
             abstract: true,
-            templateUrl: 'app/root/layout.tpl.html',
+            templateUrl: 'app/root/root.tpl.html',
             controller: 'rootCtrl as root',
             resolve: {
               userData: function($http) {
@@ -24,16 +24,16 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             parent: 'root',
             templateUrl: 'app/index/index.tpl.html'
         })
-        .state('createcard', {
-            url: '/create',
-            parent: 'root',
-            data: {
-                secure: true
-            },
-            templateUrl: 'app/tpl/createCard.tpl.html',
-            controller: 'createCardCtrl',
-            controllerAs: 'vm'
-        })
+        //.state('createcard', {
+        //    url: '/create',
+        //    parent: 'root',
+        //    data: {
+        //        secure: true
+        //    },
+        //    templateUrl: 'app/tpl/createCard.tpl.html',
+        //    controller: 'createCardCtrl',
+        //    controllerAs: 'vm'
+        //})
 
 // Profile Pages
 // =====================================================================================================================

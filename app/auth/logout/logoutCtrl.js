@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var logoutUser = function ($http, $state, $rootScope) {
+    var logoutUser = function ($http, $state, localStorageService) {
 
         $http({
             method: 'GET',
@@ -14,8 +14,8 @@
 
             //successfully deleted session
             //delete local user info
-            $rootScope.user = null;
-            $rootScope.loggedIn = false;
+            localStorageService.remove('loggedIn');
+            localStorageService.remove('user');
 
             $state.go('home');
 
@@ -25,6 +25,6 @@
 
     };
 
-    angular.module('app').controller('logoutCtrl', ['$http', '$state', '$rootScope', logoutUser]);
+    angular.module('app').controller('logoutCtrl', ['$http', '$state', 'localStorageService', logoutUser]);
 
 })();

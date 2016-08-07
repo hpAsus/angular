@@ -7,7 +7,7 @@
     });
 
     // Main App module
-    angular.module('app', ['ui.router', 'pascalprecht.translate', 'ngMaterial', 'app.auth', 'app.profile']);
+    angular.module('app', ['ui.router', 'pascalprecht.translate', 'ngMaterial', 'LocalStorageModule', 'app.auth', 'app.profile']);
 
 })();
 

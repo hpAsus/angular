@@ -3,8 +3,8 @@
 var rootDir = __dirname;
 var port = process.env.PORT || 9000;
 
-var path = require('path');
-var fs = require('fs');
+//var path = require('path');
+//var fs = require('fs');
 var md5 = require('md5');
 var express = require('express');
 var app = express();
@@ -48,7 +48,7 @@ app.use(session({
     rolling: true,
     saveUninitialized: true,
     cookie: {
-        maxAge: 1 * 60 * 1000
+        maxAge: 10 * 60 * 1000
     }
 }));
 
