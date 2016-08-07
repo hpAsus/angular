@@ -44,6 +44,6 @@
 
     };
 
-    angular.module('app').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', 'localStorageService', loginUser]);
+    angular.module('app.auth').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', 'localStorageService', loginUser]);
 
 })();

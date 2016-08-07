@@ -40,7 +40,7 @@
         }
     };
 
-    angular.module('app').controller('profileEditCtrl', ['CONST_VALIDATORS', '$scope', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', profileEditCtrlFunc]);
+    angular.module('app.profile').controller('profileEditCtrl', ['CONST_VALIDATORS', '$scope', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', profileEditCtrlFunc]);
 
 })();
 

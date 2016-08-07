@@ -1,6 +1,12 @@
-angular.module('app').controller('profileCtrl', ['CONST_VALIDATORS', '$scope', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', '$location', function(CONST_VALIDATORS, $scope, $http, $httpParamSerializerJQLike, $state, $mdToast, $location) {
+// View Profile Controller
+// =====================================================================================================================
+(function () {
+
+    var profileCtrlFunc = function ($scope, $state) {
+
+    };
 
 
+    angular.module('app.profile').controller('profileCtrl', ['$scope', '$state', profileCtrlFunc]);
 
-}]);
-
+})();

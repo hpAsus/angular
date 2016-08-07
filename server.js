@@ -3,8 +3,6 @@
 var rootDir = __dirname;
 var port = process.env.PORT || 9000;
 
-//var path = require('path');
-//var fs = require('fs');
 var md5 = require('md5');
 var express = require('express');
 var app = express();
@@ -14,9 +12,6 @@ var errorhandler = require('errorhandler');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
-var NodeCache = require( "node-cache" );
-var myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
 
 
 // USER MODEL

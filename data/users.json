@@ -1,1 +1,16 @@
-{"email":"olga@mail.ru","password":"202cb962ac59075b964b07152d234b70","name":"Pesen","birthdate":"08-04-1984","age":"18","bio":"Some words about myself","_id":"tAaJuj0gAf74Gdov"}
+{
+  "olga@mail.ru":{
+    "password":"202cb962ac59075b964b07152d234b70",
+    "name":"Olga",
+    "birthdate":"12-08-1992",
+    "age":"44",
+    "bio":"Olga Olga Olga"
+  },
+  "vitaly@mail.ru":{
+    "password":"202cb962ac59075b964b07152d234b70",
+    "name":"Vitaly",
+    "birthdate":"08-04-1984",
+    "age":"18",
+    "bio":"Vitaly Vitaly Vitaly"
+  }
+}

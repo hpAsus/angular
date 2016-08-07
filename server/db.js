@@ -2,7 +2,7 @@
 // =====================================================================================================================
 var Datastore = require('nedb');
 var db = new Datastore({
-    filename: 'data/users.json'
+    filename: 'data/users_nedb.json'
 });
 db.loadDatabase();
 

@@ -20,6 +20,6 @@
             });
     };
 
-    angular.module('app').controller('profileViewCtrl', [ '$http', '$httpParamSerializerJQLike', '$scope', '$state', '$mdToast', 'localStorageService', profileViewCtrlFunc]);
+    angular.module('app.profile').controller('profileViewCtrl', [ '$http', '$httpParamSerializerJQLike', '$scope', '$state', '$mdToast', 'localStorageService', profileViewCtrlFunc]);
 
 })();

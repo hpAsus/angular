@@ -1,6 +1,11 @@
 var schemas = require("./db-schema.js"); // Database scheme
-var db = require("./db.js"); //Database class
 var _ = require("lodash");
+
+//Cache Database
+var db = require("./db.js");
+//var NodeCache = require( "node-cache" );
+//var cache = new NodeCache( { checkperiod: 0 } );
+//var db = require('../data/users.json');
 
 // USER MODEL Structure
 // =====================================================================================================================

@@ -7,8 +7,8 @@
             <span flex></span>
             <span ng-controller="langCtrl">
                 <!--<span>Active: {{activeLanguage}}</span>-->
-                <md-button ng-click="switchLang('en')">English</md-button>
-                <md-button ng-click="switchLang('ru')">Русский</md-button>
+                <md-button ng-click="switchLang('en')" ng-hide="activeLanguage == 'en'">English</md-button>
+                <md-button ng-click="switchLang('ru')" ng-hide="{{activeLanguage == 'ru'}}"">Русский</md-button>
             </span>
             <span flex></span>
             <md-button ui-sref="login" ng-show="!root.loggedIn">{{ 'AUTH.SIGNIN' | translate }}</md-button>
@@ -19,6 +19,7 @@
         </div>
     </md-toolbar>
     <md-content>
+        {{activeLanguage}}
         <div ui-view></div>
     </md-content>
 </div>

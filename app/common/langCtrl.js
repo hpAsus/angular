@@ -1,12 +1,21 @@
 // Language controller
 // =====================================================================================================================
-angular.module('app').controller('langCtrl', ["$scope", "$translate", function($scope, $translate){
-    var active = $translate.preferredLanguage();
+//(function () {
 
-    $scope.switchLang = function(key) {
-        $translate.use(key);
-        $scope.activeLanguage = key;
+    var langCtrlFunc = function ($scope, $rootScope, $translate) {
+
+        var active = $translate.preferredLanguage();
+
+        $rootScope.switchLang = function (key) {
+            console.log($translate.proposedLanguage());
+            $translate.use(key);
+            $rootScope.activeLanguage = key;
+        };
+
+        $rootScope.activeLanguage = active;
+        console.log(active);
     };
 
-    $scope.activeLanguage = active;
-}]);
+    angular.module('app').controller('langCtrl', ['$scope', '$rootScope', '$translate', langCtrlFunc]);
+
+//})();
