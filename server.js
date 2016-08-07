@@ -4,15 +4,20 @@ var rootDir = __dirname;
 var port = process.env.PORT || 9000;
 
 var md5 = require('md5');
+var timeout = require('connect-timeout');
 var express = require('express');
-var app = express();
 var router = require('./server/router.js');
 var apiRouter = require('./server/router_api.js');
 var errorhandler = require('errorhandler');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var timeout = require('connect-timeout');
 
+var app = express();
+app.post('/test', timeout('10s'), function (req, res) {
+    res.send({timeout: '3s'})
+});
 
 // USER MODEL
 // =====================================================================================================================
@@ -29,6 +34,7 @@ var userManager = new UserManager({
 
 // CONFIGS
 // =====================================================================================================================
+
 
 // Body parser
 app.use(bodyParser.json());
@@ -48,8 +54,8 @@ app.use(session({
     cookie: {
         maxAge: 10 * 60 * 1000
     }
-}));
 
+}));
 
 app.use(
     "/", // URL for access to static content
@@ -76,3 +82,10 @@ app.all('/api/*', function (req, res, next) {
 // =====================================================================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+
+// Connect Timeout Helper
+// =====================================================================================================================
+function haltOnTimedout(req, res, next) {
+    if (!req.timedout) next();
+}

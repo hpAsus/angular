@@ -5,11 +5,15 @@ var router = express.Router();
 var UserManager = require('./userManager.js');
 var userManager = new UserManager();
 var md5 = require('md5');
+var timeout = require('connect-timeout');
+var bodyParser = require('body-parser');
 
 // Login
 // =====================================================================================================================
 router.route('/login')
-    .post(function (req, res) {
+    .post(timeout('3s'), bodyParser.json(), haltOnTimedout, function (req, res) {
+
+//app.post('/login', timeout('10s'), haltOnTimedout, function (req, res) {
 
         //Parsing body vars with bodyParser
         var email = req.body.email;
@@ -60,6 +64,14 @@ router.route('/logout').get(function (req, res) {
     });
 });
 
+// Connect Timeout Helper
+// =====================================================================================================================
+function haltOnTimedout(req, res, next) {
+    if (!req.timedout) next();
+}
+
+
 // Exports
 // =====================================================================================================================
 module.exports = router;
+
