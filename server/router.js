@@ -2,8 +2,8 @@
 // =====================================================================================================================
 var express = require('express');
 var router = express.Router();
-var User = require('./user.js');
-var user = new User();
+var UserManager = require('./userManager.js');
+var userManager = new UserManager();
 var md5 = require('md5');
 
 // Login
@@ -16,7 +16,7 @@ router.route('/login')
         var pass = req.body.password;
 
         // Check promised result
-        user.authenticate(email, md5(pass))
+        userManager.authenticate(email, md5(pass))
             .then(function (userObj) {
 
                 //password is correct, we can authorize user

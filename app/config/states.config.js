@@ -72,11 +72,22 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             url: '/view',
             parent: 'profile',
             templateUrl: 'app/dashboard/profile/view/profileView.tpl.html',
-            controller: 'profileViewCtrl',
-            controllerAs: 'vm'
+            controller: 'profileViewCtrl'
+            //controllerAs: 'vm'
         })
         .state('editProfile', {
             url: '/edit',
+            resolve: {
+                userData: function($http) {
+                    return $http({
+                        method: 'GET',
+                        url: '/api/getuserdata'
+                    }).then(function(res) {
+                        console.log(res.data.user);
+                        return res.data.user;
+                    });
+                }
+            },
             parent: 'profile',
             templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
             controller: 'profileEditCtrl',

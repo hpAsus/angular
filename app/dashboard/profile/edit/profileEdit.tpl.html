@@ -1,87 +1,67 @@
-<md-content layout-gt-sm="row" layout-padding>
+<md-whiteframe class="md-whiteframe-1dp profile-info" flex-sm="100" flex-gt-sm="50" layout layout-align="center center">
+    <md-content flex-sm="100" flex-gt-sm="100" layout-gt-sm="column">
 
-<form novalidate name="profile" autocomplete="off" class="profile">
+        <div class="md-block login-readonly">
+            <p class="login-readonly__label">Your Login</p>
 
-    <div class="md-block">
-        <md-input-container class="md-block">
-            <label for="name">Display Name</label>
-            <input type="text" id="name" name="name" ng-model="user.name" required="required" at-name-validator placeholder="Choose a display name">
-        </md-input-container>
-    </div>
-        <md-input-container class="md-block">
-            <label for="birthDate" class="required">Send on date:</label>
-            <input type="text" id="birthDate" required="required" name="birthdate" ng-model="user.birthdate" date-format="DD-MM-YYYY" placeholder="Select you birth date" at-date-validator>
-        </md-input-container>
-    <md-datepicker ng-model="user.birthday" md-placeholder="Birthdate"></md-datepicker>
-    <div class="md-block">
-        <md-input-container>
-            <label>Display age</label>
-            <input type="number" name="age" ng-model="user.age" min="800" max="4999" />
-        </md-input-container>
-    </div>
-
-
-    <div class="form-group">
-        <label for="name" class="required">Birthday person name</label>
-        <input type="text" class="form-control" id="name" name="name" ng-model="name" required="required" at-name-validator placeholder="Who's gonna have a Birthday soon?">
-
-        <div class="new-card__messages" ng-show="newcard.$submitted || newcard.name.$touched">
-            <div class="alert alert-danger" ng-show="newcard.name.$error.required || newcard.name.$error.nameValidator || newcard.name.$error.nameWords || newcard.name.$error.nameLength">
-                <div ng-show="newcard.name.$error.required">Birthday person name is required.</div>
-                <div ng-show="newcard.name.$error.nameValidator">Oh, it's a name.It should start with capital letter.</div>
-                <div ng-show="newcard.name.$error.nameWords">Your name should consists of {{vm.nameMaxWords}} words maximum.</div>
-                <div ng-show="newcard.name.$error.minNameLength">Your name is too short</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="age" class="required">Birthday person age</label>
-        <input type="text" class="form-control" id="age" name="age" required="required" ng-model="age" at-age-validator placeholder="How old is he (she)?">
-        <div class="new-card__messages" ng-show="newcard.$submitted || newcard.age.$touched">
-            <div class="alert alert-danger" ng-show="newcard.age.$error.ageValidator || newcard.age.$error.ageInteger">
-                <div ng-show="newcard.age.$error.required">The age is required.</div>
-                <div ng-show="newcard.age.$error.ageValidator">Birthday person should be in {{vm.minAge}}...{{vm.maxAge}} age range) </div>
-                <div ng-show="newcard.age.$error.ageInteger">Age should be integer) </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="form-group">
-        <label for="greetings" class="required">Greetings message:</label>
-        <textarea class="form-control" id="greetings" name="greetings" ng-model="greetings" rows="3" at-greetings-validator required="required" placeholder="Greeting words of wisdom..."></textarea>
-
-        <div class="new-card__messages" ng-show="newcard.$submitted || newcard.greetings.$touched">
-            <div class="alert alert-danger" ng-show="newcard.greetings.$error.greetingsValidator || newcard.greetings.$error.required">
-                <div ng-show="newcard.greetings.$error.required">Greeting message is required</div>
-                <div ng-show="newcard.greetings.$error.greetingsValidator">Your greeting is too short and ugly( </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-
-
-        <div class="new-card__messages" ng-show="newcard.$submitted || newcard.greetDate.$touched">
-            <div class="alert alert-danger" ng-show="newcard.greetDate.$error.dateValidator || newcard.greetDate.$error.dateInFuture">
-                <div ng-show="newcard.greetDate.$error.required">Date is required</div>
-                <div ng-show="newcard.greetDate.$error.dateValidator">Check you date, please( Format is DD-MM-YYYY</div>
-                <div ng-show="newcard.greetDate.$error.dateInFuture">Sorry, you can't greet in the past( </div>
-            </div>
+            <h2 class="login-readonly__login">{{vm.user.email}}</h2>
 
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-success btn-block btn-lg pull-right" ng-disabled="newcard.$invalid">Create card</button>
+        <form novalidate name="profile" autocomplete="off" class="profile" name="profile" layout-padding ng-submit="vm.submitProfileUpdateForm()">
 
-    <div class="congrats" ng-show="newcard.$submitted && newcard.$valid">
-        <h3>Yippee!<br>Your great greeting card is ready to send!</h3>
-        <a class="btn btn-primary">Send it on {{greetdate}}!</a>
-    </div>
+            <input type="hidden" name="user.email" ng-model="vm.user.name">
+
+            <md-input-container class="md-block">
+                <label for="name">Display Name</label>
+                <input type="text" id="name" name="user.name" ng-model="vm.user.name" required="required" at-name-validator>
+
+                <div ng-messages="profile.name.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="nameValidator">Oh, it's a name.It should start with capital letter.</div>
+                    <div ng-message="nameWords">Your name should consists of {{vm.nameMaxWords}} words maximum.</div>
+                    <div ng-message="minNameLength">Your name is too short</div>
+                </div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label for="birthDate" class="required">Birth Date</label>
+                <input type="text" id="birthDate" required="required" name="user.birthdate" at-date-validator ng-model="vm.user.birthdate"
+                       date-format="DD-MM-YYYY">
+
+                <div ng-messages="profile.birthdate.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="dateValidator">Check you date, please. Date format is DD-MM-YYYY</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Display age</label>
+                <input type="text" required="required" name="user.age" ng-model="vm.user.age" at-age-validator>
+
+                <div ng-messages="profile.age.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="ageValidator">Age should be in {{vm.minAge}}...{{vm.maxAge}} range</div>
+                    <div ng-message="ageInteger">Age should be a number</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Biography</label>
+                <textarea required="required" name="user.bio" ng-model="vm.user.bio" at-bio-validator md-select-on-focus></textarea>
+
+                <div ng-messages="profile.bio.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="bioValidator">Your bio is too short</div>
+                </div>
+            </md-input-container>
 
 
-</form>
+            <md-button type="submit" class="md-raised md-primary">{{ 'PROFILE.SAVE_PROFILE_BUTTON' | translate}}</md-button>
 
-</md-content>
+        </form>
+
+    </md-content>
+
+</md-whiteframe>

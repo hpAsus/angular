@@ -13,6 +13,9 @@
     "USERGREETING": "Hello, {{username}}"
   },
   "PROFILE": {
-    "TITLE": "Profile page"
+    "TITLE": "Profile page",
+    "VIEWTAB": "Your profile",
+    "EDITTAB": "Edit profile",
+    "SAVE_PROFILE_BUTTON": "Save profile"
   }
 }

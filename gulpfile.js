@@ -3,6 +3,8 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var nodemon = require('gulp-nodemon');
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 
 // we'd need a slight delay to reload browsers
 // connected to browser-sync after restarting nodemon
@@ -49,8 +51,8 @@ gulp.task('browser-sync', ['nodemon'], function () {
         // informs browser-sync to use the following port for the proxied app
         // notice that the default port is 3000, which would clash with our expressjs
         port: 4000,
-        browser: 'google chrome',
-        notify: false
+        notify: false,
+        browser: 'google chrome'
     });
 });
 

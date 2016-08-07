@@ -4,27 +4,27 @@ var _ = require("lodash");
 
 // USER MODEL Structure
 // =====================================================================================================================
-var User = function (data) {
+var UserManager = function (data) {
     this.data = this.sanitize(data);
 };
 
-User.prototype.data = {};
+UserManager.prototype.data = {};
 
 // Get value by name
 // =====================================================================================================================
-User.prototype.get = function (name) {
+UserManager.prototype.get = function (name) {
     return this.data[name];
 };
 
 // Set value by name
 // =====================================================================================================================
-User.prototype.set = function (name, value) {
+UserManager.prototype.set = function (name, value) {
     this.data[name] = value;
 };
 
 // Sanitize data
 // =====================================================================================================================
-User.prototype.sanitize = function (data) {
+UserManager.prototype.sanitize = function (data) {
     data = data || {};
     schema = schemas.user;
     return _.pick(_.defaults(data, schema), _.keys(schema));
@@ -32,7 +32,7 @@ User.prototype.sanitize = function (data) {
 
 // Create user
 // =====================================================================================================================
-User.prototype.create = function () {
+UserManager.prototype.createUser = function () {
 
     var self = this;
 
@@ -58,7 +58,7 @@ User.prototype.create = function () {
 
 // Check User
 // =====================================================================================================================
-User.prototype.authenticate = function (email, password) {
+UserManager.prototype.authenticate = function (email, password) {
     return new Promise(function (resolve, reject) {
         db.findOne({
             email: email
@@ -78,24 +78,53 @@ User.prototype.authenticate = function (email, password) {
     });
 };
 
-// Destroy User Session
+// Get Single User
 // =====================================================================================================================
-User.prototype.destroySession = function() {
+UserManager.prototype.getUser = function(email) {
+
     return new Promise(function (resolve, reject) {
+        db.findOne({
+            email: email
+        }, function (err, found) {
+            if (found) {
+                resolve(found);
+            } else {
+                reject(new Error('User not found'));
+            }
+        });
 
     });
 };
-// List All User
+
+// Update User
 // =====================================================================================================================
-//User.prototype.listAll = function () {
-//    db.find({name: {$exists: true}}, function (err, found) {
-//        if (!err) {
-//            return found;
-//        } else {
-//            console.log(err);
-//        }
-//    });
-//};
+UserManager.prototype.updateUser = function(userObj) {
+
+    return new Promise(function (resolve, reject) {
+        console.log(userObj.email);
+        db.update({
+            email: userObj.email
+        }, {
+            $set: {
+                "email": userObj.email,
+                "name": userObj.name,
+                "birthdate": userObj.birthdate,
+                "age": userObj.age,
+                "bio": userObj.bio,
+            }
+        }, {}, function (err, numReplaced) {
+
+            if (numReplaced) {
+                db.persistence.compactDatafile();
+                resolve(numReplaced);
+            } else {
+                reject(new Error('User not found'));
+            }
+        });
+
+    });
+};
+
 // Exports
 // =====================================================================================================================
-module.exports = User;
+module.exports = UserManager;

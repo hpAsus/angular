@@ -8,6 +8,7 @@
         }
 
         this.submitLoginForm = function () {
+
             $http({
                 method: 'POST',
                 url: '/login',
@@ -17,6 +18,7 @@
                 }
             }).success(function (res) {
                 if (res.success) {
+
                     // setting user data to $rootScope
                     localStorageService.set('loggedIn', true);
                     localStorageService.set('user', angular.toJson(res.user));

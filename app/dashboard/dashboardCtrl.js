@@ -7,7 +7,6 @@
         // if we have session on serverside - pass data to local variables
         if (userData) {
 
-            console.log(userData);
 
             // update on localstorage
             localStorageService.set('loggedIn', true);

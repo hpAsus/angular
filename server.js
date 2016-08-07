@@ -15,11 +15,14 @@ var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var NodeCache = require( "node-cache" );
+var myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
+
 
 // USER MODEL
 // =====================================================================================================================
-var User = require('./server/user.js');
-var user = new User({
+var UserManager = require('./server/userManager.js');
+var userManager = new UserManager({
     email: 'olga@mail.ru',
     password: md5('123'),
     name: 'Olga',
@@ -27,7 +30,7 @@ var user = new User({
     age: 32,
     bio: 'Nice beaver!'
 });
-//user.create();
+//userManager.createUser();
 
 // CONFIGS
 // =====================================================================================================================

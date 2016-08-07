@@ -88,3 +88,28 @@ html, body {
 
 .loginForm md-input-container {
   display: block; }
+
+.profile-info {
+  background-color: #fff;
+  margin-top: 2em; }
+  .profile-info__list {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+  .profile-info__item {
+    border-bottom: 1px solid #eee; }
+    .profile-info__item:last-child {
+      border-bottom: 0; }
+  .profile-info__label {
+    color: #999; }
+  .profile-info__content {
+    padding: 2em; }
+
+.login-readonly {
+  background: #eee;
+  padding: 1em 1em; }
+  .login-readonly__label {
+    margin: 0;
+    margin: .5em 0; }
+  .login-readonly__login {
+    margin: .5em 0; }

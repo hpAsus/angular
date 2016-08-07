@@ -13,6 +13,9 @@
     "USERGREETING": "Привет, {{username}}!"
   },
   "PROFILE": {
-    "TITLE": "Профиль пользователя"
+    "TITLE": "Профиль пользователя",
+    "VIEWTAB": "Ваш профиль",
+    "EDITTAB": "Редактировать",
+    "SAVE_PROFILE_BUTTON": "Сохранить профиль"
   }
 }

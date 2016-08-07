@@ -17,14 +17,14 @@ angular.module('app').directive('atDateValidator', ['CONST_VALIDATORS', function
                 return (moment(modelValue, attrs['dateFormat'], true).isValid()) || checkPlus;
             };
 
-            ctrl.$validators.dateInFuture = function (modelValue) {
-                var now = moment();
-                var sendDate = moment(modelValue, attrs['dateFormat']);
-                if(sendDate > CONST_VALIDATORS.SYMBOLS_START_CHECK_DATE) {
-                    return moment(sendDate).isAfter(now);
-                }
-
-            };
+            //ctrl.$validators.dateInFuture = function (modelValue) {
+            //    var now = moment();
+            //    var sendDate = moment(modelValue, attrs['dateFormat']);
+            //    if(sendDate > CONST_VALIDATORS.SYMBOLS_START_CHECK_DATE) {
+            //        return moment(sendDate).isAfter(now);
+            //    }
+            //
+            //};
         }
     };
 }]);
