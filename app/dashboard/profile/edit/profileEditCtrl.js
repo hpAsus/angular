@@ -7,8 +7,6 @@
 
         this.user = angular.fromJson(userData);
 
-        console.log(this.user);
-
         //Sending some constants to view
         this.nameMaxWords = CONST_VALIDATORS.MAX_WORDS_IN_NAME;
         this.minAge = CONST_VALIDATORS.AGE_MINIMUM;
@@ -16,10 +14,6 @@
 
         //Profile Update form
         this.submitProfileUpdateForm = function() {
-
-            //console.log(this.user);
-            //console.log(angular.toJson(this.user));
-            //console.log($httpParamSerializerJQLike(angular.toJson(this.user)));
 
             $http({
                 method: 'PUT',
@@ -29,10 +23,7 @@
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).success(function(data) {
-
-                console.log('success! ', data);
                 $state.go('viewProfile');
-
             }).error(function (err) {
                 console.log('error! ', err);
             });

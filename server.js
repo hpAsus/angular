@@ -12,12 +12,8 @@ var errorhandler = require('errorhandler');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var timeout = require('connect-timeout');
 
 var app = express();
-app.post('/test', timeout('10s'), function (req, res) {
-    res.send({timeout: '3s'})
-});
 
 // USER MODEL
 // =====================================================================================================================
@@ -82,10 +78,3 @@ app.all('/api/*', function (req, res, next) {
 // =====================================================================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
-
-// Connect Timeout Helper
-// =====================================================================================================================
-function haltOnTimedout(req, res, next) {
-    if (!req.timedout) next();
-}

@@ -4,6 +4,7 @@
 
     var profileCtrlFunc = function ($scope, $state) {
 
+        this.currentNavItem = $state.current.name;
     };
 
 

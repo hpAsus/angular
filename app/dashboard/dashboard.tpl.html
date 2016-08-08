@@ -5,10 +5,10 @@
             <!-- fill up the space between left and right area -->
 
             <span flex></span>
-            <span ng-controller="langCtrl">
+            <span ng-controller="languageCtrl as langCtrl">
                 <!--<span>Active: {{activeLanguage}}</span>-->
-                <md-button ng-click="switchLang('en')">English</md-button>
-                <md-button ng-click="switchLang('ru')">Русский</md-button>
+                <md-button ng-click="langCtrl.switchLang('en')" ng-hide="langCtrl.activeLanguage == 'en'">English</md-button>
+                <md-button ng-click="langCtrl.switchLang('ru')" ng-hide="langCtrl.activeLanguage == 'ru'">Русский</md-button>
             </span>
             <span flex></span>
             <md-button ui-sref="login" ng-show="!dashboard.loggedIn">{{ 'AUTH.SIGNIN' | translate }}</md-button>

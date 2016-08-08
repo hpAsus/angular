@@ -11,9 +11,10 @@ var md5 = require('md5');
 apiRouter.route('/getuserdata')
     .get(function(req,res) {
         if(req.session.authenticated) {
+
             res.send({
                 success: true,
-                user: req.session.user
+                user: req.session.user // todo: request user from db
             });
         } else {
             res.send({

@@ -4,22 +4,22 @@
         <div class="md-block login-readonly">
             <p class="login-readonly__label">Your Login</p>
 
-            <h2 class="login-readonly__login">{{vm.user.email}}</h2>
+            <h2 class="login-readonly__login">{{editUser.user.email}}</h2>
 
         </div>
 
-        <form novalidate name="profile" autocomplete="off" class="profile" name="profile" layout-padding ng-submit="vm.submitProfileUpdateForm()">
+        <form novalidate name="profile" autocomplete="off" class="profile" name="profile" layout-padding ng-submit="editUser.submitProfileUpdateForm()">
 
-            <input type="hidden" name="user.email" ng-model="vm.user.name">
+            <input type="hidden" name="user.email" ng-model="editUser.user.name">
 
             <md-input-container class="md-block">
                 <label for="name">Display Name</label>
-                <input type="text" id="name" name="user.name" ng-model="vm.user.name" required="required" at-name-validator>
+                <input type="text" id="name" name="user.name" ng-model="editUser.user.name" required="required" at-name-validator>
 
                 <div ng-messages="profile.name.$error">
                     <div ng-message="required">This is required.</div>
                     <div ng-message="nameValidator">Oh, it's a name.It should start with capital letter.</div>
-                    <div ng-message="nameWords">Your name should consists of {{vm.nameMaxWords}} words maximum.</div>
+                    <div ng-message="nameWords">Your name should consists of {{editUser.nameMaxWords}} words maximum.</div>
                     <div ng-message="minNameLength">Your name is too short</div>
                 </div>
                 </div>
@@ -27,7 +27,7 @@
 
             <md-input-container class="md-block">
                 <label for="birthDate" class="required">Birth Date</label>
-                <input type="text" id="birthDate" required="required" name="user.birthdate" at-date-validator ng-model="vm.user.birthdate"
+                <input type="text" id="birthDate" required="required" name="user.birthdate" at-date-validator ng-model="editUser.user.birthdate"
                        date-format="DD-MM-YYYY">
 
                 <div ng-messages="profile.birthdate.$error">
@@ -38,18 +38,18 @@
 
             <md-input-container class="md-block">
                 <label>Display age</label>
-                <input type="text" required="required" name="user.age" ng-model="vm.user.age" at-age-validator>
+                <input type="text" required="required" name="user.age" ng-model="editUser.user.age" at-age-validator>
 
                 <div ng-messages="profile.age.$error">
                     <div ng-message="required">This is required.</div>
-                    <div ng-message="ageValidator">Age should be in {{vm.minAge}}...{{vm.maxAge}} range</div>
+                    <div ng-message="ageValidator">Age should be in {{editUser.minAge}}...{{editUser.maxAge}} range</div>
                     <div ng-message="ageInteger">Age should be a number</div>
                 </div>
             </md-input-container>
 
             <md-input-container class="md-block">
                 <label>Biography</label>
-                <textarea required="required" name="user.bio" ng-model="vm.user.bio" at-bio-validator md-select-on-focus></textarea>
+                <textarea required="required" name="user.bio" ng-model="editUser.user.bio" at-bio-validator md-select-on-focus></textarea>
 
                 <div ng-messages="profile.bio.$error">
                     <div ng-message="required">This is required.</div>

@@ -4,9 +4,10 @@
 
     var dashboardCtrlFunc = function ($scope, userData, localStorageService) {
 
+
+
         // if we have session on serverside - pass data to local variables
         if (userData) {
-
 
             // update on localstorage
             localStorageService.set('loggedIn', true);

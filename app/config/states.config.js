@@ -66,14 +66,14 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             url: '/profile',
             templateUrl: 'app/dashboard/profile/profile.tpl.html',
             controller: 'profileCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'profile'
         })
         .state('viewProfile', {
             url: '/view',
             parent: 'profile',
             templateUrl: 'app/dashboard/profile/view/profileView.tpl.html',
-            controller: 'profileViewCtrl'
-            //controllerAs: 'vm'
+            controller: 'profileViewCtrl',
+            controllerAs: 'viewUser'
         })
         .state('editProfile', {
             url: '/edit',
@@ -83,7 +83,6 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
                         method: 'GET',
                         url: '/api/getuserdata'
                     }).then(function(res) {
-                        console.log(res.data.user);
                         return res.data.user;
                     });
                 }
@@ -91,7 +90,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             parent: 'profile',
             templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
             controller: 'profileEditCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'editUser'
         })
 
 // Auth Pages
