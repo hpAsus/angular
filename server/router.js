@@ -5,13 +5,12 @@ var router = express.Router();
 var UserManager = require('./userManager.js');
 var userManager = new UserManager();
 var md5 = require('md5');
-var timeout = require('connect-timeout');
 var bodyParser = require('body-parser');
 
 // Login
 // =====================================================================================================================
 router.route('/login')
-    .post(timeout('3s'), bodyParser.json(), haltOnTimedout, function (req, res) {
+    .post(function (req, res) {
 
         //Parsing body vars with bodyParser
         var email = req.body.email;
@@ -25,7 +24,6 @@ router.route('/login')
                 req.session.authenticated = true;
 
                 // remove unwanted data from user object
-                // todo refactor, because it's not a great idea
                 delete userObj.password;
                 delete userObj._id;
 
@@ -58,25 +56,26 @@ router.route('/logout').get(function (req, res) {
             res.send({
                 success: true
             });
+        } else {
+            res.send({
+                success: false,
+                error: {
+                    code: 500,
+                    message: 'Problems with session destroy'
+                }
+            });
         }
     });
 });
 
 // Forgot Password
 // =====================================================================================================================
-router.route('/logout').get(function (req, res) {
+router.route('/forgot').get(function (req, res) {
     res.send({
         success: true,
         message: 'Activation link has been sent to your email'
     });
 });
-
-// Connect Timeout Helper
-// =====================================================================================================================
-function haltOnTimedout(req, res, next) {
-    if (!req.timedout) next();
-}
-
 
 // Exports
 // =====================================================================================================================

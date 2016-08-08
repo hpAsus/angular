@@ -4,11 +4,9 @@ var rootDir = __dirname;
 var port = process.env.PORT || 9000;
 
 var md5 = require('md5');
-var timeout = require('connect-timeout');
 var express = require('express');
 var router = require('./server/router.js');
 var apiRouter = require('./server/router_api.js');
-var errorhandler = require('errorhandler');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -28,23 +26,21 @@ var userManager = new UserManager({
 });
 //userManager.createUser();
 
+
 // CONFIGS
 // =====================================================================================================================
-
-
 // Body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Error handling
-app.use(errorhandler({dumpExceptions: true, showStack: true}));
 
 // Method Override
 app.use(methodOverride('X-HTTP-Method-Override'));
 
+//Session settings
 app.use(session({
     secret: 'angular secret key',
-    resave: false,
+    resave: true,
     rolling: true,
     saveUninitialized: true,
     cookie: {
@@ -58,9 +54,9 @@ app.use(
     express.static(rootDir) //position of static content in a filesystem
 );
 // timeout for all requests
-app.use(function(req,res,next){
-    setTimeout(next,1200)
-});
+//app.use(function(req,res,next){
+//    setTimeout(next,1200)
+//});
 
 
 // Router Settings

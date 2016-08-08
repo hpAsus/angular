@@ -42,7 +42,6 @@ UserManager.prototype.createUser = function () {
     var self = this;
 
     // todo:validation
-
     // before inserting check if already exists
     db.find(self.data, function (err, found) {
         if (!found.length) {

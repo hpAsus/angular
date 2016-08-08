@@ -4,50 +4,49 @@
 
 (function () {
 
-    var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast, userData, localStorageService) {
-        this.user = {};
+    var loginUser = function ($rootScope, $http, $httpParamSerializerJQLike, $state, userData, localStorageService, authService, toastService) {
+
+        var vm = this;
+
+
+        // Defaul user data is empty
+        vm.user = {};
+
+        // Check if login is set from reset password page
+        if ($rootScope.login !== 'undefined') {
+            vm.user.email = $rootScope.login;
+        }
 
         if (userData) {
             $state.go('home');
         }
 
-        this.submitLoginForm = function () {
+        vm.submitLoginForm = function () {
 
-            $http({
-                method: 'POST',
-                url: '/login',
-                data: $httpParamSerializerJQLike(this.user),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).success(function (res) {
-                if (res.success) {
 
-                    // setting user data to $rootScope
+            authService.userLogin(vm.user).then(function (res) {
+
+                if (res.data.success) {
+                    // setting user to localStorage
                     localStorageService.set('loggedIn', true);
-                    localStorageService.set('user', angular.toJson(res.user));
+                    localStorageService.set('user', angular.toJson(res.data.user));
 
+                    // go to profile state
                     $state.go('viewProfile');
-
                 } else {
                     // Show toast with error message
-                    // todo translate message
-                    // todo global settings for toast
-                    $mdToast.show($mdToast.simple().position('top right').textContent(res.error.message));
+                    toastService.message(res.error.message);
                 }
-            }).error(function (err) {
 
+            }).catch(function (err) {
                 // Something wrong with serverside, show error toast
-                // todo translate message
-                // todo global settings for toast
-                $mdToast.show($mdToast.simple().position('top right').textContent('Server is taking a coffee. Try again later'));
-
+                toastService.message('Server is taking a coffee. Try again later');
             });
 
-        }
+        };
 
     };
 
-    angular.module('app.auth').controller('loginCtrl', ['$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', 'localStorageService', loginUser]);
+    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$httpParamSerializerJQLike', '$state', 'userData', 'localStorageService', 'authService', 'toastService', loginUser]);
 
 })();

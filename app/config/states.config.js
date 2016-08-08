@@ -63,7 +63,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             parent: 'profile',
             templateUrl: 'app/dashboard/profile/view/profileView.tpl.html',
             controller: 'profileViewCtrl',
-            controllerAs: 'viewUser'
+            controllerAs: 'vm'
         })
         .state('editProfile', {
             url: '/edit',

@@ -2,31 +2,25 @@
 // =====================================================================================================================
 (function () {
 
-    var logoutUser = function ($http, $state, localStorageService) {
+    var logoutUser = function ($http, $state, localStorageService, authService, toastService) {
 
+        authService.userLogout().then(function (res) {
+            if (res.data.success) {
 
-        $http({
-            method: 'GET',
-            url: '/logout',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                //successfully deleted session
+                //delete local user info
+                localStorageService.remove('loggedIn');
+                localStorageService.remove('user');
+
+                $state.go('home');
+
+            } else {
+                toastService.message(res.data.error.message);
             }
-        }).success(function(res) {
-
-            //successfully deleted session
-            //delete local user info
-            localStorageService.remove('loggedIn');
-            localStorageService.remove('user');
-
-            $state.go('home');
-
-        }).error(function (err) {
-            //something go wrong on serverside
-
         });
 
     };
 
-    angular.module('app').controller('logoutCtrl', ['$http', '$state', 'localStorageService', logoutUser]);
+    angular.module('app').controller('logoutCtrl', ['$http', '$state', 'localStorageService', 'authService', 'toastService', logoutUser]);
 
 })();

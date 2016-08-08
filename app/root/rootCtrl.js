@@ -4,6 +4,8 @@
 
     var rootCtrl = function ($scope, userData, localStorageService) {
 
+        var vm = this;
+
         // if we have session on serverside - pass data to local variables
         if (userData) {
 
@@ -12,8 +14,8 @@
             localStorageService.set('user', angular.toJson(userData));
 
             // set locals
-            this.loggedIn = localStorageService.get('loggedIn');
-            this.user = angular.fromJson(localStorageService.get('user'));
+            vm.loggedIn = localStorageService.get('loggedIn');
+            vm.user = angular.fromJson(localStorageService.get('user'));
 
         }
 

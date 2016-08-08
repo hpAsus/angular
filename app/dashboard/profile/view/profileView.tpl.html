@@ -1,25 +1,26 @@
 <md-whiteframe class="md-whiteframe-1dp profile-info" flex-sm="100" flex-gt-sm="50" layout layout-align="center center">
     <md-content layout-wrap layout-fill class="profile-info__content">
+
         <ul class="profile-info__list">
             <li class="profile-info__item">
                 <p class="profile-info__label" translate="PROFILE.LABELS.LOGIN_LABEL"></p>
-                <h2 class="profile-info__title">{{user.email}}</h2>
+                <h2 class="profile-info__title">{{vm.user.email}}</h2>
             </li>
             <li class="profile-info__item">
                 <p class="profile-info__label" translate="PROFILE.LABELS.NAME_LABEL"></p>
-                <h2 class="profile-info__title">{{user.name}}</h2>
+                <h2 class="profile-info__title">{{vm.user.name}}</h2>
             </li>
             <li class="profile-info__item">
                 <p class="profile-info__label" translate="PROFILE.LABELS.BIRTHDATE_LABEL"></p>
-                <h2 class="profile-info__title">{{user.birthdate}}</h2>
+                <h2 class="profile-info__title">{{vm.user.birthdate}}</h2>
             </li>
             <li class="profile-info__item">
                 <p class="profile-info__label" translate="PROFILE.LABELS.AGE_LABEL"></p>
-                <h2 class="profile-info__title">{{user.age}}</h2>
+                <h2 class="profile-info__title">{{vm.user.age}}</h2>
             </li>
             <li class="profile-info__item">
                 <p class="profile-info__label" translate="PROFILE.LABELS.BIO_LABEL"></p>
-                <h2 class="profile-info__title">{{user.bio}}</h2>
+                <h2 class="profile-info__title">{{vm.user.bio}}</h2>
             </li>
         </ul>
     </md-content>

@@ -2,24 +2,20 @@
 // =====================================================================================================================
 (function () {
 
-    var profileViewCtrlFunc = function ($http, $httpParamSerializerJQLike, $scope, $state, $mdToast,localStorageService) {
-
+    var profileViewCtrlFunc = function ($http, $scope, $state, localStorageService, profileService, toastService) {
+        var vm = this;
         var currentUser = angular.fromJson(localStorageService.get('user'));
 
-        $http({
-            method: 'GET',
-            url: '/api/users/' + currentUser.email
-        })
-            .success(function (data) {
-                $scope.user = data.user;
-            })
-            .error(function(err) {
-                // do something if data not loaded
-                $mdToast.show($mdToast.simple().position('top right').textContent(err.toString()));
+        vm.test = 'text';
 
+        profileService.getUserProfile(currentUser.email)
+            .then(function(res) {
+                vm.user = res.data.user;
+            }).catch(function(err) {
+                toastService.message(err.toString());
             });
-    };
 
-    angular.module('app.profile').controller('profileViewCtrl', [ '$http', '$httpParamSerializerJQLike', '$scope', '$state', '$mdToast', 'localStorageService', profileViewCtrlFunc]);
+    };
+    angular.module('app.profile').controller('profileViewCtrl', ['$http', '$scope', '$state', 'localStorageService', 'profileService', 'toastService', profileViewCtrlFunc]);
 
 })();
