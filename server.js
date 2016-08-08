@@ -58,9 +58,9 @@ app.use(
     express.static(rootDir) //position of static content in a filesystem
 );
 // timeout for all requests
-//app.use(function(req,res,next){
-//    setTimeout(next,1200)
-//});
+app.use(function(req,res,next){
+    setTimeout(next,1200)
+});
 
 
 // Router Settings
