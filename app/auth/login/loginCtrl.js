@@ -1,3 +1,7 @@
+// Login controller
+// =====================================================================================================================
+
+
 (function () {
 
     var loginUser = function ($http, $httpParamSerializerJQLike, $state, $mdToast, userData, localStorageService) {

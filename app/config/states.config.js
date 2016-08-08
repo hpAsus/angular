@@ -25,16 +25,6 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             parent: 'root',
             templateUrl: 'app/index/index.tpl.html'
         })
-        //.state('createcard', {
-        //    url: '/create',
-        //    parent: 'root',
-        //    data: {
-        //        secure: true
-        //    },
-        //    templateUrl: 'app/createCard/createCard.tpl.html',
-        //    controller: 'createCardCtrl',
-        //    controllerAs: 'vm'
-        //})
 
 // Dashboard
 // =====================================================================================================================
@@ -90,7 +80,7 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (
             parent: 'profile',
             templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
             controller: 'profileEditCtrl',
-            controllerAs: 'editUser'
+            controllerAs: 'vm'
         })
 
 // Auth Pages

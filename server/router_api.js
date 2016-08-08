@@ -12,10 +12,24 @@ apiRouter.route('/getuserdata')
     .get(function(req,res) {
         if(req.session.authenticated) {
 
-            res.send({
-                success: true,
-                user: req.session.user // todo: request user from db
-            });
+            userManager.getUser(req.session.user.email)
+                .then(function(data) {
+                    delete data.password;
+                    delete data._id;
+                    res.send({
+                        success: true,
+                        user: data
+                    });
+                })
+                .catch(function(err) {
+                    res.send({
+                        success: false,
+                        error: {
+                            code: 500, //todo: change code
+                            message: 'Something go wrong while getting data on serverside'
+                        }
+                    });
+                });
         } else {
             res.send({
                 success: false,
@@ -84,7 +98,6 @@ apiRouter.route('/users/:user_id')
     .put(function (req, res) {
 
         if (req.session.authenticated) {
-            console.log(req.body);
             userManager.updateUser(req.body)
                 .then(function(data) {
                     console.log(data);
@@ -101,11 +114,7 @@ apiRouter.route('/users/:user_id')
                         }
                     });
                 });
-            //res.json({
-            //    STATUS: 'Updating a single user',
-            //    user_id: req.params.user_id,
-            //    name: req.body.name
-            //});
+
         } else {
             res.json({
                 success: false,

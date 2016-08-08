@@ -118,7 +118,6 @@ UserManager.prototype.updateUser = function(userObj) {
                 "bio": userObj.bio,
             }
         }, {}, function (err, numReplaced) {
-
             if (numReplaced) {
                 db.persistence.compactDatafile();
                 resolve(numReplaced);

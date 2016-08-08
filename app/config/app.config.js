@@ -1,3 +1,5 @@
+// MAIN APP CONFIG
+// =====================================================================================================================
 (function () {
 
     var appConfig = function ($mdThemingProvider, localStorageServiceProvider) {

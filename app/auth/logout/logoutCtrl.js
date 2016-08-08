@@ -4,6 +4,7 @@
 
     var logoutUser = function ($http, $state, localStorageService) {
 
+
         $http({
             method: 'GET',
             url: '/logout',
@@ -21,6 +22,7 @@
 
         }).error(function (err) {
             //something go wrong on serverside
+
         });
 
     };

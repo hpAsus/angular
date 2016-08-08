@@ -1,3 +1,5 @@
+// ROOT Controller
+// =====================================================================================================================
 (function () {
 
     var rootCtrl = function ($scope, userData, localStorageService) {

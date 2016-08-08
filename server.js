@@ -57,6 +57,11 @@ app.use(
     "/", // URL for access to static content
     express.static(rootDir) //position of static content in a filesystem
 );
+// timeout for all requests
+//app.use(function(req,res,next){
+//    setTimeout(next,1200)
+//});
+
 
 // Router Settings
 // =====================================================================================================================
@@ -73,6 +78,7 @@ app.all('/api/*', function (req, res, next) {
         res.sendStatus(401);
     }
 });
+
 
 // START THE SERVER
 // =====================================================================================================================

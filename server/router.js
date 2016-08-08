@@ -13,8 +13,6 @@ var bodyParser = require('body-parser');
 router.route('/login')
     .post(timeout('3s'), bodyParser.json(), haltOnTimedout, function (req, res) {
 
-//app.post('/login', timeout('10s'), haltOnTimedout, function (req, res) {
-
         //Parsing body vars with bodyParser
         var email = req.body.email;
         var pass = req.body.password;
@@ -61,6 +59,15 @@ router.route('/logout').get(function (req, res) {
                 success: true
             });
         }
+    });
+});
+
+// Forgot Password
+// =====================================================================================================================
+router.route('/logout').get(function (req, res) {
+    res.send({
+        success: true,
+        message: 'Activation link has been sent to your email'
     });
 });
 

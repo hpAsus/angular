@@ -1,4 +1,15 @@
-angular.module('app').controller('forgotCtrl', ['$scope', 'CONST_VALIDATORS', function($scope, CONST_VALIDATORS) {
-    var vm = this;
+// Forgot password controller
+// =====================================================================================================================
 
-}]);
+(function () {
+
+    var forgotCtrlFunc = function ($scope) {
+        var vm = this;
+
+
+    };
+
+    angular.module('app').controller('forgotCtrl', ['$scope', forgotCtrlFunc]);
+
+
+})();

@@ -1,3 +1,9 @@
+/* MAIN STYLES INCLUDES
+// ==================================================================================================================*/
+/* VARIABLES
+// ==================================================================================================================*/
+/* FONTS
+// ==================================================================================================================*/
 @font-face {
   font-family: 'Roboto';
   src: local("Roboto Thin"), local("Roboto-Thin"), url("../fonts/roboto/robotothin.woff2") format("woff2"), url("../fonts/roboto/robotothin.woff") format("woff"), url("../fonts/roboto/robotothin.ttf") format("truetype");
@@ -70,6 +76,8 @@
   font-weight: 900;
   font-style: italic; }
 
+/* General Styles
+// ==================================================================================================================*/
 html, body {
   width: 100%;
   height: 100%;
@@ -78,6 +86,30 @@ html, body {
 .at-layout {
   height: 100%; }
 
+/* Loader
+// ==================================================================================================================*/
+#loading-bar .bar {
+  height: 10px;
+  background: #FFBE00; }
+
+#loading-bar .peg {
+  display: none; }
+
+#loading-bar-spinner {
+  position: fixed;
+  top: auto;
+  bottom: 20px;
+  left: 20px; }
+
+#loading-bar-spinner .spinner-icon {
+  width: 30px;
+  height: 30px;
+  border: solid 5px transparent;
+  border-top-color: #FFBE00;
+  border-left-color: #FFBE00; }
+
+/* AUTH Styles
+// ==================================================================================================================*/
 .loginBox {
   max-width: 90%;
   width: 500px; }
@@ -86,9 +118,16 @@ html, body {
   height: 100%;
   background: #343434 url("../images/darkbg.png"); }
 
+.btn-back {
+  color: #fff; }
+
+/* FORMS
+// ==================================================================================================================*/
 .loginForm md-input-container {
   display: block; }
 
+/* PROFILE
+// ==================================================================================================================*/
 .profile-info {
   background-color: #fff;
   margin-top: 2em; }

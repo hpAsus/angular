@@ -1,3 +1,3 @@
 (function () {
-    angular.module('app.profile',[]);
+    angular.module('app.profile',['ngMessages']);
 })();
