@@ -49,10 +49,9 @@ app.use(session({
 
 }));
 
-app.use(
-    "/", // URL for access to static content
-    express.static(rootDir) //position of static content in a filesystem
-);
+// Static content
+app.use( "/", express.static(rootDir));
+
 // timeout for all requests
 //app.use(function(req,res,next){
 //    setTimeout(next,1200)

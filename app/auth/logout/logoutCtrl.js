@@ -12,10 +12,10 @@
                 localStorageService.remove('loggedIn');
                 localStorageService.remove('user');
 
-                $state.go('home');
+                $state.go('login');
 
             } else {
-                toastService.message(res.data.error.message);
+                toastService.show(res.data.error.message);
             }
         });
 

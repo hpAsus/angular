@@ -5,7 +5,7 @@
     var toastServiceFunc = function ($mdToast) {
 
         //
-        this.message = function (message) {
+        this.show = function (message) {
             return $mdToast.show($mdToast.simple().position('top right').textContent(message));
         };
 

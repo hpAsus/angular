@@ -20,16 +20,15 @@
                 method: 'GET',
                 data: login
             });
-        }
+        };
 
         // user logout
-
         this.userLogout = function() {
             return $http({
                 method: 'GET',
                 url: '/logout'
             });
-        }
+        };
     };
 
     angular.module('app.auth').service('authService', ['$http', authServiceFunc]);

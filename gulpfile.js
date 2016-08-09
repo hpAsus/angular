@@ -15,7 +15,7 @@ gulp.task('nodemon', function (cb) {
     return nodemon({
 
         // nodemon our expressjs server
-        script: 'server.js',
+        script: 'app.js',
 
         ignore: [
             '.gitignore',

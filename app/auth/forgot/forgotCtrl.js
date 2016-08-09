@@ -20,11 +20,11 @@
 
                     $state.go('login');
 
-                    toastService.message(res.data.message);
+                    toastService.show(res.data.message);
 
                 } else {
                     // Show toast with error message
-                    toastService.message(res.error.message);
+                    toastService.show(res.error.message);
                 }
             });
         };

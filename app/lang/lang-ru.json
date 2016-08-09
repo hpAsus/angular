@@ -13,7 +13,6 @@
     "FORGOT_TITLE": "Восстановление пароля",
     "FORGOT_BUTTON": "Сбросить пароль",
     "BACK_TO_LOGIN": "Войти снова",
-    "BACK_TO_INDEX": "Вернуться на сайт",
     "LOGOUT": "Выйти",
     "USERGREETING": "Привет, {{username}}!",
     "LABELS": {

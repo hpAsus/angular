@@ -13,7 +13,6 @@
     "FORGOT_TITLE": "Password recovery",
     "FORGOT_BUTTON": "Reset Password",
     "BACK_TO_LOGIN": "Back to login",
-    "BACK_TO_INDEX": "Back to site",
     "LOGOUT": "Log out",
     "USERGREETING": "Hello, {{username}}",
     "LABELS": {

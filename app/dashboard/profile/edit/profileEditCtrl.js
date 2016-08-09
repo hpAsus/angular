@@ -3,7 +3,7 @@
 
 (function () {
 
-    var profileEditCtrlFunc = function (CONST_VALIDATORS, $scope, $http, $httpParamSerializerJQLike, $state, $mdToast, userData) {
+    var profileEditCtrlFunc = function (CONST_VALIDATORS, $scope, $http, $httpParamSerializerJQLike, $state, toastService, userData, profileService) {
 
         this.user = angular.fromJson(userData);
 
@@ -15,23 +15,15 @@
         //Profile Update form
         this.submitProfileUpdateForm = function() {
 
-            $http({
-                method: 'PUT',
-                url: 'api/users/' + this.user.email,
-                data: $httpParamSerializerJQLike(this.user),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).success(function(data) {
-                $state.go('viewProfile');
-            }).error(function (err) {
-                console.log('error! ', err);
-            });
+            profileService.updateUserProfile(this.user)
+                .then( function(data) {
+                    $state.go('viewProfile');
+                });
 
         }
     };
 
-    angular.module('app.profile').controller('profileEditCtrl', ['CONST_VALIDATORS', '$scope', '$http', '$httpParamSerializerJQLike', '$state', '$mdToast', 'userData', profileEditCtrlFunc]);
+    angular.module('app.profile').controller('profileEditCtrl', ['CONST_VALIDATORS', '$scope', '$http', '$httpParamSerializerJQLike', '$state', 'toastService', 'userData', 'profileService', profileEditCtrlFunc]);
 
 })();
 

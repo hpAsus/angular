@@ -8,7 +8,7 @@ var md5 = require('md5');
 
 // API / USER DATA
 // =====================================================================================================================
-apiRouter.route('/getuserdata')
+apiRouter.route('/checksession')
     .get(function(req,res) {
         if(req.session.authenticated) {
 
@@ -41,16 +41,6 @@ apiRouter.route('/getuserdata')
         }
     });
 
-// API / USERS
-// =====================================================================================================================
-apiRouter.route('/users')
-    // Get list of users
-    .get(function (req, res) {
-        res.json({
-            STATUS: 'Not implemented yet'
-        });
-    });
-
 // API / USER (SINGLES)
 // =====================================================================================================================
 apiRouter.route('/users/:user_id')
@@ -81,13 +71,7 @@ apiRouter.route('/users/:user_id')
                 });
 
         } else {
-            res.json({
-                success: false,
-                error: {
-                    code: 401,
-                    message: 'Not Authorized'
-                }
-            });
+            res.sendStatus(401);
         }
 
 
@@ -116,13 +100,7 @@ apiRouter.route('/users/:user_id')
                 });
 
         } else {
-            res.json({
-                success: false,
-                error: {
-                    code: 401,
-                    message: 'Not Authorized'
-                }
-            });
+            res.sendStatus(401);
         }
     })
 

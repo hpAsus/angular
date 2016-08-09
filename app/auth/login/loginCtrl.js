@@ -17,31 +17,34 @@
             vm.user.email = $rootScope.login;
         }
 
+        //if user is already logged in
         if (userData) {
-            $state.go('home');
+            $state.go('viewProfile');
         }
 
         vm.submitLoginForm = function () {
 
 
-            authService.userLogin(vm.user).then(function (res) {
+            authService.userLogin(vm.user)
+                .then(function (res) {
 
-                if (res.data.success) {
-                    // setting user to localStorage
-                    localStorageService.set('loggedIn', true);
-                    localStorageService.set('user', angular.toJson(res.data.user));
+                    if (res.data.success) {
+                        // setting user to localStorage
+                        localStorageService.set('loggedIn', true);
+                        localStorageService.set('user', angular.toJson(res.data.user));
 
-                    // go to profile state
-                    $state.go('viewProfile');
-                } else {
-                    // Show toast with error message
-                    toastService.message(res.error.message);
-                }
+                        // go to profile state
+                        $state.go('viewProfile');
+                    } else {
+                        // Show toast with error message
+                        toastService.show(res.data.error.message);
+                    }
 
-            }).catch(function (err) {
-                // Something wrong with serverside, show error toast
-                toastService.message('Server is taking a coffee. Try again later');
-            });
+                }).catch(function (err) {
+                    console.log(err);
+                    // Something wrong with serverside, show error toast
+                    toastService.show(err.toString());
+                });
 
         };
 

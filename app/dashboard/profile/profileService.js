@@ -4,9 +4,8 @@
 
     var profileServiceFunc = function ($http) {
 
-
+        // get user profile data
         this.getUserProfile = function (userLogin) {
-
             return $http({
                 method: 'GET',
                 url: '/api/users/' + userLogin
@@ -14,32 +13,23 @@
 
         };
 
-        // user login
-        this.userLogin = function (userData) {
+        // update user profile data
+        this.updateUserProfile = function (userData) {
             return $http({
-                method: 'POST',
-                url: '/login',
+                method: 'PUT',
+                url: 'api/users/' + userData.email,
                 data: userData
             });
         };
 
-        // reset password
-        this.resetPassword = function (login) {
-            return $http({
-                url: '/forgot',
-                method: 'GET',
-                data: login
-            });
-        }
-
-        // user logout
-
-        this.userLogout = function() {
+        // check user session
+        this.checkUserSession = function() {
             return $http({
                 method: 'GET',
-                url: '/logout'
+                url: '/api/checksession'
             });
-        }
+        };
+
     };
 
     angular.module('app.profile').service('profileService', ['$http', profileServiceFunc]);

@@ -6,13 +6,9 @@
         var vm = this;
         var currentUser = angular.fromJson(localStorageService.get('user'));
 
-        vm.test = 'text';
-
         profileService.getUserProfile(currentUser.email)
             .then(function(res) {
                 vm.user = res.data.user;
-            }).catch(function(err) {
-                toastService.message(err.toString());
             });
 
     };
