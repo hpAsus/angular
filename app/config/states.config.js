@@ -15,7 +15,9 @@
                 parent: 'auth',
                 resolve: {
                     userData: function (profileService) {
-                        return profileService.checkUserSession();
+                        return profileService.checkUserSession().then(function(res){
+                            return res.data;
+                        });
                     }
                 },
                 templateUrl: 'app/auth/login/login.tpl.html',
@@ -39,14 +41,13 @@
 // =====================================================================================================================
             .state('dashboard', {
                 abstract: true,
-                //resolve: {
-                //    userData: function (profileService) {
-                //        profileService.checkUserSession()
-                //            .then(function(res) {
-                //                return res.data.user;
-                //            });
-                //    }
-                //},
+                resolve: {
+                    userData: function (profileService) {
+                        return profileService.checkUserSession().then(function(res){
+                            return res.data;
+                        });
+                    }
+                },
                 data: {
                     secure: true
                 },
@@ -63,7 +64,7 @@
                 url: '/profile',
                 templateUrl: 'app/dashboard/profile/profile.tpl.html',
                 controller: 'profileCtrl',
-                controllerAs: 'profile'
+                controllerAs: 'vm'
             })
             .state('viewProfile', {
                 url: '/view',
@@ -74,14 +75,6 @@
             })
             .state('editProfile', {
                 url: '/edit',
-                //resolve: {
-                //    userData: function (profileService) {
-                //        profileService.checkUserSession()
-                //            .then(function(res) {
-                //                return res.data.user;
-                //            });
-                //    }
-                //},
                 parent: 'profile',
                 templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
                 controller: 'profileEditCtrl',

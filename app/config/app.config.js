@@ -2,7 +2,12 @@
 // =====================================================================================================================
 (function () {
 
-    var appConfig = function ($mdThemingProvider, localStorageServiceProvider) {
+    var appConfig = function ($mdThemingProvider, localStorageServiceProvider, cfpLoadingBarProvider, $httpProvider) {
+
+
+        // Loading Bar config
+        // =============================================================================================================
+        cfpLoadingBarProvider.includeSpinner = false;
 
         // LocalStorage config
         // =============================================================================================================
@@ -16,8 +21,26 @@
             .primaryPalette('blue-grey')
             .accentPalette('orange')
             .warnPalette('red');
+
+
+        // HTTP Interceptor
+        // =============================================================================================================
+
+        $httpProvider.interceptors.push(['$q', '$injector', '$state', function($q, $injector, $state) {
+            return {
+                'response': function(res) {
+
+                    //$injector.get('$state').transitionTo('login');
+                    return res;
+                },
+                'responseError': function(rejection) {
+                    return $q.reject(rejection);
+                }
+            };
+        }]);
+
     };
 
-    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', appConfig]);
+    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', 'cfpLoadingBarProvider', '$httpProvider', appConfig]);
 
 })();

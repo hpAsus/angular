@@ -17,8 +17,9 @@
             vm.user.email = $rootScope.login;
         }
 
+        console.log(userData);
         //if user is already logged in
-        if (userData) {
+        if (userData.success) {
             $state.go('viewProfile');
         }
 

@@ -142,7 +142,17 @@ html, body {
   .profile-info__label {
     color: #999; }
   .profile-info__content {
-    padding: 2em; }
+    padding: 2em;
+    position: relative;
+    height: 590px; }
+    .profile-info__content md-progress-circular {
+      position: absolute;
+      top: 50%;
+      left: 50%; }
+      .profile-info__content md-progress-circular svg {
+        position: relative;
+        top: -50px;
+        left: -50px; }
 
 .login-readonly {
   background: #eee;
@@ -152,3 +162,6 @@ html, body {
     margin: .5em 0; }
   .login-readonly__login {
     margin: .5em 0; }
+
+/* Profile Toolbar
+// ==================================================================================================================*/

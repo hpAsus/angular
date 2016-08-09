@@ -54,7 +54,7 @@ app.use( "/", express.static(rootDir));
 
 // timeout for all requests
 //app.use(function(req,res,next){
-//    setTimeout(next,1200)
+//    setTimeout(next, 10*1000)
 //});
 
 

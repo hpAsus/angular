@@ -6,6 +6,8 @@ var UserManager = require('./userManager.js');
 var userManager = new UserManager();
 var md5 = require('md5');
 
+var timeOut = 3*1000;
+
 // API / USER DATA
 // =====================================================================================================================
 apiRouter.route('/checksession')
@@ -54,9 +56,11 @@ apiRouter.route('/users/:user_id')
                 .then(function(data) {
                     delete data.password;
                     delete data._id;
-                    res.send({
-                        success: true,
-                        user: data
+                    res.setTimeout(timeOut, function () {
+                        res.send({
+                            success: true,
+                            user: data
+                        });
                     });
                 })
                 .catch(function(err) {
@@ -84,7 +88,7 @@ apiRouter.route('/users/:user_id')
         if (req.session.authenticated) {
             userManager.updateUser(req.body)
                 .then(function(data) {
-                    console.log(data);
+                    //console.log(data);
                     res.send({
                         success: true,
                         user: data
