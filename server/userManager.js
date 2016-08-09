@@ -105,7 +105,6 @@ UserManager.prototype.getUser = function(email) {
 UserManager.prototype.updateUser = function(userObj) {
 
     return new Promise(function (resolve, reject) {
-        console.log(userObj.email);
         db.update({
             email: userObj.email
         }, {

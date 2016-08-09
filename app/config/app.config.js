@@ -26,18 +26,18 @@
         // HTTP Interceptor
         // =============================================================================================================
 
-        $httpProvider.interceptors.push(['$q', '$injector', '$state', function($q, $injector, $state) {
-            return {
-                'response': function(res) {
-
-                    //$injector.get('$state').transitionTo('login');
-                    return res;
-                },
-                'responseError': function(rejection) {
-                    return $q.reject(rejection);
-                }
-            };
-        }]);
+        //$httpProvider.interceptors.push(['$q', '$injector', '$state', function($q, $injector, $state) {
+        //    return {
+        //        'response': function(res) {
+        //
+        //            //$injector.get('$state').transitionTo('login');
+        //            return res;
+        //        },
+        //        'responseError': function(rejection) {
+        //            return $q.reject(rejection);
+        //        }
+        //    };
+        //}]);
 
     };
 

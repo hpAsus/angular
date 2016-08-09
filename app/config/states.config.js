@@ -13,13 +13,6 @@
             .state('login', {
                 url: '/',
                 parent: 'auth',
-                resolve: {
-                    userData: function (profileService) {
-                        return profileService.checkUserSession().then(function(res){
-                            return res.data;
-                        });
-                    }
-                },
                 templateUrl: 'app/auth/login/login.tpl.html',
                 controller: 'loginCtrl',
                 controllerAs: 'vm'

@@ -4,7 +4,7 @@
 
 (function () {
 
-    var loginUser = function ($rootScope, $http, $httpParamSerializerJQLike, $state, userData, localStorageService, authService, toastService) {
+    var loginUser = function ($rootScope, $http, $httpParamSerializerJQLike, $state, localStorageService, authService, toastService) {
 
         var vm = this;
 
@@ -15,12 +15,6 @@
         // Check if login is set from reset password page
         if ($rootScope.login !== 'undefined') {
             vm.user.email = $rootScope.login;
-        }
-
-        console.log(userData);
-        //if user is already logged in
-        if (userData.success) {
-            $state.go('viewProfile');
         }
 
         vm.submitLoginForm = function () {
@@ -51,6 +45,6 @@
 
     };
 
-    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$httpParamSerializerJQLike', '$state', 'userData', 'localStorageService', 'authService', 'toastService', loginUser]);
+    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$httpParamSerializerJQLike', '$state', 'localStorageService', 'authService', 'toastService', loginUser]);
 
 })();
