@@ -25,6 +25,7 @@
     "md5": "2.1.0",
     "method-override": "2.3.6",
     "moment": "2.14.1",
+    "nedb": "1.8.0",
     "node-cache": "3.2.1",
     "promise-polyfill": "6.0.1"
   },
