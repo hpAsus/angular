@@ -6,6 +6,7 @@ var UserManager = require('./userManager.js');
 var userManager = new UserManager();
 var md5 = require('md5');
 
+var treeData = require('../data/tree.json');
 var timeOut = 3*1000;
 
 // API / USER DATA
@@ -131,7 +132,14 @@ apiRouter.route('/users/:user_id')
         })
     });
 
+// USER - Delete single user
+// =====================================================================================================================
+apiRouter.route('/getTree')
+    .get(function (req, res) {
 
+        // todo - check for auth
+        res.send(treeData);
+    });
 // Exports
 // =====================================================================================================================
 module.exports = apiRouter;

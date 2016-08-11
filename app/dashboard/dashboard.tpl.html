@@ -14,6 +14,10 @@
 
             <span flex></span>
 
+            <md-button ui-sref="treeview">{{ 'TREEVIEW.TITLE' | translate }}</md-button>
+
+            <span flex></span>
+
             <md-button ui-sref="login" ng-show="!dashboard.loggedIn">{{ 'AUTH.SIGNIN' | translate }}</md-button>
             <md-button ui-sref="viewProfile" ng-show="dashboard.loggedIn" translate="AUTH.USERGREETING"
                        translate-values="{ username: dashboard.user.email }" aria-label="Profile"></md-button>

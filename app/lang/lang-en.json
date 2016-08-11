@@ -52,5 +52,8 @@
       "BIO_REQUIRED": "Biography is required.",
       "BIO_VALIDATOR": "Your bio is too short."
     }
+  },
+  "TREEVIEW": {
+    "TITLE": "TreeView"
   }
 }

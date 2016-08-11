@@ -49,6 +49,16 @@
                 controllerAs: 'dashboard'
             })
 
+// Treeview Pages
+// =====================================================================================================================
+            .state('treeview', {
+                parent: 'dashboard',
+                url: '/treeview',
+                templateUrl: 'app/dashboard/treeview/treeview.tpl.html',
+                controller: 'treeviewCtrl',
+                controllerAs: 'vm'
+            })
+
 // Profile Pages
 // =====================================================================================================================
             .state('profile', {
