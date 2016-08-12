@@ -6,7 +6,7 @@ var UserManager = require('./userManager.js');
 var userManager = new UserManager();
 var md5 = require('md5');
 
-var timeOut = 3*1000;
+var timeOut = 1*1000;
 
 // Login
 // =====================================================================================================================

@@ -3,6 +3,29 @@
 // =====================================================================================================================
 (function () {
 
+    // Tree
+    // =====================================================================================================================
+    function Tree(title) {
+        this.version = '0';
+        this.id = generateID();
+        this.metadata = {
+            'title': title
+        };
+        this.rootNode = null;
+
+        // Generate uniq ID Helper Method
+        // =============================================================================
+        function generateID() {
+            var d = new Date().getTime();
+            var id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+            return id;
+        }
+    }
+
     // NODE ENTITY
     // =============================================================================
     function NODE(title) {
@@ -41,7 +64,8 @@
 
         nodeArr.map(function (node) {
             //setting guid
-            node.id = self.id + self._children.length;
+            // node.id = self.id + self._children.length;
+            node.id = generateID();
             // setting parent
             node.setParent(self);
             //adding child
@@ -68,13 +92,14 @@
         // =====================================================================
         this.trees = function () {
             return {
-                add: function () {
-                    $http({
-                        method: 'GET',
-                        url: '/api/getTree'
-                    }).then(function (res) {
-                        console.log(res.data);
-                        return res.data;
+                add: function (title) {
+                    var tree = new Tree(title);
+                    return new Promise(function (resolve, reject) {
+                        if (title) {
+                            resolve(tree);
+                        } else {
+                            reject();
+                        }
                     });
                 },
                 remove: function () {
