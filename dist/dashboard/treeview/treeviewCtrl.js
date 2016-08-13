@@ -4,33 +4,21 @@
 // =====================================================================================================================
 (function () {
 
-    var treeviewCtrlFunc = function treeviewCtrlFunc($scope, treeviewService, $http) {
+    var treeviewCtrlFunc = function treeviewCtrlFunc($scope, treeviewService) {
         var vm = this;
 
-        $http({
-            method: 'GET',
-            url: '/api/getTree'
-        }).then(function (res) {
-
-            console.log('hahas');
-
-            var treeJSON = res.data.tree;
-            console.log(treeJSON.metadata.title);
-            var tree = treeviewService.trees();
-            tree.add(treeJSON.metadata.title);
-            //Process response data with methods from treeviewService
-
-            // console.log(dataJSON);
-            console.log(tree);
-            // console.log(dataJSON.metadata.title);
-
-            // var tree = treeviewService.trees();
-            // tree.add('test');
-
-
-            // Processed result apply to view
+        var treeView = treeviewService.load().then(function (tree) {
+            treeviewService.trees().add();
         });
+        // var trees = treeviewService.trees().add('Root Tree');
+        // trees.then(function (tree) {
+        //
+        //     // here we should have complete tree and pass it to view
+        //     // console.log(tree);
+        //     // vm.tree = tree;
+        // });
+
     };
 
-    angular.module('app').controller('treeviewCtrl', ['$scope', 'treeviewService', '$http', treeviewCtrlFunc]);
+    angular.module('app').controller('treeviewCtrl', ['$scope', 'treeviewService', treeviewCtrlFunc]);
 })();

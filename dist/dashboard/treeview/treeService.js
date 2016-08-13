@@ -3,119 +3,185 @@
 // =====================================================================================================================
 
 (function () {
-
-    // Tree
-    // =====================================================================================================================
-    function Tree(title) {
-        this.version = '0';
-        this.id = generateID();
-        this.metadata = {
-            'title': title
-        };
-        this.rootNode = null;
+    var treeviewServiceFunc = function treeviewServiceFunc($http, $q) {
 
         // Generate uniq ID Helper Method
         // =============================================================================
         function generateID() {
             var d = new Date().getTime();
-            var id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var id = 'yxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = (d + Math.random() * 16) % 16 | 0;
                 d = Math.floor(d / 16);
                 return (c == 'x' ? r : r & 0x3 | 0x8).toString(16);
             });
             return id;
         }
-    }
 
-    // NODE ENTITY
-    // =============================================================================
-    function NODE(title) {
-        this.id = '1';
-        this.metadata = {
-            'title': title
+        // Tree
+        // =====================================================================================================================
+        // function Tree(title) {
+        //     this.version = '0';
+        //     this.id = generateID();
+        //     this.metadata = {
+        //         'title': title
+        //     };
+        //     this.rootNode = null;
+        //
+        //
+        // }
+
+        // NODE ENTITY
+        // =============================================================================
+        function NODE(title) {
+            this.id = generateID();
+            this.metadata = {
+                'title': title
+            };
+            this._parent = null;
+            this._children = [];
+        }
+
+        // Set parent Method
+        // =============================================================================
+        NODE.prototype.setParent = function (node) {
+            this._parent = node;
         };
-        this._parent = null;
-        this._children = [];
-    }
 
-    // Set parent Method
-    // =============================================================================
-    Node.prototype.setParent = function (node) {
-        this._parent = node;
-    };
+        // Get parent Method
+        // =============================================================================
+        NODE.prototype.getParent = function () {
+            return this._parent;
+        };
 
-    // Get parent Method
-    // =============================================================================
-    Node.prototype.getParent = function () {
-        return this._parent;
-    };
+        // Get children Method
+        // =============================================================================
+        NODE.prototype.getChildren = function () {
+            var deferred = $q.defer();
+            var self = this;
+            deferred.resolve(self._children);
+            return deferred.promise;
+        };
+        // Add children Method
+        // =============================================================================
+        NODE.prototype.addChildren = function (node) {
+            var deferred = $q.defer();
+            var self = this;
 
-    // Get children Method
-    // =============================================================================
-    Node.prototype.getChildren = function () {
-        var self = this;
-        return new Promise(function (resolve, reject) {
-            resolve(self._children);
-        });
-    };
-    // Add children Method
-    // =============================================================================
-    Node.prototype.addChildren = function (nodeArr) {
-        var self = this; //parent element
-
-        nodeArr.map(function (node) {
-            //setting guid
-            // node.id = self.id + self._children.length;
-            node.id = generateID();
-            // setting parent
             node.setParent(self);
-            //adding child
-            self._children[self._children.length] = node;
-        });
+            self._children.push(node);
 
-        return new Promise(function (resolve, reject) {
-            resolve(self._children); // no, we should export only added children i think
-        });
-    };
+            deferred.resolve(self._children);
 
-    // Delete children Method
-    // =============================================================================
-    Node.prototype.removeChildren = function () {
-        this._children = [];
-    };
+            return deferred.promise;
+        };
 
-    // =====================================================================================================================
-    // =====================================================================================================================
-    var treeviewServiceFunc = function treeviewServiceFunc($http) {
+        // Delete children Method
+        // =============================================================================
+        Node.prototype.removeChildren = function () {
+            this._children = [];
+        };
+
+        // =====================================================================================================================
+        // =====================================================================================================================
+        // =====================================================================================================================
+        var self = this;
+        self.rootTree = null;
+        self.treeJSON = null;
+
+        // Load Tree from server
+        // =====================================================================
+        self.load = function () {
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: '/api/getTree'
+            }).then(function (res) {
+                self.treeJSON = res.data.tree.rootNode;
+                deferred.resolve(self.treeJSON);
+            });
+            return deferred.promise;
+        };
 
         // Trees
         // =====================================================================
-        this.trees = function () {
+        self.trees = function () {
+
+            //nodes from server
+            var nodes = self.treeJSON;
+
             return {
-                add: function add(title) {
-                    var tree = new Tree(title);
-                    return new Promise(function (resolve, reject) {
-                        if (title) {
-                            resolve(tree);
-                        } else {
-                            reject();
+                //Add Tree Method
+                add: function add() {
+
+                    var deferred = $q.defer();
+                    // console.log(nodes);
+                    var count = 1;
+
+                    // Traversing nodes
+                    function listItem(current, depth) {
+                        var space = '';
+                        var node, childNode;
+                        var nodeTitle = current.metadata.title || '-';
+
+                        // some space for visual
+                        for (var j = 0; j < depth; j++) {
+                            space = space + '  ';
                         }
-                    });
+
+                        //create node
+                        node = new NODE(nodeTitle);
+                        // console.log(space + depth + '. ' + nodeTitle);
+
+                        var children = current.children;
+                        _.forEach(children, function (child) {
+                            childNode = new NODE(child.metadata.title);
+                            node.addChildren(childNode);
+                            listItem(child, depth + 1);
+                            count++;
+                        });
+                        console.log(node);
+                    }
+
+                    // Loop through JSON nodes
+                    listItem(nodes, 0);
+
+                    return deferred.promise;
                 },
-                remove: function remove() {}
+                // Remove Tree Method
+                remove: function remove() {
+                    var deffered = $q.defer();
+
+                    // May be it should be more complicated
+                    self.rootTree = null;
+                    deffered.resolve();
+
+                    return deffered.promise;
+                }
             };
         };
 
         // Nodes
         // =====================================================================
-        this.nodes = function () {
+        self.nodes = function () {
 
             return {
-                add: function add(node) {},
-                delete: function _delete() {}
+                //Add Node Method
+                add: function add(node) {
+                    var deffered = $q.defer();
+
+                    return deffered.promise;
+                },
+                //Delete Node Method
+                delete: function _delete() {
+                    var deffered = $q.defer();
+
+                    // delete and resolve(void)
+
+                    return deffered.promise;
+                }
             };
         };
     };
 
-    angular.module('app').service('treeviewService', ['$http', treeviewServiceFunc]);
+    angular.module('app').service('treeviewService', ['$http', '$q', treeviewServiceFunc]);
 })();

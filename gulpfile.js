@@ -57,7 +57,8 @@ gulp.task('browser-sync', ['nodemon'], function () {
         // notice that the default port is 3000, which would clash with our expressjs
         port: 4000,
         notify: false,
-        browser: 'google chrome'
+        browser: 'google chrome',
+        reloadDelay: 500
     });
 });
 gulp.task('bs-reload', function () {
