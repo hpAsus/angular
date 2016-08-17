@@ -30,13 +30,13 @@
                 controllerAs: 'vm'
             })
 
-// Dashboard
-// =====================================================================================================================
+            // Dashboard
+            // =========================================================================================================
             .state('dashboard', {
                 abstract: true,
                 resolve: {
                     userData: function (profileService) {
-                        return profileService.checkUserSession().then(function(res){
+                        return profileService.checkUserSession().then(function (res) {
                             return res.data;
                         });
                     }
@@ -49,8 +49,8 @@
                 controllerAs: 'dashboard'
             })
 
-// Treeview Pages
-// =====================================================================================================================
+            // Treeview Pages
+            // =========================================================================================================
             .state('treeview', {
                 parent: 'dashboard',
                 url: '/treeview',
@@ -59,8 +59,8 @@
                 controllerAs: 'vm'
             })
 
-// Profile Pages
-// =====================================================================================================================
+            // Profile Pages
+            // =========================================================================================================
             .state('profile', {
                 abstract: true,
                 parent: 'dashboard',
@@ -81,6 +81,16 @@
                 parent: 'profile',
                 templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
                 controller: 'profileEditCtrl',
+                controllerAs: 'vm'
+            })
+
+            // Action Button Test Component
+            // =========================================================================================================
+            .state('actionTest', {
+                parent: 'dashboard',
+                url: '/actiontest',
+                templateUrl: 'app/pages/actiontest/actiontest.tpl.html',
+                controller: 'actionTestCtrl',
                 controllerAs: 'vm'
             });
     };

@@ -68,11 +68,22 @@ gulp.task('bs-reload', function () {
 // SASS
 // =====================================================================================================================
 gulp.task('sass', function () {
-    return gulp.src('app/src/scss/**/*.+(scss|sass)')
+    var sassFiles = [
+        'app/src/scss/**/*.+(scss|sass)',
+        'app/actionButton/scss/*.+(scss|sass)'
+    ];
+    return gulp.src(sassFiles)
         .pipe(sass())
-        .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
+        .pipe(autoprefixer(['last 2 versions', '> 1%'], {cascade: true}))
         .pipe(gulp.dest('dist/assets/css'))
         .pipe(browserSync.stream());
+});
+
+// HTML Templates
+// =====================================================================================================================
+gulp.task('templates', function() {
+    return gulp.src('app/**/*.html')
+        .pipe(gulp.dest('dist'));
 });
 
 // BABEL
@@ -98,10 +109,11 @@ gulp.task('default', ['browser-sync'], function () {
     var icons = gulp.src('app/assets/icons/**/*')
         .pipe(gulp.dest('dist/assets/icons'));
 
-    var langs = gulp.src('app/lang/**/*')
+    var lang = gulp.src('app/lang/**/*')
         .pipe(gulp.dest('dist/lang'));
 
-    gulp.watch('app/src/scss/**/*.+(scss|sass)', ['sass']);
+    gulp.watch('app/**/*.+(scss|sass)', ['sass']);
     gulp.watch('app/**/*.js',   ['babel', 'bs-reload']);
-    gulp.watch('app/**/*.html', ['bs-reload']);
+    gulp.watch('app/**/*.html', ['templates', 'bs-reload']);
+
 });

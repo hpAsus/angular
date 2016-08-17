@@ -55,5 +55,8 @@
   },
   "TREEVIEW": {
     "TITLE": "ДеревоВид"
+  },
+  "ACTIONTEST": {
+    "TITLE": "ЭкшнТест"
   }
 }

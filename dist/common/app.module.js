@@ -10,6 +10,5 @@
     });
 
     // Main App module
-    //'angular-loading-bar'
     angular.module('app', ['ui.router', 'angular-loading-bar', 'pascalprecht.translate', 'ngMaterial', 'ngMessages', 'LocalStorageModule', 'app.auth', 'app.profile']);
 })();
