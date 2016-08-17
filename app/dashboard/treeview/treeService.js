@@ -87,6 +87,8 @@
         var self = this;
         self.rootTree = null;
         self.treeJSON = null;
+        self.nodesSystem = [];
+
 
         // Load Tree from server
         // =====================================================================
@@ -113,16 +115,16 @@
             return {
                 //Add Tree Method
                 add: function () {
-
                     var deferred = $q.defer();
-                    // console.log(nodes);
                     var count = 1;
+
 
                     // Traversing nodes
                     function listItem(current, depth) {
                         var space = '';
                         var node, childNode;
                         var nodeTitle = current.metadata.title || '-';
+                        // console.log(current);
 
                         // some space for visual
                         for (var j = 0; j < depth; j++) {
@@ -131,7 +133,8 @@
 
                         //create node
                         node = new NODE(nodeTitle);
-                        // console.log(space + depth + '. ' + nodeTitle);
+                        console.log(space + depth + '. ' + nodeTitle);
+                        self.nodesSystem.push(node);
 
                         var children = current.children;
                         _.forEach(children, function (child) {
@@ -140,13 +143,16 @@
                             listItem(child, depth + 1);
                             count++;
                         });
-                        console.log(node);
-
+                        // console.log(node);
+                        // nodesSystem.push(node);
                     }
 
+                    console.log(nodes);
                     // Loop through JSON nodes
                     listItem(nodes, 0);
 
+                    console.log(self.nodesSystem);
+                    deferred.resolve(self.nodesSystem)
 
                     return deferred.promise;
 
@@ -173,6 +179,9 @@
                 //Add Node Method
                 add: function (node) {
                     var deffered = $q.defer();
+
+                    self.nodesSystem.push(node);
+                    deffered.resolve(node);
 
                     return deffered.promise;
 

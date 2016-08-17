@@ -6,7 +6,9 @@
             "title": "ANGULAR-TRAINING-TREE-ID"
         },
         "rootNode": {
-            "metadata": {},
+            "metadata": {
+                "title": "ROOT"
+            },
             "children": [{
                 "metadata": {
                     "title": "Category Title",

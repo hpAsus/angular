@@ -7,9 +7,13 @@
 
         var treeView = treeviewService.load()
             .then(function (tree) {
-                treeviewService.trees().add();
+                treeviewService.trees().add().then(nodes=> {
+                    console.log('starting nodes');
+                    console.log(nodes.join('\n'));
+                });
 
             });
+
         // var trees = treeviewService.trees().add('Root Tree');
         // trees.then(function (tree) {
         //
