@@ -1,12 +1,55 @@
 .at-action-button {
-  border: 1px solid crimson;
   position: relative;
-  background: #eee;
-  display: inline-block; }
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0;
+  width: auto; }
   .at-action-button .at-action-title {
-    text-transform: uppercase; }
-  .at-action-button .at-action-dropdown {
     display: block;
-    border: 0px solid green; }
-    .at-action-button .at-action-dropdown .at-action-item {
-      display: block; }
+    padding: 15px 30px 15px 15px;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #607d8b url("../icons/icon_updown_white.svg") center right no-repeat;
+    background-size: 16px 16px; }
+  .at-action-button .at-action-dropdown {
+    min-width: 100%;
+    display: block;
+    position: absolute;
+    top: 100%;
+    background: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
+  .at-action-button .at-action-item {
+    display: block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 10px 0;
+    padding: 10px 25px;
+    clear: both;
+    line-height: 32px; }
+    .at-action-button .at-action-item .icon {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      float: left;
+      overflow: hidden;
+      margin-right: 10px; }
+    .at-action-button .at-action-item .icon-play {
+      background: url("../icons/icon_play.svg") no-repeat; }
+    .at-action-button .at-action-item .icon-progress {
+      background: url("../icons/icon_inprogress.svg") no-repeat;
+      -webkit-animation: spin 1s linear infinite;
+      animation: spin 1s linear infinite; }
+    .at-action-button .at-action-item .icon-success {
+      background: url("../icons/icon_success.svg") no-repeat; }
+    .at-action-button .at-action-item .icon-error {
+      background: url("../icons/icon_error.svg") no-repeat; }
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }

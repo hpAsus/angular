@@ -1,19 +1,71 @@
 .at-action-button {
-  border: 1px solid crimson;
   position: relative;
-  background: #eee;
   display: inline-block;
+  box-sizing: border-box;
+  padding: 0;
+  width: auto;
 
   .at-action-title {
+    display: block;
+    padding: 15px 30px 15px 15px;
+
+    color: #fff;
     text-transform: uppercase;
+    cursor: pointer;
+    background: rgb(96,125,139) url('../icons/icon_updown_white.svg') center right no-repeat;
+    background-size: 16px 16px;
+
   }
 
   .at-action-dropdown {
+    min-width: 100%;
     display: block;
-    border:0px solid green;
+    position: absolute;
+    top: 100%;
+    background: #fff;
 
-    .at-action-item {
-      display: block;
-    }
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
   }
+
+  .at-action-item {
+    display: block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 10px 0;
+    padding: 10px 25px;
+    clear: both;
+    line-height: 32px;
+
+
+    .icon {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      float: left;
+      overflow: hidden;
+      margin-right: 10px;
+    }
+    .icon-play {
+      background: url('../icons/icon_play.svg') no-repeat;
+    }
+    .icon-progress {
+      background: url('../icons/icon_inprogress.svg') no-repeat;
+      -webkit-animation:spin 1s linear infinite;
+      -moz-animation:spin 1s linear infinite;
+      animation:spin 1s linear infinite;
+    }
+    .icon-success {
+      background: url('../icons/icon_success.svg') no-repeat;
+    }
+    .icon-error {
+      background: url('../icons/icon_error.svg') no-repeat;
+    }
+
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+  }
+
+
 }
+
