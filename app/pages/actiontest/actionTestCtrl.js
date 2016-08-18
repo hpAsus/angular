@@ -2,11 +2,13 @@
 // =====================================================================================================================
 (function () {
 
-    var actionTestCtrlFunc = function () {
+    var actionTestCtrlFunc = function ($scope) {
+        var vm = this;
 
+        console.log('actionTestCtrl');
 
     };
 
-    angular.module('app').controller('actionTestCtrl', [actionTestCtrlFunc]);
+    angular.module('app').controller('actionTestCtrl', ['$scope', actionTestCtrlFunc]);
 
 })();

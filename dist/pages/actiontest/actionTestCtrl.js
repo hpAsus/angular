@@ -4,7 +4,11 @@
 // =====================================================================================================================
 (function () {
 
-    var actionTestCtrlFunc = function actionTestCtrlFunc() {};
+    var actionTestCtrlFunc = function actionTestCtrlFunc($scope) {
+        var vm = this;
 
-    angular.module('app').controller('actionTestCtrl', [actionTestCtrlFunc]);
+        console.log('actionTestCtrl');
+    };
+
+    angular.module('app').controller('actionTestCtrl', ['$scope', actionTestCtrlFunc]);
 })();

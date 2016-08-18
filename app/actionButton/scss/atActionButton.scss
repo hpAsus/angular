@@ -1,7 +1,7 @@
 .at-action-button {
   border: 1px solid crimson;
   position: relative;
-  background: #607D8B;
+  background: #eee;
   display: inline-block;
 
   .at-action-title {
@@ -10,7 +10,7 @@
 
   .at-action-dropdown {
     display: block;
-    border:1px solid green;
+    border:0px solid green;
 
     .at-action-item {
       display: block;
