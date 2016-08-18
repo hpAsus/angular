@@ -11,6 +11,7 @@
         var promiseCompleted = false;
         var promiseError = false;
         var checkIntervalID;
+        var clicked = false;
 
         //Statuses
         //0 - Play (Default)
@@ -34,76 +35,54 @@
         function isPromiseCompleted() {
             if (promiseCompleted) {
                 promiseError ? setStatus(3) : setStatus(2);
-
                 //clear step
                 firstRun = false;
-                // if (checkIntervalID) {
-                //     console.log('interval cleared');
-                //     $interval.cancel(checkIntervalID);
-                // }
                 return true;
             } else {
                 return false;
             }
         }
 
-
         // Start Action
         vm.actionStart = function () {
-            var promise = scope.ngModel();
+            if (!clicked) {
+                var promise = scope.ngModel();
+                if (firstRun) {
+                    promise.then(function (res) {
+                        promiseCompleted = true;
+                    }).catch(function (err) {
+                        promiseCompleted = true;
+                        promiseError = true;
+                    });
 
+                    setStatus(1);
 
-            if (firstRun) {
-                promise.then(function (res) {
-                    promiseCompleted = true;
-                    console.log('Promise arrived!');
-                }).catch(function (err) {
-                    promiseCompleted = true;
-                    promiseError = true;
-                });
+                    //start delay
+                    $timeout(function () {
+                        if (!isPromiseCompleted()) {
+                            checkIntervalID = $interval(function () {
+                                if (isPromiseCompleted()) {
+                                    $interval.cancel(checkIntervalID);
+                                }
+                            }, checkInterval);
 
-                setStatus(1);
+                            // Final check
+                            $timeout(function () {
+                                if (checkIntervalID) {
+                                    $interval.cancel(checkIntervalID);
+                                }
+                                if (!isPromiseCompleted()) {
+                                    setStatus(3);
+                                }
+                            }, finalCheckDelay);
 
-                //start delay
-                $timeout(function () {
-                    console.log('[Action started]');
+                        }
+                    }, firstDelay);
+                    firstRun = false;
+                }
 
-                    if (!isPromiseCompleted()) {
-
-                        console.log('[Delay passed] Action not completed yet');
-
-                        checkIntervalID = $interval(function () {
-                            if (isPromiseCompleted()) {
-                                console.log('[Interval cancelled]');
-                                $interval.cancel(checkIntervalID);
-                            } else {
-                                console.log('[Checking...] ', checkInterval);
-                            }
-                        }, checkInterval);
-
-                        // Final check
-                        $timeout(function () {
-                            console.log('[Final check]');
-                            if (checkIntervalID) {
-                                console.log('[Interval cancelled]');
-                                $interval.cancel(checkIntervalID);
-                            }
-                            if(!isPromiseCompleted()) {
-                                setStatus(3);
-                            };
-                        }, finalCheckDelay);
-
-                    } else {
-                        console.log('[Action completed]');
-                    }
-
-                }, firstDelay);
-
-                firstRun = false;
-            } else {
-                console.log('action in progress or finished');
+                clicked = true;
             }
-
         }
 
 

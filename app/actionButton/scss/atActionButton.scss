@@ -1,58 +1,65 @@
+/* ---  Action Button Styles --- */
+/* ------------------------------------------------------------------------------------------------------------------ */
 .at-action-button {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
   padding: 0;
-  width: auto;
+  outline: none;
+  width: 300px;
+  min-width: 150px;
 
+  /* ---  Button --- */
+  /* -------------------------------------------------------------------------------------------------------------- */
   .at-action-title {
     display: block;
     padding: 15px 30px 15px 15px;
 
+    border-radius: 3px;
     color: #fff;
-    text-transform: uppercase;
     cursor: pointer;
-    background: rgb(96,125,139) url('../icons/icon_updown_white.svg') center right no-repeat;
-    background-size: 16px 16px;
-
+    background: rgb(96, 125, 139) url('../icons/icon_updown_white.svg') center right no-repeat;
+    background-size: 16px 20px;
   }
 
+  /* ---  Dropdown --- */
+  /* -------------------------------------------------------------------------------------------------------------- */
   .at-action-dropdown {
-    min-width: 100%;
-    display: block;
+    width: 100%;
     position: absolute;
+    padding: 10px 0;
     top: 100%;
     background: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+  }
 
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+  .at-action-item-text {
+    overflow: hidden;
   }
 
   .at-action-item {
-    display: block;
     vertical-align: middle;
     cursor: pointer;
     margin: 10px 0;
-    padding: 10px 25px;
-    clear: both;
-    line-height: 32px;
+    padding: 10px 15px;
 
-
+    /* ---  Icons --- */
+    /* -------------------------------------------------------------------------------------------------------------- */
     .icon {
       display: inline-block;
-      width: 32px;
-      height: 32px;
+      position: relative;
+      top: -2px;
+      width: 24px;
+      height: 24px;
       float: left;
-      overflow: hidden;
-      margin-right: 10px;
+      margin-right: 5px;
     }
     .icon-play {
       background: url('../icons/icon_play.svg') no-repeat;
     }
     .icon-progress {
       background: url('../icons/icon_inprogress.svg') no-repeat;
-      -webkit-animation:spin 1s linear infinite;
-      -moz-animation:spin 1s linear infinite;
-      animation:spin 1s linear infinite;
+      animation: spin 1s linear infinite;
     }
     .icon-success {
       background: url('../icons/icon_success.svg') no-repeat;
@@ -61,11 +68,31 @@
       background: url('../icons/icon_error.svg') no-repeat;
     }
 
-    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+    /* ---  Loader Animation --- */
+    /* -------------------------------------------------------------------------------------------------------------- */
+    @-moz-keyframes spin {
+      100% {
+        -moz-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
   }
 
+  .at-action-item:after {
+    content: '';
+    clear: both;
+    visibility: hidden;
+  }
 
 }
 
