@@ -9,9 +9,7 @@
             },
             templateUrl: 'app/actionButton/tpl/atActionItem.tpl.html',
             controller: 'atActionItemCtrl as vm',
-            transclude: true,
-            link: function (scope, elem, attrs, ctrl) {
-            }
+            transclude: true
         };
     };
     angular.module('atActionButton').directive('atActionItem', [atActionItemFunc]);

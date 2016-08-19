@@ -6,10 +6,10 @@
 
     var atActionItemCtrlFunc = function atActionItemCtrlFunc(scope, element, attrs, $timeout, $interval) {
         var vm = this;
-        var firstRun = true;
         var firstDelay = 3 * 1000;
         var checkInterval = 5 * 1000;
         var finalCheckDelay = 60 * 1000;
+        var firstRun = true;
         var promiseCompleted = false;
         var promiseError = false;
         var checkIntervalID;
@@ -33,7 +33,7 @@
             vm.currentStatus = vm.statuses[status];
         }
 
-        function isPromiseCompleted() {
+        function processPromise() {
             if (promiseCompleted) {
                 promiseError ? setStatus(3) : setStatus(2);
                 //clear step
@@ -60,9 +60,9 @@
 
                     //start delay
                     $timeout(function () {
-                        if (!isPromiseCompleted()) {
+                        if (!processPromise()) {
                             checkIntervalID = $interval(function () {
-                                if (isPromiseCompleted()) {
+                                if (processPromise()) {
                                     $interval.cancel(checkIntervalID);
                                 }
                             }, checkInterval);
@@ -72,7 +72,7 @@
                                 if (checkIntervalID) {
                                     $interval.cancel(checkIntervalID);
                                 }
-                                if (!isPromiseCompleted()) {
+                                if (!processPromise()) {
                                     setStatus(3);
                                 }
                             }, finalCheckDelay);

@@ -9,13 +9,6 @@
             scope: {
                 buttonTitle: '@buttonTitle'
             },
-            link: function link(scope, element, attrs) {
-                scope.showActionsMenu = false;
-
-                scope.showActions = function () {
-                    scope.showActionsMenu = scope.showActionsMenu ? false : true;
-                };
-            },
             controller: 'atActionButtonCtrl as vm',
             templateUrl: 'app/actionButton/tpl/atActionButton.tpl.html',
             transclude: true
