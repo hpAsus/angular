@@ -70,7 +70,7 @@ gulp.task('bs-reload', function () {
 gulp.task('sass', function () {
     var sassFiles = [
         'app/src/scss/**/*.+(scss|sass)',
-        'app/actionButton/scss/*.+(scss|sass)'
+        'app/actionButtonComponent/scss/*.+(scss|sass)'
     ];
     return gulp.src(sassFiles)
         .pipe(sass())

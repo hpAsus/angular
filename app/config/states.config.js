@@ -8,12 +8,12 @@
         $stateProvider
             .state('auth', {
                 abstract: true,
-                templateUrl: 'app/auth/auth.tpl.html'
+                templateUrl: 'app/pages/auth/tpl/auth.tpl.html'
             })
             .state('login', {
                 url: '/',
                 parent: 'auth',
-                templateUrl: 'app/auth/login/login.tpl.html',
+                templateUrl: 'app/pages/auth/login/tpl/login.tpl.html',
                 controller: 'loginCtrl',
                 controllerAs: 'vm'
             })
@@ -25,7 +25,7 @@
             .state('forgot', {
                 url: '/reset',
                 parent: 'auth',
-                templateUrl: 'app/auth/forgot/forgot.tpl.html',
+                templateUrl: 'app/pages/auth/forgot/tpl/forgot.tpl.html',
                 controller: 'forgotCtrl',
                 controllerAs: 'vm'
             })
@@ -44,20 +44,20 @@
                 data: {
                     secure: true
                 },
-                templateUrl: 'app/dashboard/dashboard.tpl.html',
+                templateUrl: 'app/pages/dashboard/tpl/dashboard.tpl.html',
                 controller: 'dashboardCtrl',
                 controllerAs: 'dashboard'
             })
 
             // Treeview Pages
             // =========================================================================================================
-            .state('treeview', {
-                parent: 'dashboard',
-                url: '/treeview',
-                templateUrl: 'app/dashboard/treeview/treeview.tpl.html',
-                controller: 'treeviewCtrl',
-                controllerAs: 'vm'
-            })
+            // .state('treeview', {
+            //     parent: 'dashboard',
+            //     url: '/treeview',
+            //     templateUrl: 'app/pages/treeview/tpl/treeview.tpl.html',
+            //     controller: 'treeviewCtrl',
+            //     controllerAs: 'vm'
+            // })
 
             // Profile Pages
             // =========================================================================================================
@@ -65,21 +65,21 @@
                 abstract: true,
                 parent: 'dashboard',
                 url: '/profile',
-                templateUrl: 'app/dashboard/profile/profile.tpl.html',
+                templateUrl: 'app/pages/profile/tpl/profile.tpl.html',
                 controller: 'profileCtrl',
                 controllerAs: 'vm'
             })
             .state('viewProfile', {
                 url: '/view',
                 parent: 'profile',
-                templateUrl: 'app/dashboard/profile/view/profileView.tpl.html',
+                templateUrl: 'app/pages/profile/view/tpl/profileView.tpl.html',
                 controller: 'profileViewCtrl',
                 controllerAs: 'vm'
             })
             .state('editProfile', {
                 url: '/edit',
                 parent: 'profile',
-                templateUrl: 'app/dashboard/profile/edit/profileEdit.tpl.html',
+                templateUrl: 'app/pages/profile/edit/tpl/profileEdit.tpl.html',
                 controller: 'profileEditCtrl',
                 controllerAs: 'vm'
             })
@@ -89,7 +89,7 @@
             .state('actionTest', {
                 parent: 'dashboard',
                 url: '/actiontest',
-                templateUrl: 'app/pages/actiontest/actiontest.tpl.html',
+                templateUrl: 'app/pages/actiontest/tpl/actiontest.tpl.html',
                 controller: 'actionTestCtrl',
                 controllerAs: 'vm'
             });

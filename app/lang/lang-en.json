@@ -57,6 +57,11 @@
     "TITLE": "TreeView"
   },
   "ACTIONTEST": {
-    "TITLE": "Action Test"
+    "TITLE": "Action Test",
+    "BUTTON_TITLE": "Awesome Actions",
+    "ACTION1_TEXT": "Action Success Fast",
+    "ACTION2_TEXT": "Action Success Later",
+    "ACTION3_TEXT": "Action Later Error",
+    "ACTION4_TEXT": "Action Long Error"
   }
 }
