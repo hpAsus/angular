@@ -45,8 +45,7 @@
                         // final check error with no response
                         setStatus(3);
                     }
-
-                    $timeout.cancel(firstTimeout);
+                    // clear last timeout
                     $timeout.cancel(lastTimeout);
                 }).catch(function (err) {
                     // if something go wrong on serverside

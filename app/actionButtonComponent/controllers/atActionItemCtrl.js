@@ -35,8 +35,8 @@
 
 
                 firstTimeout.then(function () {
-                    return $q.race([actionPromise,lastTimeout]);
-                })
+                        return $q.race([actionPromise,lastTimeout]);
+                    })
                     .then(function (res) {
                         if (res) {
                             //setting status based on res success
@@ -45,8 +45,7 @@
                             // final check error with no response
                             setStatus(3);
                         }
-
-                        $timeout.cancel(firstTimeout);
+                        // clear last timeout
                         $timeout.cancel(lastTimeout);
                     })
                     .catch(function (err) {

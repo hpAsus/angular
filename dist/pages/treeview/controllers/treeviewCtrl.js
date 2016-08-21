@@ -4,25 +4,38 @@
 // =====================================================================================================================
 (function () {
 
-    var treeviewCtrlFunc = function treeviewCtrlFunc($scope, treeviewService) {
+    var treeviewCtrlFunc = function treeviewCtrlFunc($scope, $http, treeviewService) {
         var vm = this;
 
-        var treeView = treeviewService.load().then(function (tree) {
-            treeviewService.trees().add().then(function (nodes) {
-                console.log('starting nodes');
-                console.log(nodes.join('\n'));
+        // Get Tree From server
+        $http.get('/api/getTree').then(function (res) {
+            var inputTree = res.data.tree;
+            var inputRootNode = inputTree.rootNode;
+            //input tree
+            console.log('Input tree', inputTree);
+
+            treeviewService.trees().add(inputTree).then(function (rootNode) {
+                var count = 1;
+                console.log(rootNode);
+
+                // Traversing nodes
+                function listItem(current) {
+
+                    treeviewService.nodes().add(current.metadata.title).then(function (node) {
+                        console.log(node);
+                        var children = current.children;
+                        _.forEach(children, function (child) {
+                            console.log(count + '. ' + child.metadata.title);
+                            node.addChildren(child);
+                            listItem(child);
+                            count++;
+                        });
+                    });
+                }
+                listItem(inputRootNode);
             });
         });
-
-        // var trees = treeviewService.trees().add('Root Tree');
-        // trees.then(function (tree) {
-        //
-        //     // here we should have complete tree and pass it to view
-        //     // console.log(tree);
-        //     // vm.tree = tree;
-        // });
-
     };
 
-    angular.module('app').controller('treeviewCtrl', ['$scope', 'treeviewService', treeviewCtrlFunc]);
+    angular.module('app').controller('treeviewCtrl', ['$scope', '$http', 'treeviewService', treeviewCtrlFunc]);
 })();
