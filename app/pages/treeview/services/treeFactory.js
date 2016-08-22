@@ -8,33 +8,35 @@
         // NODE ENTITY
         // =============================================================================================================
         class atNODE {
-            constructor(nodeObj, depth = 0) {
-                this.id = atNODE._guid++;
-                this.depth = depth;
+            constructor(nodeObj) {
+                this.id = String(nodeObj.id || atNODE._guid++);
                 this.metadata = nodeObj.metadata;
                 this._children = [];
-
-                nodeObj.children && this.addChildren(nodeObj.children);
-                console.log('[' + this.id + '] – [' + this.metadata.title + '] depth = ' + this.depth);
-
-                heapStorage.push($q.all(this));
             }
 
             // Get children Method
             // =============================================================================
             getChildren() {
                 var self = this;
-                return $q.all(self._children);
+                var defer = $q.defer();
+
+                //find children in heapStorage
+                var children = _.map(self._children, () => _.find(heapStorage, (node) => node.id === self.id));
+
+                defer.resolve(children);
+                return defer.promise;
             }
 
             // Add children Method
             // =============================================================================
-            addChildren(arr) {
+            addChildren(childId) {
                 var self = this;
-                self._children = _.map(arr, (item) => {
-                    $timeout(() => new atNODE(item, self.depth + 1), 1000 + 1000 * Math.random());
-                });
-                return this.getChildren();
+                var defer = $q.defer();
+
+                self._children.push(childId);
+                defer.resolve(this.getChildren());
+
+                return defer.promise;
             }
 
         }
@@ -46,6 +48,8 @@
         // Factory Exports
         // =============================================================================================================
         return {
+            atNODE: atNODE,
+            // =============================================================================
             trees: {
                 add: function (rootNode) {
                     var defer = $q.defer();
@@ -59,24 +63,32 @@
                     return defer.promise;
                 }
             },
+            // =============================================================================
             nodes: {
                 add: function (node) {
-                    console.log(node);
                     var defer = $q.defer();
-                    defer.resolve(new atNODE(node));
+
+                    // metadata check
+                    if(!node.metadata) {
+                        defer.reject('Incorrect node metadata');
+                    }
+
+                    // add node to heapStorage
+                    heapStorage.push(node);
+
+                    // resolve node
+                    defer.resolve(node);
+
                     return defer.promise;
                 },
                 delete: function () {
                     console.log('Delete node from Tree')
                 }
             },
+            // =============================================================================
             render: {
-                tree: function () {
-                    // var defer = $q.defer();
-                    // defer.resolve(heapStorage);
-                    // return defer.promise;
-                    // console.log(heapStorage);
-                    return $q.all(heapStorage);
+                heap: function () {
+                  return  heapStorage;
                 }
             }
         };

@@ -13,29 +13,27 @@
 
                 //input tree
                 console.log('Input tree', inputTree);
-                
+
                 function listNodes(currentNode) {
-                    treeViewFactory.nodes.add(currentNode)
-                        .then(function (node) {
-                            // console.log(node);
-                            var children = currentNode.children;
-                            _.forEach(children, function (child) {
-                                // console.log(child.metadata.title);
+                    var newNode = new treeViewFactory.atNODE(currentNode);
+
+                    treeViewFactory.nodes.add(newNode)
+                        .then(() => {
+
+                            _.forEach(currentNode.children, (child) => {
+
+                                var childNode = new treeViewFactory.atNODE(child);
+                                newNode.addChildren(childNode.id);
+
                                 listNodes(child);
                             });
-
                         });
                 }
-                // listNodes(inputRootNode);
 
-                treeViewFactory.trees.add(inputRootNode);
-                // treeViewFactory.render.tree().then(function (tree) {
-                //     vm.tree = tree;
-                // });
+                listNodes(inputRootNode);
 
-                // vm.$watch('tree', function () {
-                //
-                // })
+                console.log(treeViewFactory.render.heap());
+
             });
 
 

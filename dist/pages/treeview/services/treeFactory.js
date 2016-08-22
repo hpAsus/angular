@@ -16,19 +16,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         var atNODE = function () {
             function atNODE(nodeObj) {
-                var depth = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-
                 _classCallCheck(this, atNODE);
 
-                this.id = atNODE._guid++;
-                this.depth = depth;
+                this.id = String(nodeObj.id || atNODE._guid++);
                 this.metadata = nodeObj.metadata;
                 this._children = [];
-
-                nodeObj.children && this.addChildren(nodeObj.children);
-                console.log('[' + this.id + '] – [' + this.metadata.title + '] depth = ' + this.depth);
-
-                heapStorage.push($q.all(this));
             }
 
             // Get children Method
@@ -39,7 +31,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 key: 'getChildren',
                 value: function getChildren() {
                     var self = this;
-                    return $q.all(self._children);
+                    var defer = $q.defer();
+
+                    //find children in heapStorage
+                    var children = _.map(self._children, function () {
+                        return _.find(heapStorage, function (node) {
+                            return node.id === self.id;
+                        });
+                    });
+
+                    defer.resolve(children);
+                    return defer.promise;
                 }
 
                 // Add children Method
@@ -47,14 +49,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             }, {
                 key: 'addChildren',
-                value: function addChildren(arr) {
+                value: function addChildren(childId) {
                     var self = this;
-                    self._children = _.map(arr, function (item) {
-                        $timeout(function () {
-                            return new atNODE(item, self.depth + 1);
-                        }, 1000 + 1000 * Math.random());
-                    });
-                    return this.getChildren();
+                    var defer = $q.defer();
+
+                    self._children.push(childId);
+                    defer.resolve(this.getChildren());
+
+                    return defer.promise;
                 }
             }]);
 
@@ -69,6 +71,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         // Factory Exports
         // =============================================================================================================
         return {
+            atNODE: atNODE,
+            // =============================================================================
             trees: {
                 add: function add(rootNode) {
                     var defer = $q.defer();
@@ -82,24 +86,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     return defer.promise;
                 }
             },
+            // =============================================================================
             nodes: {
                 add: function add(node) {
-                    console.log(node);
                     var defer = $q.defer();
-                    defer.resolve(new atNODE(node));
+
+                    // metadata check
+                    if (!node.metadata) {
+                        defer.reject('Incorrect node metadata');
+                    }
+
+                    // add node to heapStorage
+                    heapStorage.push(node);
+
+                    // resolve node
+                    defer.resolve(node);
+
                     return defer.promise;
                 },
                 delete: function _delete() {
                     console.log('Delete node from Tree');
                 }
             },
+            // =============================================================================
             render: {
-                tree: function tree() {
-                    // var defer = $q.defer();
-                    // defer.resolve(heapStorage);
-                    // return defer.promise;
-                    // console.log(heapStorage);
-                    return $q.all(heapStorage);
+                heap: function heap() {
+                    return heapStorage;
                 }
             }
         };
