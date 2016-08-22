@@ -54,7 +54,7 @@
                 add: function (rootNode) {
                     var defer = $q.defer();
                     // metadata check
-                    if(!node.metadata) {
+                    if(!rootNode.metadata) {
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage

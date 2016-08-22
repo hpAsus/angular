@@ -77,7 +77,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 add: function add(rootNode) {
                     var defer = $q.defer();
                     // metadata check
-                    if (!node.metadata) {
+                    if (!rootNode.metadata) {
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage

@@ -15,27 +15,32 @@
             //input tree
             console.log('Input tree', inputTree);
 
-            function listNodes(currentNode) {
-                var newNode = new treeViewFactory.atNODE(currentNode);
-                treeViewFactory.nodes.add(newNode).then(function () {
+            var rootNode = new treeViewFactory.atNODE(inputRootNode);
+            treeViewFactory.trees.add(rootNode).then(function (root) {
+                console.log(root);
 
-                    _.forEach(currentNode.children, function (child) {
+                function listNodes(currentNode) {
+                    var newNode = new treeViewFactory.atNODE(currentNode);
 
-                        var timeGap = $timeout(angular.noop, 1000 + 5 * 1000 * Math.random());
-                        timeGap.then(function () {
-                            var childNode = new treeViewFactory.atNODE(child);
-                            newNode.addChildren(childNode.id).then(function () {
-                                console.log('[Gaped] ', child.metadata.title);
+                    treeViewFactory.nodes.add(newNode).then(function () {
+
+                        _.forEach(currentNode.children, function (child) {
+
+                            var timeGap = $timeout(angular.noop, 1000 + 5 * 1000 * Math.random());
+                            timeGap.then(function () {
+                                var childNode = new treeViewFactory.atNODE(child);
+                                newNode.addChildren(childNode.id).then(function () {
+                                    console.log('[Gaped] ', child.metadata.title);
+                                });
                             });
+
+                            listNodes(child);
                         });
-
-                        // newNode.addChildren(childNode.id);
-
-                        listNodes(child);
                     });
-                });
-            }
-            listNodes(inputRootNode);
+                }
+                listNodes(inputRootNode);
+            });
+
             console.log(treeViewFactory.render.heap());
         });
     };
