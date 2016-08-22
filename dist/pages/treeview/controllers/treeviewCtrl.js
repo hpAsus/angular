@@ -4,7 +4,7 @@
 // =====================================================================================================================
 (function () {
 
-    var treeviewCtrlFunc = function treeviewCtrlFunc($scope, $http, treeViewFactory) {
+    var treeviewCtrlFunc = function treeviewCtrlFunc($scope, $http, $timeout, treeViewFactory) {
         var vm = this;
 
         // Get Tree From server
@@ -21,8 +21,15 @@
 
                     _.forEach(currentNode.children, function (child) {
 
-                        var childNode = new treeViewFactory.atNODE(child);
-                        newNode.addChildren(childNode.id);
+                        var timeGap = $timeout(angular.noop, 1000 + 5 * 1000 * Math.random());
+                        timeGap.then(function () {
+                            var childNode = new treeViewFactory.atNODE(child);
+                            newNode.addChildren(childNode.id).then(function () {
+                                console.log('[Gaped] ', child.metadata.title);
+                            });
+                        });
+
+                        // newNode.addChildren(childNode.id);
 
                         listNodes(child);
                     });
@@ -33,5 +40,5 @@
         });
     };
 
-    angular.module('app').controller('treeviewCtrl', ['$scope', '$http', 'treeViewFactory', treeviewCtrlFunc]);
+    angular.module('app').controller('treeviewCtrl', ['$scope', '$http', '$timeout', 'treeViewFactory', treeviewCtrlFunc]);
 })();
