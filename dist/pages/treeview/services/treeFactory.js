@@ -92,15 +92,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 delete: function _delete() {
                     console.log('Delete node from Tree');
                 }
-            },
-            render: {
-                tree: function tree() {
-                    // var defer = $q.defer();
-                    // defer.resolve(heapStorage);
-                    // return defer.promise;
-                    // console.log(heapStorage);
-                    return $q.all(heapStorage);
-                }
             }
         };
     };

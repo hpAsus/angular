@@ -28,13 +28,6 @@
             // listNodes(inputRootNode);
 
             treeViewFactory.trees.add(inputRootNode);
-            // treeViewFactory.render.tree().then(function (tree) {
-            //     vm.tree = tree;
-            // });
-
-            // vm.$watch('tree', function () {
-            //
-            // })
         });
     };
 

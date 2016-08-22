@@ -70,15 +70,15 @@
                     console.log('Delete node from Tree')
                 }
             },
-            render: {
-                tree: function () {
-                    // var defer = $q.defer();
-                    // defer.resolve(heapStorage);
-                    // return defer.promise;
-                    // console.log(heapStorage);
-                    return $q.all(heapStorage);
-                }
-            }
+            // render: {
+            //     tree: function () {
+            //         var defer = $q.defer();
+            //         defer.resolve(heapStorage);
+            //         return defer.promise;
+            //         // console.log(heapStorage);
+            //         // return $q.all(heapStorage);
+            //     }
+            // }
         };
 
     };
