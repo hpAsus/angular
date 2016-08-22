@@ -17,7 +17,8 @@
                 nodeObj.children && this.addChildren(nodeObj.children);
                 console.log('[' + this.id + '] – [' + this.metadata.title + '] depth = ' + this.depth);
 
-                heapStorage.push($q.all(this));
+                heapStorage.push(this);
+                // heapStorage.push($q.all(this));
             }
 
             // Get children Method
