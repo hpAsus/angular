@@ -14,9 +14,9 @@
                 //input tree
                 console.log('Input tree', inputTree);
 
+
                 function listNodes(currentNode) {
                     var newNode = new treeViewFactory.atNODE(currentNode);
-
                     treeViewFactory.nodes.add(newNode)
                         .then(() => {
 
@@ -29,11 +29,8 @@
                             });
                         });
                 }
-
                 listNodes(inputRootNode);
-
                 console.log(treeViewFactory.render.heap());
-
             });
 
 

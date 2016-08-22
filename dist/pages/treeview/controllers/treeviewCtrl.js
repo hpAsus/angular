@@ -17,7 +17,6 @@
 
             function listNodes(currentNode) {
                 var newNode = new treeViewFactory.atNODE(currentNode);
-
                 treeViewFactory.nodes.add(newNode).then(function () {
 
                     _.forEach(currentNode.children, function (child) {
@@ -29,9 +28,7 @@
                     });
                 });
             }
-
             listNodes(inputRootNode);
-
             console.log(treeViewFactory.render.heap());
         });
     };
