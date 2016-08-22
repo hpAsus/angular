@@ -53,7 +53,13 @@
             trees: {
                 add: function (rootNode) {
                     var defer = $q.defer();
-                    defer.resolve(new atNODE(rootNode));
+                    // metadata check
+                    if(!node.metadata) {
+                        defer.reject('Incorrect node metadata');
+                    }
+                    // add node to heapStorage
+                    heapStorage.push(rootNode);
+                    defer.resolve(rootNode);
                     return defer.promise;
                 },
                 remove: function () {
@@ -67,18 +73,14 @@
             nodes: {
                 add: function (node) {
                     var defer = $q.defer();
-
                     // metadata check
                     if(!node.metadata) {
                         defer.reject('Incorrect node metadata');
                     }
-
                     // add node to heapStorage
                     heapStorage.push(node);
-
                     // resolve node
                     defer.resolve(node);
-
                     return defer.promise;
                 },
                 delete: function () {
