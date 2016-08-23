@@ -54,8 +54,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: function addChildren(childId) {
                     var self = this;
                     var defer = $q.defer();
-                    // var timeGap = $timeout(angular.noop, 0);
-                    var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
+                    var timeGap = $timeout(angular.noop, 0);
+                    // var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
                     timeGap.then(function () {
                         self._children.push(childId);
                         var child = _.find(_heapStorage, function (node) {

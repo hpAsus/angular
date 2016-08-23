@@ -34,8 +34,8 @@
             addChildren(childId) {
                 var self = this;
                 var defer = $q.defer();
-                // var timeGap = $timeout(angular.noop, 0);
-                var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
+                var timeGap = $timeout(angular.noop, 0);
+                // var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
                 timeGap.then(() => {
                     self._children.push(childId);
                     var child = _.find(heapStorage, (node) => node.id == childId);
