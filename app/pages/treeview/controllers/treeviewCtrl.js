@@ -2,8 +2,9 @@
 // =====================================================================================================================
 (function () {
 
-    var treeViewCtrlFunc = function ($scope, $http, $timeout, treeViewFactory) {
+    var treeViewCtrlFunc = function ($scope, $http, $timeout, $q, treeViewFactory) {
         var vm = this;
+
 
         // Get Tree From server
         $http.get('/api/getTree')
@@ -14,43 +15,36 @@
 
                 treeViewFactory.trees.add(rootNode).then(function (root) {
 
-                    function listNodes(currentNode) {
-                        var newNode = new treeViewFactory.atNODE(currentNode);
-                        treeViewFactory.nodes.add(newNode)
-                            .then(() => {
-                                _.forEach(currentNode.children, (child) => {
-                                    var timeGap = $timeout(angular.noop, 1000 + 5 * 1000 * Math.random());
-                                    timeGap.then(() => {
-                                        var childNode = new treeViewFactory.atNODE(child);
-                                        newNode.addChildren(childNode.id).then(() => {
-                                            // console.log('[Node Created] ', child.metadata.title);
-                                        });
+                    function addRecursive(parent, children) {
+
+                        _.forEach(children, (child) => {
+                            treeViewFactory.nodes.add(new treeViewFactory.atNODE(child)).then((node) => {
+
+                                parent.addChildren(node.id)
+                                    .then(() => {
+                                        addRecursive(node, child.children);
                                     });
-                                    listNodes(child);
-                                });
+
+
+
                             });
+
+
+
+                        });
+
+
                     }
-                    listNodes(inputRootNode);
-                    return treeViewFactory.render.heapStorage();
 
-                }).then((promiseHeap) => {
-                    var rootNode = promiseHeap[0];
-                    //process promises
-                    console.log(promiseHeap);
-                    console.log(rootNode._children);
+                    addRecursive(root, inputRootNode.children);
 
-                    rootNode.getChildren().then((children) => {
-                        console.log(children);
-                    });
+                    // console.log(treeViewFactory.render.heapStorage());
 
                 });
 
             });
-
-
     };
 
-
-    angular.module('app').controller('treeViewCtrl', ['$scope', '$http', '$timeout', 'treeViewFactory', treeViewCtrlFunc]);
+    angular.module('app').controller('treeViewCtrl', ['$scope', '$http', '$timeout', '$q', 'treeViewFactory', treeViewCtrlFunc]);
 
 })();

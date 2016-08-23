@@ -10,6 +10,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var treeViewFactoryFunc = function treeViewFactoryFunc($http, $q, $timeout) {
 
         var _heapStorage = [];
+        // var heapStorage = new Array();
+        var count = 1;
 
         // NODE ENTITY
         // =============================================================================================================
@@ -18,7 +20,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             function atNODE(nodeObj) {
                 _classCallCheck(this, atNODE);
 
-                this.id = String(nodeObj.id || atNODE._guid++);
+                this.id = nodeObj.id || String('node' + atNODE._guid++);
                 this.metadata = nodeObj.metadata;
                 this._children = [];
             }
@@ -34,9 +36,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     var defer = $q.defer();
 
                     //find children in heapStorage
-                    var children = _.map(self._children, function () {
+                    var children = _.map(self._children, function (childId) {
                         return _.find(_heapStorage, function (node) {
-                            return node.id === self.id;
+                            return node.id === childId;
                         });
                     });
 
@@ -52,10 +54,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 value: function addChildren(childId) {
                     var self = this;
                     var defer = $q.defer();
+                    // var timeGap = $timeout(angular.noop, 0);
+                    var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
+                    timeGap.then(function () {
+                        self._children.push(childId);
+                        var child = _.find(_heapStorage, function (node) {
+                            return node.id == childId;
+                        });
+                        console.log(count++ + ' [Child Added] ' + childId, child.metadata.title);
 
-                    self._children.push(childId);
-                    defer.resolve(this._children);
-                    // defer.resolve(this.getChildren());
+                        // defer.resolve(self._children);
+                        defer.resolve();
+                    });
 
                     return defer.promise;
                 }
@@ -82,7 +92,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage
-                    // heapStorage.push(rootNode);
+                    _heapStorage.push(rootNode);
+                    console.log('0 [ROOT Added] ' + rootNode.id, rootNode.metadata.title);
 
                     defer.resolve(rootNode);
                     return defer.promise;
@@ -104,6 +115,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     }
                     // add node to heapStorage
                     _heapStorage.push(node);
+
                     // resolve node
                     defer.resolve(node);
                     return defer.promise;
@@ -116,6 +128,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             render: {
                 heapStorage: function heapStorage() {
                     return _heapStorage;
+                    // var defer = $q.defer();
+                    // defer.resolve(heapStorage);
+                    // return defer.promise;
                 }
             }
 

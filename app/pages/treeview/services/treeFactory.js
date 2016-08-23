@@ -4,12 +4,14 @@
     var treeViewFactoryFunc = function ($http, $q, $timeout) {
 
         var heapStorage = [];
+        // var heapStorage = new Array();
+        var count = 1;
 
         // NODE ENTITY
         // =============================================================================================================
         class atNODE {
             constructor(nodeObj) {
-                this.id = String(nodeObj.id || atNODE._guid++);
+                this.id = nodeObj.id || String('node' + atNODE._guid++);
                 this.metadata = nodeObj.metadata;
                 this._children = [];
             }
@@ -21,7 +23,7 @@
                 var defer = $q.defer();
 
                 //find children in heapStorage
-                var children = _.map(self._children, () => _.find(heapStorage, (node) => node.id === self.id));
+                var children = _.map(self._children, (childId) => _.find(heapStorage, (node) => node.id === childId));
 
                 defer.resolve(children);
                 return defer.promise;
@@ -32,10 +34,17 @@
             addChildren(childId) {
                 var self = this;
                 var defer = $q.defer();
+                // var timeGap = $timeout(angular.noop, 0);
+                var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
+                timeGap.then(() => {
+                    self._children.push(childId);
+                    var child = _.find(heapStorage, (node) => node.id == childId);
+                    console.log((count++) + ' [Child Added] ' + childId, child.metadata.title);
 
-                self._children.push(childId);
-                defer.resolve(this._children);
-                // defer.resolve(this.getChildren());
+                    // defer.resolve(self._children);
+                    defer.resolve();
+
+                });
 
                 return defer.promise;
             }
@@ -55,11 +64,12 @@
                 add: function (rootNode) {
                     var defer = $q.defer();
                     // metadata check
-                    if(!rootNode.metadata) {
+                    if (!rootNode.metadata) {
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage
-                    // heapStorage.push(rootNode);
+                    heapStorage.push(rootNode);
+                    console.log('0 [ROOT Added] ' + rootNode.id, rootNode.metadata.title);
 
                     defer.resolve(rootNode);
                     return defer.promise;
@@ -76,11 +86,12 @@
                 add: function (node) {
                     var defer = $q.defer();
                     // metadata check
-                    if(!node.metadata) {
+                    if (!node.metadata) {
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage
                     heapStorage.push(node);
+
                     // resolve node
                     defer.resolve(node);
                     return defer.promise;
@@ -92,7 +103,10 @@
             // =============================================================================
             render: {
                 heapStorage: function () {
-                  return  heapStorage;
+                    return heapStorage;
+                    // var defer = $q.defer();
+                    // defer.resolve(heapStorage);
+                    // return defer.promise;
                 }
             }
 
