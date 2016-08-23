@@ -34,7 +34,8 @@
                 var defer = $q.defer();
 
                 self._children.push(childId);
-                defer.resolve(this.getChildren());
+                defer.resolve(this._children);
+                // defer.resolve(this.getChildren());
 
                 return defer.promise;
             }
@@ -58,7 +59,8 @@
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage
-                    heapStorage.push(rootNode);
+                    // heapStorage.push(rootNode);
+
                     defer.resolve(rootNode);
                     return defer.promise;
                 },
@@ -89,7 +91,7 @@
             },
             // =============================================================================
             render: {
-                heap: function () {
+                heapStorage: function () {
                   return  heapStorage;
                 }
             }

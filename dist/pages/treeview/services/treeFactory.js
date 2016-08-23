@@ -9,7 +9,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function () {
     var treeViewFactoryFunc = function treeViewFactoryFunc($http, $q, $timeout) {
 
-        var heapStorage = [];
+        var _heapStorage = [];
 
         // NODE ENTITY
         // =============================================================================================================
@@ -35,7 +35,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     //find children in heapStorage
                     var children = _.map(self._children, function () {
-                        return _.find(heapStorage, function (node) {
+                        return _.find(_heapStorage, function (node) {
                             return node.id === self.id;
                         });
                     });
@@ -54,7 +54,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     var defer = $q.defer();
 
                     self._children.push(childId);
-                    defer.resolve(this.getChildren());
+                    defer.resolve(this._children);
+                    // defer.resolve(this.getChildren());
 
                     return defer.promise;
                 }
@@ -81,14 +82,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage
-                    heapStorage.push(rootNode);
+                    // heapStorage.push(rootNode);
+
                     defer.resolve(rootNode);
                     return defer.promise;
                 },
                 remove: function remove() {
                     var defer = $q.defer();
-                    heapStorage = null;
-                    defer.resolve(heapStorage);
+                    _heapStorage = null;
+                    defer.resolve(_heapStorage);
                     return defer.promise;
                 }
             },
@@ -101,7 +103,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         defer.reject('Incorrect node metadata');
                     }
                     // add node to heapStorage
-                    heapStorage.push(node);
+                    _heapStorage.push(node);
                     // resolve node
                     defer.resolve(node);
                     return defer.promise;
@@ -112,8 +114,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             },
             // =============================================================================
             render: {
-                heap: function heap() {
-                    return heapStorage;
+                heapStorage: function heapStorage() {
+                    return _heapStorage;
                 }
             }
 

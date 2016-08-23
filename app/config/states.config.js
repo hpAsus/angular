@@ -55,7 +55,7 @@
                 parent: 'dashboard',
                 url: '/treeview',
                 templateUrl: 'app/pages/treeview/tpl/treeview.tpl.html',
-                controller: 'treeviewCtrl',
+                controller: 'treeViewCtrl',
                 controllerAs: 'vm'
             })
 
