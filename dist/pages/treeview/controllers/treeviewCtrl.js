@@ -16,6 +16,7 @@
             console.log('Input tree', inputTree);
 
             var rootNode = new treeViewFactory.atNODE(inputRootNode);
+
             treeViewFactory.trees.add(rootNode).then(function (root) {
                 console.log(root);
 
@@ -25,7 +26,6 @@
                     treeViewFactory.nodes.add(newNode).then(function () {
 
                         _.forEach(currentNode.children, function (child) {
-
                             var timeGap = $timeout(angular.noop, 1000 + 5 * 1000 * Math.random());
                             timeGap.then(function () {
                                 var childNode = new treeViewFactory.atNODE(child);
