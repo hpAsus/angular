@@ -13,7 +13,7 @@
         vm.user = {};
 
         // Check if login is set from reset password page
-        if ($rootScope.login !== 'undefined') {
+        if ($rootScope.login) {
             vm.user.email = $rootScope.login;
         }
 

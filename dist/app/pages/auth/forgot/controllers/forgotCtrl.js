@@ -1,8 +1,10 @@
+'use strict';
+
 // Forgot password controller
 // =====================================================================================================================
 
 (function () {
-    var forgotCtrlFunc = function ($scope, $rootScope, authService, $state, toastService) {
+    var forgotCtrlFunc = function forgotCtrlFunc($scope, $rootScope, authService, $state, toastService) {
         var vm = this;
 
         //setting login if previously defined
@@ -21,7 +23,6 @@
                     $state.go('login');
 
                     toastService.show(res.data.message);
-
                 } else {
                     // Show toast with error message
                     toastService.show(res.error.message);
@@ -31,6 +32,4 @@
     };
 
     angular.module('app.auth').controller('forgotCtrl', ['$scope', '$rootScope', 'authService', '$state', 'toastService', forgotCtrlFunc]);
-
-
 })();

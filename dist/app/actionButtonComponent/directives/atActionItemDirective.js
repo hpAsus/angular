@@ -1,11 +1,13 @@
+'use strict';
+
 // At Action Item Directive
 // =====================================================================================================================
 (function () {
-    var atActionItemFunc = function () {
+    var atActionItemFunc = function atActionItemFunc() {
         return {
             restrict: 'E',
             scope: {
-                ngModel : '='
+                ngModel: '='
             },
             bindToController: true,
             templateUrl: 'app/actionButtonComponent/tpl/atActionItem.tpl.html',

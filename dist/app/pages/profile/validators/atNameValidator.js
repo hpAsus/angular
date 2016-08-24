@@ -1,12 +1,14 @@
+'use strict';
+
 // Name Validator
 // =====================================================================================================================
 (function () {
-    var atNameValidatorFunc = function (CONST_VALIDATORS) {
+    var atNameValidatorFunc = function atNameValidatorFunc(CONST_VALIDATORS) {
 
         return {
             require: 'ngModel',
             restrict: 'A',
-            link: function (scope, elem, attrs, ctrl) {
+            link: function link(scope, elem, attrs, ctrl) {
 
                 // Validate for letters
                 ctrl.$validators.nameValidator = function (modelValue) {
@@ -35,10 +37,8 @@
                     var mValue = modelValue || '';
                     return mValue.length > CONST_VALIDATORS.MIN_NAME_LENGTH;
                 };
-
             }
         };
-
     };
 
     angular.module('app.profile').directive('atNameValidator', ['CONST_VALIDATORS', atNameValidatorFunc]);
