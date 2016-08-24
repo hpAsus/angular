@@ -13,6 +13,7 @@
             constructor(nodeObj) {
                 this.id = nodeObj.id || String('node' + atNODE._guid++);
                 this.metadata = nodeObj.metadata;
+                this._parent = null;
                 this._children = [];
             }
 
@@ -34,14 +35,14 @@
             addChildren(childId) {
                 var self = this;
                 var defer = $q.defer();
-                var timeGap = $timeout(angular.noop, 0);
-                // var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
+                // var timeGap = $timeout(angular.noop, 0);
+                var timeGap = $timeout(angular.noop, 1000 + 2 * 1000 * Math.random());
+
                 timeGap.then(() => {
                     self._children.push(childId);
                     var child = _.find(heapStorage, (node) => node.id == childId);
-                    console.log((count++) + ' [Child Added] ' + childId, child.metadata.title);
+                    console.log((count++) + ' [Child Added] [ID: ' + childId + ']', child.metadata.title);
 
-                    // defer.resolve(self._children);
                     defer.resolve();
 
                 });
@@ -69,7 +70,7 @@
                     }
                     // add node to heapStorage
                     heapStorage.push(rootNode);
-                    console.log('0 [ROOT Added] ' + rootNode.id, rootNode.metadata.title);
+                    console.log('0 [ROOT  Added] ' + '[ID: ' + rootNode.id + ']', rootNode.metadata.title);
 
                     defer.resolve(rootNode);
                     return defer.promise;

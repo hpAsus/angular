@@ -30,16 +30,17 @@
                     _.forEach(children, function (child) {
                         treeViewFactory.nodes.add(new treeViewFactory.atNODE(child)).then(function (node) {
                             parent.addChildren(node.id).then(function () {
-                                console.log('map ', map);
-                                console.log('parent.id ', parent.id);
-                                console.log('map[parent.id] ', map[parent.id]);
-                                console.log('vm.nodes[map[parent.id]] ', vm.nodes[map[parent.id]]);
-                                console.log('vm.nodes ', vm.nodes);
-                                map[node.id] = counter++;
-                                vm.nodes[map[parent.id]].children.push({
-                                    title: node.metadata.title,
-                                    children: []
-                                });
+                                // console.log('NODE ', node);
+                                // console.log('map ', map);
+                                // console.log('parent.id ', parent.id);
+                                // console.log('map[parent.id] ', map[parent.id]);
+                                // console.log('vm.nodes[map[parent.id]] ', vm.nodes[map[parent.id]]);
+                                // console.log('vm.nodes ', vm.nodes);
+                                // map[node.id] = counter++;
+                                // vm.nodes[map[parent.id]].children.push({
+                                //     title: node.metadata.title,
+                                //     children: []
+                                // });
                                 // console.log('vm.nodes ', vm.nodes);
                                 // console.log(parent.metadata.title);
                                 // console.log(node);
