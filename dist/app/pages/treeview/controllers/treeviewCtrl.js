@@ -30,6 +30,7 @@
                     _.forEach(children, function (child) {
                         treeViewFactory.nodes.add(new treeViewFactory.atNODE(child)).then(function (node) {
                             parent.addChildren(node.id).then(function () {
+
                                 // console.log('NODE ', node);
                                 // console.log('map ', map);
                                 // console.log('parent.id ', parent.id);

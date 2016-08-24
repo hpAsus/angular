@@ -30,6 +30,7 @@
                             treeViewFactory.nodes.add(new treeViewFactory.atNODE(child)).then((node) => {
                                 parent.addChildren(node.id)
                                     .then(() => {
+
                                         // console.log('NODE ', node);
                                         // console.log('map ', map);
                                         // console.log('parent.id ', parent.id);

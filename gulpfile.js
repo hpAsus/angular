@@ -46,6 +46,7 @@ gulp.task('nodemon', function (cb) {
             'gitignore',
             'app/**',
             'data/**',
+            'dist/**',
             'node_modules/**'
         ],
         watch: ['app.js', '/server/**/*.js']
@@ -121,24 +122,10 @@ gulp.task('babel', function () {
 
 // DEFAULT
 // =====================================================================================================================
-gulp.task('default', ['browser-sync'], function () {
-    var fonts, images, icons, lang;
-    fonts = gulp.src(options.src.fonts + '**/*')
-        .pipe(gulp.dest(options.dist.fonts));
-
-    images = gulp.src(options.src.images + '**/*')
-        .pipe(gulp.dest(options.dist.images));
-
-    icons = gulp.src(options.src.icons + '**/*')
-        .pipe(gulp.dest(options.dist.icons));
-
-    lang = gulp.src(options.src.lang + '**/*')
-        .pipe(gulp.dest(options.dist.lang));
-
+gulp.task('default', ['build', 'browser-sync'], function () {
     gulp.watch('app/**/*.+(scss|sass)', ['sass']);
     gulp.watch('app/**/*.js', ['babel', 'bs-reload']);
     gulp.watch('app/**/*.html', ['templates', 'bs-reload']);
-
 });
 
 // GULP BUILD

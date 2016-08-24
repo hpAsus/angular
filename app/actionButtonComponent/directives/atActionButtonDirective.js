@@ -7,7 +7,7 @@
             scope: {
                 buttonTitle: '@buttonTitle'
             },
-            bindToController: true,
+            // bindToController: true,
             controller: 'atActionButtonCtrl as vm',
             templateUrl: 'app/actionButtonComponent/tpl/atActionButton.tpl.html',
             transclude: true

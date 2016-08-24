@@ -7,7 +7,7 @@
             scope: {
                 ngModel : '='
             },
-            bindToController: true,
+            // bindToController: true,
             templateUrl: 'app/actionButtonComponent/tpl/atActionItem.tpl.html',
             controller: 'atActionItemCtrl as vm',
             transclude: true
