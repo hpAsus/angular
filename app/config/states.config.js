@@ -49,6 +49,16 @@
                 controllerAs: 'dashboard'
             })
 
+			// User Management
+			// =========================================================================================================
+			.state('userList', {
+				parent: 'dashboard',
+				url: '/users-list',
+				templateUrl: 'app/pages/users/tpl/usersList.tpl.html',
+				controller: 'usersListCtrl',
+				controllerAs: 'vm'
+			})
+
             // Treeview Pages
             // =========================================================================================================
             .state('treeview', {

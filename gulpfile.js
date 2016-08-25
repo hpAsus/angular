@@ -9,156 +9,163 @@ var vfs = require('vinyl-fs');
 
 var BROWSER_SYNC_RELOAD_DELAY = 500;
 var options = {
-    src: {
-        root: '',
-        rootApp: 'app/',
-        assets: 'app/assets/',
-        css: 'app/assets/css/',
-        fonts: 'app/assets/fonts/',
-        icons: 'app/assets/icons/',
-        images: 'app/assets/images/',
-        lang: 'app/lang/',
-        data: 'data/',
-        server: 'server/',
-        node_modules : 'node_modules/'
-    },
-    dist: {
-        root: 'dist/',
-        rootApp: 'dist/app/',
-        assets: 'dist/app/assets/',
-        css: 'dist/app/assets/css/',
-        fonts: 'dist/app/assets/fonts/',
-        icons: 'dist/app/assets/icons/',
-        images: 'dist/app/assets/images/',
-        lang: 'dist/app/lang/',
-        data: 'dist/data/',
-        server: 'dist/server/',
-        node_modules : 'dist/node_modules/'
-    }
+	src: {
+		root: '',
+		rootApp: 'app/',
+		assets: 'app/assets/',
+		css: 'app/assets/css/',
+		fonts: 'app/assets/fonts/',
+		icons: 'app/assets/icons/',
+		images: 'app/assets/images/',
+		lang: 'app/lang/',
+		data: 'data/',
+		server: 'server/',
+		node_modules: 'node_modules/'
+	},
+	dist: {
+		root: 'dist/',
+		rootApp: 'dist/app/',
+		assets: 'dist/app/assets/',
+		css: 'dist/app/assets/css/',
+		fonts: 'dist/app/assets/fonts/',
+		icons: 'dist/app/assets/icons/',
+		images: 'dist/app/assets/images/',
+		lang: 'dist/app/lang/',
+		data: 'dist/data/',
+		server: 'dist/server/',
+		node_modules: 'dist/node_modules/'
+	}
 
 };
 
 // NODEMON TASK
 // =====================================================================================================================
 gulp.task('nodemon', function (cb) {
-    var called = false;
-    return nodemon({
-        script: 'dist/app.js',
-        ignore: [
-            '.gitignore',
-            'gitignore',
-            'app/**',
-            'data/**',
-            'dist/**',
-            'node_modules/**'
-        ],
-        watch: ['app.js', '/server/**/*.js']
-    })
-        .on('start', function onStart() {
-            // ensure start only got called once
-            if (!called) {
-                cb();
-            }
-            called = true;
-        })
-        .on('restart', function onRestart() {
-            setTimeout(function reload() {
-                browserSync.reload({
-                    stream: false
-                });
-            }, BROWSER_SYNC_RELOAD_DELAY);
-        });
+	var called = false;
+
+	return nodemon({
+		script: 'dist/app.js',
+		ignore: [
+			'app/**/*',
+			'dist/**/*',
+			'data/**/*',
+			'node_modules/**/*',
+			'.gitignore'
+		],
+		watch: ['app.js', 'server/**/*.js']
+	})
+		.on('start', function onStart() {
+			// ensure start only got called once
+			if (!called) {
+				cb();
+			}
+			called = true;
+		})
+		.on('restart', function onRestart() {
+			setTimeout(function reload() {
+				browserSync.reload({
+					stream: false
+				});
+			}, BROWSER_SYNC_RELOAD_DELAY);
+		});
 });
 
 // BROWSER SYNC
 // =====================================================================================================================
 gulp.task('browser-sync', ['nodemon'], function () {
-    browserSync({
-        proxy: 'http://localhost:9000',
-        port: 4000,
-        notify: false,
-        browser: 'google chrome',
-        reloadDelay: 500
-    });
+	browserSync({
+		proxy: 'http://localhost:9000',
+		port: 4000,
+		notify: false,
+		browser: 'google chrome',
+		reloadDelay: 500
+	});
 });
 gulp.task('bs-reload', function () {
-    browserSync.reload();
+	browserSync.reload();
 });
 
 // SASS
 // =====================================================================================================================
 gulp.task('sass', function () {
-    var sassFiles = [
-        'app/assets/css/**/*.+(scss|sass)',
-        'app/actionButtonComponent/scss/*.+(scss|sass)'
-    ];
-    return gulp.src(sassFiles)
-        .pipe(sass())
-        .pipe(autoprefixer(['last 2 versions', '> 1%'], {cascade: true}))
-        .pipe(gulp.dest(options.dist.css))
-        .pipe(browserSync.stream());
+	var sassFiles = [
+		'app/assets/css/**/*.+(scss|sass)',
+		'app/actionButtonComponent/scss/*.+(scss|sass)'
+	];
+	return gulp.src(sassFiles)
+		.pipe(sass())
+		.pipe(autoprefixer(['last 2 versions', '> 1%'], {cascade: true}))
+		.pipe(gulp.dest(options.dist.css))
+		.pipe(browserSync.stream());
 });
 
 // HTML Templates
 // =====================================================================================================================
 gulp.task('templates', function () {
-    var templates = [
-        options.src.root + '**/*.html',
-        '!' + options.src.root + 'dist/**/*',
-        '!' + options.src.root + 'node_modules/**/*'
-    ];
-    // console.log(templates);
-    return gulp.src(templates)
-        .pipe(gulp.dest(options.dist.root));
+	var templates = [
+		options.src.root + '**/*.html',
+		'!' + options.src.root + 'dist/**/*',
+		'!' + options.src.root + 'node_modules/**/*'
+	];
+	// console.log(templates);
+	return gulp.src(templates)
+		.pipe(gulp.dest(options.dist.root));
 });
 
 // BABEL
 // =====================================================================================================================
 gulp.task('babel', function () {
-    return gulp.src(options.src.rootApp + '**/*.js')
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(gulp.dest(options.dist.rootApp));
+	return gulp.src(options.src.rootApp + '**/*.js')
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(gulp.dest(options.dist.rootApp));
 });
 // BABEL
 // =====================================================================================================================
 gulp.task('node_modules_symlink', function () {
-    return vfs.src(options.src.node_modules)
-        .pipe(vfs.symlink(options.dist.node_modules));
+	return vfs.src(options.src.node_modules)
+		.pipe(vfs.symlink(options.dist.node_modules));
 });
 
 // DEFAULT
 // =====================================================================================================================
 gulp.task('default', ['build', 'browser-sync'], function () {
-    gulp.watch('app/**/*.+(scss|sass)', ['sass']);
-    gulp.watch('app/**/*.js', ['babel', 'bs-reload']);
-    gulp.watch('app/**/*.html', ['templates', 'bs-reload']);
+	gulp.watch('app/**/*.+(scss|sass)', ['sass']);
+	gulp.watch('app/**/*.js', ['babel', 'build', 'bs-reload']);
+	gulp.watch('app/**/*.html', ['templates', 'build', 'bs-reload']);
+
+	//server
+	// var serverFiles = [
+	// 	'server/**/*.js',
+	// 	'app.js'
+	// ];
+	// gulp.watch(serverFiles, ['babel', 'build', 'bs-reload']);
 });
 
 // GULP BUILD
 // =====================================================================================================================
 gulp.task('build', ['node_modules_symlink', 'sass', 'templates', 'babel'], function () {
-    var fonts, images, icons, lang, server, data, app, nodeModules;
-    fonts = gulp.src(options.src.fonts + '**/*')
-        .pipe(gulp.dest(options.dist.fonts));
+	var fonts, images, icons, lang, server, data, app, nodeModules;
+	fonts = gulp.src(options.src.fonts + '**/*')
+		.pipe(gulp.dest(options.dist.fonts));
 
-    images = gulp.src(options.src.images + '**/*')
-        .pipe(gulp.dest(options.dist.images));
+	images = gulp.src(options.src.images + '**/*')
+		.pipe(gulp.dest(options.dist.images));
 
-    icons = gulp.src(options.src.icons + '**/*')
-        .pipe(gulp.dest(options.dist.icons));
+	icons = gulp.src(options.src.icons + '**/*')
+		.pipe(gulp.dest(options.dist.icons));
 
-    lang = gulp.src(options.src.lang + '**/*')
-        .pipe(gulp.dest(options.dist.lang));
+	lang = gulp.src(options.src.lang + '**/*')
+		.pipe(gulp.dest(options.dist.lang));
 
-    data = gulp.src(options.src.data+ '**/*')
-        .pipe(gulp.dest(options.dist.data));
+	data = gulp.src(options.src.data + '**/*')
+		.pipe(gulp.dest(options.dist.data));
 
-    app = gulp.src(options.src.root+ 'app.js')
-        .pipe(gulp.dest(options.dist.root));
+	app = gulp.src(options.src.root + 'app.js')
+		.pipe(gulp.dest(options.dist.root));
 
-    server = gulp.src(options.src.server + '**/*')
-        .pipe(gulp.dest(options.dist.server));
+	server = gulp.src(options.src.server + '**/*')
+		.pipe(gulp.dest(options.dist.server));
 
 });

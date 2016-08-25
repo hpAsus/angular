@@ -85,7 +85,7 @@ apiRouter.route('/users/:user_id')
     })
 
     // USER - Update single user
-    // =====================================================================================================================
+    // =================================================================================================================
     .put(function (req, res) {
 
         if (req.session.authenticated) {
@@ -115,7 +115,7 @@ apiRouter.route('/users/:user_id')
     })
 
     // USER - Create single user
-    // =====================================================================================================================
+    // =================================================================================================================
     .post(function (req, res) {
 
         console.log('Saving new user!');
@@ -125,7 +125,7 @@ apiRouter.route('/users/:user_id')
     })
 
     // USER - Delete single user
-    // =====================================================================================================================
+    // =================================================================================================================
     .delete(function (req, res) {
         if (req.session.authenticated) {
             res.json({
@@ -136,7 +136,33 @@ apiRouter.route('/users/:user_id')
         }
     });
 
-// USER - Delete single user
+// USERS
+// =====================================================================================================================
+apiRouter.route('/userslist')
+    .get(function (req, res) {
+        if (req.session.authenticated) {
+	        userManager.getAllUsers().then(function (users) {
+	            res.send({
+		            success: true,
+		            users: users
+	            });
+            }).catch(function (err) {
+		        res.send({
+			        success: false,
+			        error: {
+				        code: 500, //todo: change code
+				        message: err
+			        }
+		        });
+
+	        });
+
+        } else {
+            res.sendStatus(401);
+        }
+    });
+
+// Get Tree
 // =====================================================================================================================
 apiRouter.route('/getTree')
     .get(function (req, res) {
@@ -149,6 +175,8 @@ apiRouter.route('/getTree')
             res.sendStatus(401);
         }
     });
+
+
 // Exports
 // =====================================================================================================================
 module.exports = apiRouter;

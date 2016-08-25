@@ -1,6 +1,10 @@
-<div layout-padding>
-    <h1>{{ 'ACTIONTEST.TITLE' | translate}}</h1>
+<md-toolbar class="md-primary md-hue-3">
+    <h2 class="md-toolbar-tools">
+        <span>{{ 'ACTIONTEST.TITLE' | translate}}</span>
+    </h2>
+</md-toolbar>
 
+<div layout-padding>
     <at-action-button button-title="{{ 'ACTIONTEST.BUTTON_TITLE' | translate }}">
         <at-action-item ng-model="vm.testAction1">{{ 'ACTIONTEST.ACTION1_TEXT' | translate }}</at-action-item>
         <at-action-item ng-model="vm.testAction2">{{ 'ACTIONTEST.ACTION2_TEXT' | translate }}</at-action-item>

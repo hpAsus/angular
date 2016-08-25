@@ -1,0 +1,52 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Create New User</h2>
+                <span flex></span>
+                <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
+                <md-button class="md-icon-button" ng-click="vm.cancel()">X</md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+
+                <form name="loginForm" class="loginForm" method="post" ng-submit="vm.submitLoginForm()" novalidate>
+
+                    <md-input-container>
+                        <label translate="AUTH.LABELS.EMAIL"></label>
+                        <input type="text" name="email" required="required" ng-model="vm.user.email" at-email-validator/>
+
+                        <div ng-messages="loginForm['email'].$error">
+                            <div ng-message="required" translate="AUTH.ERRORS.EMAIL_REQUIRED"></div>
+                            <div ng-message="emailValidator" translate="AUTH.ERRORS.EMAIL_INVALID"></div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label translate="AUTH.LABELS.PASSWORD">Password</label>
+                        <input type="password" required="required" name="password" ng-model="vm.user.password"/>
+
+                        <div ng-messages="loginForm['password'].$error">
+                            <div ng-message="required" translate="AUTH.ERRORS.PASS_REQUIRED"></div>
+                        </div>
+                    </md-input-container>
+
+                </form>
+
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="answer('not useful')">
+                Create New User
+            </md-button>
+            <span flex></span>
+
+            <md-button ng-click="answer('useful')">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

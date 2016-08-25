@@ -63,7 +63,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         var child = _.find(_heapStorage, function (node) {
                             return node.id == childId;
                         });
-                        console.log(count++ + ' [Child Added] [ID: ' + childId + ']', child.metadata.title);
+                        // console.log((count++) + ' [Child Added] [ID: ' + childId + ']', child.metadata.title);
 
                         defer.resolve();
                     });

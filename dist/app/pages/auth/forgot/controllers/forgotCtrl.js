@@ -4,8 +4,10 @@
 // =====================================================================================================================
 
 (function () {
-    var forgotCtrlFunc = function forgotCtrlFunc($scope, $rootScope, authService, $state, toastService) {
+    var forgotCtrlFunc = function forgotCtrlFunc($scope, $rootScope, authService, $state, toastService, loaderService) {
         var vm = this;
+
+        loaderService.addLoader();
 
         //setting login if previously defined
         if ($rootScope.login) {
@@ -13,6 +15,9 @@
         }
 
         vm.submitForgotForm = function () {
+
+            loaderService.showLoader();
+
             authService.resetPassword(vm.login).then(function (res) {
 
                 if (res.data.success) {
@@ -23,13 +28,15 @@
                     $state.go('login');
 
                     toastService.show(res.data.message);
+                    loaderService.hideLoader();
                 } else {
                     // Show toast with error message
                     toastService.show(res.error.message);
+                    loaderService.hideLoader();
                 }
             });
         };
     };
 
-    angular.module('app.auth').controller('forgotCtrl', ['$scope', '$rootScope', 'authService', '$state', 'toastService', forgotCtrlFunc]);
+    angular.module('app.auth').controller('forgotCtrl', ['$scope', '$rootScope', 'authService', '$state', 'toastService', 'loaderService', forgotCtrlFunc]);
 })();

@@ -127,6 +127,23 @@ UserManager.prototype.updateUser = function(userObj) {
     });
 };
 
+// GET ALL USERS
+// =====================================================================================================================
+UserManager.prototype.getAllUsers = function() {
+
+    return new Promise(function (resolve, reject) {
+        db.find({
+        }, function (err, found) {
+            if (found) {
+                resolve(found);
+            } else {
+                reject(new Error('User not found'));
+            }
+        });
+
+    });
+};
+
 // Exports
 // =====================================================================================================================
 module.exports = UserManager;

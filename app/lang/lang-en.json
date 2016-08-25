@@ -65,5 +65,8 @@
     "ACTION3_TEXT": "Action Later Server Error",
     "ACTION4_TEXT": "Action Later Error",
     "ACTION5_TEXT": "Action Long Error"
+  },
+  "USERS": {
+    "MANAGE_TITLE": "Manage users"
   }
 }

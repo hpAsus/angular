@@ -57,7 +57,7 @@ router.route('/login')
 
 // Logout
 // =====================================================================================================================
-router.route('/logout').get(function (req, res) {
+router.route('/logout').get(pause(3000), function (req, res) {
     req.session.destroy(function (err) {
         if (!err) {
             res.send({

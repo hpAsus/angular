@@ -41,7 +41,7 @@
                 timeGap.then(() => {
                     self._children.push(childId);
                     var child = _.find(heapStorage, (node) => node.id == childId);
-                    console.log((count++) + ' [Child Added] [ID: ' + childId + ']', child.metadata.title);
+                    // console.log((count++) + ' [Child Added] [ID: ' + childId + ']', child.metadata.title);
 
                     defer.resolve();
 
