@@ -5,6 +5,7 @@ var nodemon = require('gulp-nodemon');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var babel = require('gulp-babel');
+var vfs = require('vinyl-fs');
 
 var BROWSER_SYNC_RELOAD_DELAY = 500;
 var options = {
@@ -18,7 +19,8 @@ var options = {
         images: 'app/assets/images/',
         lang: 'app/lang/',
         data: 'data/',
-        server: 'server/'
+        server: 'server/',
+        node_modules : 'node_modules/'
     },
     dist: {
         root: 'dist/',
@@ -30,7 +32,8 @@ var options = {
         images: 'dist/app/assets/images/',
         lang: 'dist/app/lang/',
         data: 'dist/data/',
-        server: 'dist/server/'
+        server: 'dist/server/',
+        node_modules : 'dist/node_modules/'
     }
 
 };
@@ -40,7 +43,7 @@ var options = {
 gulp.task('nodemon', function (cb) {
     var called = false;
     return nodemon({
-        script: 'app.js',
+        script: 'dist/app.js',
         ignore: [
             '.gitignore',
             'gitignore',
@@ -118,7 +121,12 @@ gulp.task('babel', function () {
         }))
         .pipe(gulp.dest(options.dist.rootApp));
 });
-
+// BABEL
+// =====================================================================================================================
+gulp.task('node_modules_symlink', function () {
+    return vfs.src(options.src.node_modules)
+        .pipe(vfs.symlink(options.dist.node_modules));
+});
 
 // DEFAULT
 // =====================================================================================================================
@@ -130,8 +138,8 @@ gulp.task('default', ['build', 'browser-sync'], function () {
 
 // GULP BUILD
 // =====================================================================================================================
-gulp.task('build', ['sass', 'templates', 'babel'], function () {
-    var fonts, images, icons, lang, server, data, app;
+gulp.task('build', ['node_modules_symlink', 'sass', 'templates', 'babel'], function () {
+    var fonts, images, icons, lang, server, data, app, nodeModules;
     fonts = gulp.src(options.src.fonts + '**/*')
         .pipe(gulp.dest(options.dist.fonts));
 

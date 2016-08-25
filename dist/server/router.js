@@ -12,7 +12,7 @@ var timeOut = 1 * 1000;
 // Login
 // =====================================================================================================================
 router.route('/login')
-    .post(function (req, res) {
+    .post(pause(3000), function (req, res) {
 
         //Parsing body vars with bodyParser
         var email = req.body.email;
@@ -77,7 +77,7 @@ router.route('/logout').get(function (req, res) {
 
 // Forgot Password
 // =====================================================================================================================
-router.route('/forgot').get(function (req, res) {
+router.route('/forgot').get(pause(3000), function (req, res) {
 
     req.session.touch(req.session.id, req.session);
     res.send({
@@ -100,7 +100,7 @@ router.get('/action_req_3', pause(5000), function (req, res) {
 router.get('/action_req_4', pause(5000), function (req, res) {
     res.send({success: false, message: 'No success request'});
 });
-router.get('/action_req_5', pause(70*1000), function (req, res) {
+router.get('/action_req_5', pause(70 * 1000), function (req, res) {
     res.send({success: 200, message: 'Success but to long'});
 });
 

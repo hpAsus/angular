@@ -4,11 +4,7 @@
 // =====================================================================================================================
 (function () {
 
-    var appConfig = function appConfig($mdThemingProvider, localStorageServiceProvider, cfpLoadingBarProvider, $httpProvider) {
-
-        // Loading Bar config
-        // =============================================================================================================
-        cfpLoadingBarProvider.includeSpinner = false;
+    var appConfig = function appConfig($mdThemingProvider, localStorageServiceProvider, $httpProvider) {
 
         // LocalStorage config
         // =============================================================================================================
@@ -33,5 +29,5 @@
         }]);
     };
 
-    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', 'cfpLoadingBarProvider', '$httpProvider', appConfig]);
+    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', '$httpProvider', appConfig]);
 })();

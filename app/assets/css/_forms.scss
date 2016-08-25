@@ -1,5 +1,12 @@
 /* FORMS
 // ==================================================================================================================*/
-.loginForm md-input-container {
+.loginForm {
+
+  md-input-container {
     display: block;
+  }
+
+  .actions-row {
+    padding-top:20px;
+  }
 }
