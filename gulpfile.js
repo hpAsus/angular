@@ -6,6 +6,7 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var babel = require('gulp-babel');
 var vfs = require('vinyl-fs');
+var changed = require('gulp-changed');
 
 var BROWSER_SYNC_RELOAD_DELAY = 500;
 var options = {
@@ -87,10 +88,10 @@ gulp.task('bs-reload', function () {
 
 // SASS
 // =====================================================================================================================
-gulp.task('sass', function () {
+gulp.task('ASSETS_styles', function () {
 	var sassFiles = [
-		'app/assets/css/**/*.+(scss|sass)',
-		'app/actionButtonComponent/scss/*.+(scss|sass)'
+		'app/assets/css/**/*.scss',
+		'app/actionButtonComponent/scss/*.scss'
 	];
 	return gulp.src(sassFiles)
 		.pipe(sass())
@@ -99,39 +100,111 @@ gulp.task('sass', function () {
 		.pipe(browserSync.stream());
 });
 
+// Assets, Langs & Data
+// =====================================================================================================================
+gulp.task('ASSETS_images', function () {
+	return gulp.src(options.src.images + '**/*')
+		.pipe(changed(options.dist.images))
+		.pipe(gulp.dest(options.dist.images))
+		.pipe(browserSync.stream());
+});
+gulp.task('ASSETS_icons', function () {
+	return gulp.src(options.src.icons + '**/*')
+		.pipe(changed(options.dist.icons))
+		.pipe(gulp.dest(options.dist.icons))
+		.pipe(browserSync.stream());
+});
+gulp.task('ASSETS_fonts', function () {
+	return gulp.src(options.src.fonts + '**/*')
+		.pipe(changed(options.dist.fonts))
+		.pipe(gulp.dest(options.dist.fonts))
+		.pipe(browserSync.stream());
+});
+gulp.task('COMMON_lang', function () {
+	return gulp.src(options.src.lang + '**/*')
+		.pipe(changed(options.dist.lang))
+		.pipe(gulp.dest(options.dist.lang))
+		.pipe(browserSync.stream());
+});
+gulp.task('COMMON_data', function () {
+	return gulp.src(options.src.data + '**/*')
+		.pipe(changed(options.dist.data))
+		.pipe(gulp.dest(options.dist.data))
+		.pipe(browserSync.stream());
+});
+
+
 // HTML Templates
 // =====================================================================================================================
-gulp.task('templates', function () {
+gulp.task('COMMON_templates', function () {
 	var templates = [
-		options.src.root + '**/*.html',
-		'!' + options.src.root + 'dist/**/*',
-		'!' + options.src.root + 'node_modules/**/*'
+		options.src.rootApp + '**/*.html'
 	];
-	// console.log(templates);
 	return gulp.src(templates)
-		.pipe(gulp.dest(options.dist.root));
+		.pipe(changed(options.dist.rootApp))
+		.pipe(gulp.dest(options.dist.rootApp));
 });
 
 // BABEL
 // =====================================================================================================================
-gulp.task('babel', function () {
+gulp.task('COMMON_js', function () {
 	return gulp.src(options.src.rootApp + '**/*.js')
+		.pipe(changed(options.dist.rootApp))
 		.pipe(babel({
 			presets: ['es2015']
 		}))
 		.pipe(gulp.dest(options.dist.rootApp));
 });
-// BABEL
+
+// SYM Link For node_modules
 // =====================================================================================================================
-gulp.task('node_modules_symlink', function () {
+gulp.task('COMMON_mods', function () {
 	return vfs.src(options.src.node_modules)
 		.pipe(vfs.symlink(options.dist.node_modules));
 });
 
+// SERVER
+// =====================================================================================================================
+gulp.task('COMMON_server', function () {
+	var serverFiles = [
+		options.src.server + '**/*.js'
+	];
+	return gulp.src(serverFiles)
+		.pipe(changed(options.dist.server))
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(gulp.dest(options.dist.server));
+});
+gulp.task('COMMON_server_app', function () {
+	var serverFiles = [
+		options.src.root + 'app.js'
+	];
+	return gulp.src(serverFiles)
+		.pipe(changed(options.dist.root + 'app.js'))
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(gulp.dest(options.dist.root));
+});
+gulp.task('COMMON_index', function () {
+	var index = [
+		options.src.root + 'index.html'
+	];
+	return gulp.src(index)
+		.pipe(changed(options.dist.root + 'index.html'))
+		.pipe(gulp.dest(options.dist.root));
+});
+
 // DEFAULT
 // =====================================================================================================================
-gulp.task('default', ['build', 'browser-sync'], function () {
-	gulp.watch('app/**/*.+(scss|sass)', ['sass']);
+gulp.task('START', ['build', 'browser-sync'], function () {
+	gulp.watch('app/assets/images/**/*', ['images']);
+	gulp.watch('app/assets/icons/**/*', ['icons']);
+	gulp.watch('app/assets/fonts/**/*', ['fonts']);
+
+	gulp.watch('app/**/*.scss', ['sass']);
+
 	gulp.watch('app/**/*.js', ['babel', 'build', 'bs-reload']);
 	gulp.watch('app/**/*.html', ['templates', 'build', 'bs-reload']);
 
@@ -145,27 +218,14 @@ gulp.task('default', ['build', 'browser-sync'], function () {
 
 // GULP BUILD
 // =====================================================================================================================
-gulp.task('build', ['node_modules_symlink', 'sass', 'templates', 'babel'], function () {
-	var fonts, images, icons, lang, server, data, app, nodeModules;
-	fonts = gulp.src(options.src.fonts + '**/*')
-		.pipe(gulp.dest(options.dist.fonts));
-
-	images = gulp.src(options.src.images + '**/*')
-		.pipe(gulp.dest(options.dist.images));
-
-	icons = gulp.src(options.src.icons + '**/*')
-		.pipe(gulp.dest(options.dist.icons));
-
-	lang = gulp.src(options.src.lang + '**/*')
-		.pipe(gulp.dest(options.dist.lang));
-
-	data = gulp.src(options.src.data + '**/*')
-		.pipe(gulp.dest(options.dist.data));
-
-	app = gulp.src(options.src.root + 'app.js')
-		.pipe(gulp.dest(options.dist.root));
-
-	server = gulp.src(options.src.server + '**/*')
-		.pipe(gulp.dest(options.dist.server));
+var buildPreTasks = [
+	'ASSETS_styles',
+	'ASSETS_images', 'ASSETS_icons', 'ASSETS_fonts',
+	'COMMON_templates', 'COMMON_js',
+	'COMMON_lang', 'COMMON_data', 'COMMON_mods',
+	'COMMON_server', 'COMMON_server_app',
+	'COMMON_index'
+];
+gulp.task('_BUILD', buildPreTasks, function () {
 
 });
