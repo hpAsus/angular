@@ -38,10 +38,9 @@
 
         </md-dialog-content>
 
-        <md-dialog-actions layout="row">
-            <md-button ng-click="vm.cancel()">Cancel</md-button>
-            <span flex></span>
-            <md-button type="submit" ng-disabled="createUserForm.$invalid">Create New User</md-button>
+        <md-dialog-actions class="md-dialog-actions" layout="row">
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="createUserForm.$invalid">Create User</md-button>
+            <md-button class="md-raised" ng-click="vm.cancel()">Cancel</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

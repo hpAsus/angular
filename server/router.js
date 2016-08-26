@@ -12,7 +12,7 @@ var timeOut = 1 * 1000;
 // Login
 // =====================================================================================================================
 router.route('/login')
-    .post(pause(3000), function (req, res) {
+    .post(pause(timeOut), function (req, res) {
 
         //Parsing body vars with bodyParser
         var email = req.body.email;
@@ -24,10 +24,6 @@ router.route('/login')
 
                 //password is correct, we can authorize user
                 req.session.authenticated = true;
-
-                // remove unwanted data from user object
-                delete userObj.password;
-                delete userObj._id;
 
                 // set user data in session
                 req.session.user = userObj;
@@ -57,7 +53,7 @@ router.route('/login')
 
 // Logout
 // =====================================================================================================================
-router.route('/logout').get(pause(3000), function (req, res) {
+router.route('/logout').get(pause(timeOut), function (req, res) {
     req.session.destroy(function (err) {
         if (!err) {
             res.send({
@@ -77,7 +73,7 @@ router.route('/logout').get(pause(3000), function (req, res) {
 
 // Forgot Password
 // =====================================================================================================================
-router.route('/forgot').get(pause(3000), function (req, res) {
+router.route('/forgot').get(pause(timeOut), function (req, res) {
 
     req.session.touch(req.session.id, req.session);
     res.send({

@@ -2,41 +2,55 @@
 // =====================================================================================================================
 (function () {
 
-	var editUserCtrlFunc = function (usersService, $mdDialog, loaderService, toastService) {
-		var vm = this;
+    var editUserCtrlFunc = function (CONST_VALIDATORS, usersService, $mdDialog, loaderService, toastService, login) {
+        var vm = this;
 
-		loaderService.addLoader();
+        //Sending some constants to view
+        vm.nameMaxWords = CONST_VALIDATORS.MAX_WORDS_IN_NAME;
+        vm.minAge = CONST_VALIDATORS.AGE_MINIMUM;
+        vm.maxAge = CONST_VALIDATORS.AGE_MAXIMUM;
+        vm.bioMaxLength = CONST_VALIDATORS.MAX_BIO_LENGTH;
 
-		vm.cancel = function() {
-			$mdDialog.cancel();
-		};
+        loaderService.addLoader();
+        loaderService.showLoader();
 
-		vm.submitForm = function () {
-			loaderService.showLoader();
+        //Get user model from server
+        usersService.getUser(login).then(function (res) {
+            vm.user = res.data.user;
+            loaderService.hideLoader();
+        });
 
-			// usersService.createUser(vm.user)
-			// 	.then(function (res) {
-			// 		if (res.data.success) {
-			// 			toastService.show('User successfully created!');
-			// 			loaderService.hideLoader();
-			// 			$mdDialog.hide('ok');
-			// 		} else {
-			// 			toastService.show(res.data.error.message);
-			// 			loaderService.hideLoader();
-			// 			$mdDialog.hide('error');
-			// 		}
-			// 	})
-			// 	.catch(function (err) {
-			// 		toastService.show(err);
-			// 		loaderService.hideLoader();
-			// 		$mdDialog.hide('error');
-			// 	});
+        // Cancel Dialog
+        vm.cancel = function () {
+            $mdDialog.cancel();
+        };
 
-		};
+        // Submit Edit Form
+        vm.submitForm = function () {
+            loaderService.showLoader();
+            usersService.updateUser(vm.user)
+                .then(function (res) {
+                    if (res.data.success) {
+                        toastService.show('User info successfully edited!');
+                        loaderService.hideLoader();
+                        $mdDialog.hide('ok');
+                    } else {
+                        toastService.show(res.data.error.message);
+                        loaderService.hideLoader();
+                        $mdDialog.hide('error');
+                    }
+                })
+                .catch(function (err) {
+                    toastService.show(err);
+                    loaderService.hideLoader();
+                    $mdDialog.hide('error');
+                });
+
+        };
 
 
-	};
+    };
 
-	angular.module('app.users').controller('editUserCtrl', ['usersService', '$mdDialog', 'loaderService', 'toastService', editUserCtrlFunc]);
+    angular.module('app.users').controller('editUserCtrl', ['CONST_VALIDATORS', 'usersService', '$mdDialog', 'loaderService', 'toastService', 'login', editUserCtrlFunc]);
 
 })();

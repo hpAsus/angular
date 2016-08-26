@@ -10,7 +10,7 @@
 
                 // Validate for letters
                 ctrl.$validators.nameValidator = function (modelValue) {
-                    if (modelValue.length === 0) {
+                    if (!modelValue) {
                         return false;
                     }
                     var REGEXP = new RegExp('^(([A-Z][a-zA-Z]+)|([A-Z][a-zA-Z]+\\s+[A-Z][a-zA-Z]+))$');

@@ -12,10 +12,18 @@
 }
 
 .createUserForm {
-
-	min-width: 270px;
+	min-width: 350px;
 
 	md-input-container {
 		display: block;
 	}
+}
+
+
+.md-dialog-actions {
+	padding: 10px 24px;
+}
+
+.editUserForm {
+	min-width: 450px;
 }

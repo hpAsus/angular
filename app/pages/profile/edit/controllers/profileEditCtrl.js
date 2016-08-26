@@ -10,8 +10,7 @@
         loaderService.addLoader();
         
         vm.user = angular.fromJson(userData.user);
-
-
+        
         //Sending some constants to view
         vm.nameMaxWords = CONST_VALIDATORS.MAX_WORDS_IN_NAME;
         vm.minAge = CONST_VALIDATORS.AGE_MINIMUM;

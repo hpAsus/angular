@@ -7,7 +7,8 @@ var schemas = {
         name: null,
         birthdate: null,
         age: null,
-        bio: null
+        bio: null,
+        role : "user"
     }
 };
 

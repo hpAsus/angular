@@ -107,6 +107,7 @@ UserManager.prototype.updateUser = function(userObj) {
                 "birthdate": userObj.birthdate,
                 "age": userObj.age,
                 "bio": userObj.bio
+                // "role": userObj.role
             }
         }, {}, function (err, numReplaced) {
             if (numReplaced) {
