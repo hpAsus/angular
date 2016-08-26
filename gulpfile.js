@@ -198,22 +198,24 @@ gulp.task('COMMON_index', function () {
 
 // DEFAULT
 // =====================================================================================================================
-gulp.task('START', ['build', 'browser-sync'], function () {
-	gulp.watch('app/assets/images/**/*', ['images']);
-	gulp.watch('app/assets/icons/**/*', ['icons']);
-	gulp.watch('app/assets/fonts/**/*', ['fonts']);
+gulp.task('START', ['_BUILD', 'browser-sync'], function () {
 
-	gulp.watch('app/**/*.scss', ['sass']);
+	//watchers
 
-	gulp.watch('app/**/*.js', ['babel', 'build', 'bs-reload']);
-	gulp.watch('app/**/*.html', ['templates', 'build', 'bs-reload']);
+	//Assets
+	gulp.watch(options.src.images + '**/*', ['ASSETS_images']);
+	gulp.watch(options.src.icons + '**/*',  ['ASSETS_icons']);
+	gulp.watch(options.src.fonts + '**/*',  ['ASSETS_fonts']);
+	gulp.watch(options.src.rootApp + '**/*.scss', ['ASSETS_styles']);
+
+	// Scripts & Templates & Index
+	gulp.watch(options.src.rootApp + '**/*.js', ['COMMON_js', 'bs-reload']);
+	gulp.watch(options.src.rootApp + '**/*.html', ['COMMON_templates', 'bs-reload']);
+	gulp.watch(options.src.root + 'index.html', ['COMMON_index', 'bs-reload']);
 
 	//server
-	// var serverFiles = [
-	// 	'server/**/*.js',
-	// 	'app.js'
-	// ];
-	// gulp.watch(serverFiles, ['babel', 'build', 'bs-reload']);
+	gulp.watch(options.src.server + '**/*.js', ['COMMON_server', 'bs-reload']);
+	gulp.watch(options.src.root + 'app.js', ['COMMON_server_app', 'bs-reload']);
 });
 
 // GULP BUILD

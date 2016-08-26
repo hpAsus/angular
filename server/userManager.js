@@ -27,8 +27,8 @@ UserManager.prototype.set = function (name, value) {
 // Sanitize data
 // =====================================================================================================================
 UserManager.prototype.sanitize = function (data) {
-    data = data || {};
-    schema = schemas.user;
+    var data = data || {};
+    var schema = schemas.user;
     return _.pick(_.defaults(data, schema), _.keys(schema));
 };
 
