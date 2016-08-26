@@ -6,14 +6,18 @@
 
     var logoutUser = function logoutUser($http, $state, localStorageService, authService, toastService, loaderService) {
 
-        authService.userLogout().then(function (res) {
+        loaderService.addLoader();
+        loaderService.showLoader();
 
+        authService.userLogout().then(function (res) {
             if (res.data.success) {
 
                 //successfully deleted session
                 //delete local user info
                 localStorageService.remove('loggedIn');
                 localStorageService.remove('user');
+
+                loaderService.hideLoader();
 
                 $state.go('login');
             } else {

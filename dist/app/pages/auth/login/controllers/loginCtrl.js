@@ -41,6 +41,7 @@
                     toastService.show(res.data.error.message);
                 }
             }).catch(function (err) {
+
                 loaderService.hideLoader();
                 // Something wrong with serverside, show error toast
                 toastService.show(err.toString());

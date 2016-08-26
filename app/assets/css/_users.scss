@@ -10,3 +10,12 @@
 .cell-actions {
 	text-align: right;
 }
+
+.createUserForm {
+
+	min-width: 270px;
+
+	md-input-container {
+		display: block;
+	}
+}

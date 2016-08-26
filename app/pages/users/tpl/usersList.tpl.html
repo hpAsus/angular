@@ -4,7 +4,7 @@
     </h2>
 </md-toolbar>
 <md-content>
-    <md-button class="md-raised" ng-click="vm.createNewUser($event)">Create New User</md-button>
+    <md-button class="md-raised" ng-click="vm.createNewUser()">Create New User</md-button>
 </md-content>
 
 <md-content>
@@ -17,7 +17,7 @@
     <div class="t-cell cell-age">{{user.age}}</div>
     <div class="t-cell cell-actions">
         <md-button class="md-raised" ng-click="vm.editUser(user.email)">Edit User</md-button>
-        <md-button class="md-raised md-warn" ng-click="vm.deleteUser($event, user.email)">Delete User</md-button>
+        <md-button class="md-raised md-warn" ng-click="vm.deleteUser(user.email)">Delete User</md-button>
     </div>
 </div>
 </div>

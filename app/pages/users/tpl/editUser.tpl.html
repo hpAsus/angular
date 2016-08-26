@@ -1,8 +1,8 @@
-<md-dialog aria-label="Create New User">
-    <form name="createUserForm" class="createUserForm" method="post" ng-submit="vm.submitForm()" novalidate>
+<md-dialog aria-label="Edit User">
+    <form name="editUserForm" class="editUserForm" method="post" ng-submit="vm.submitForm()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Create New User</h2>
+                <h2>Edit User</h2>
                 <span flex></span>
                 <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
                 <md-button class="md-icon-button" ng-click="vm.cancel()">X</md-button>
@@ -17,7 +17,7 @@
                     <input type="text" name="email" required="required" ng-model="vm.user.email"
                            at-email-validator/>
 
-                    <div ng-messages="createUserForm['email'].$error">
+                    <div ng-messages="editUserForm['email'].$error">
                         <div ng-message="required" translate="AUTH.ERRORS.EMAIL_REQUIRED"></div>
                         <div ng-message="emailValidator" translate="AUTH.ERRORS.EMAIL_INVALID"></div>
                     </div>
@@ -27,7 +27,7 @@
                     <label translate="AUTH.LABELS.PASSWORD">Password</label>
                     <input type="password" required="required" name="password" ng-model="vm.user.password"/>
 
-                    <div ng-messages="createUserForm['password'].$error">
+                    <div ng-messages="editUserForm['password'].$error">
                         <div ng-message="required" translate="AUTH.ERRORS.PASS_REQUIRED"></div>
                     </div>
                 </md-input-container>
@@ -41,7 +41,7 @@
         <md-dialog-actions layout="row">
             <md-button ng-click="vm.cancel()">Cancel</md-button>
             <span flex></span>
-            <md-button type="submit" ng-disabled="createUserForm.$invalid">Create New User</md-button>
+            <md-button type="submit" ng-disabled="editUserForm.$invalid">Update User</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

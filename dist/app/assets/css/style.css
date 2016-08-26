@@ -215,3 +215,8 @@ html, body {
 
 .cell-actions {
   text-align: right; }
+
+.createUserForm {
+  min-width: 270px; }
+  .createUserForm md-input-container {
+    display: block; }

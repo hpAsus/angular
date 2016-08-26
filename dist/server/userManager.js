@@ -3,9 +3,6 @@ var _ = require("lodash");
 
 //Cache Database
 var db = require("./db.js");
-//var NodeCache = require( "node-cache" );
-//var cache = new NodeCache( { checkperiod: 0 } );
-//var db = require('../data/users.json');
 
 // USER MODEL Structure
 // =====================================================================================================================
@@ -38,25 +35,22 @@ UserManager.prototype.sanitize = function (data) {
 // Create user
 // =====================================================================================================================
 UserManager.prototype.createUser = function () {
-
     var self = this;
-
-    // todo:validation
-    // before inserting check if already exists
-    db.find(self.data, function (err, found) {
-        if (!found.length) {
-
-            //inserting
-            db.insert(self.data, function (err, newData) {
-                if (err) {
-                    console.log('[Error] ', err);
-                } else {
-                    console.log('[SUCCESS] Added new record: ', newData);
-                }
-            });
-        } else {
-            console.log('[ERROR] Already have such record!');
-        }
+    return new Promise(function (resolve, reject) {
+        db.find(self.data, function (err, found) {
+            if (!found.length) {
+                //inserting
+                db.insert(self.data, function (err, newData) {
+                    if (err) {
+                        reject('[Error] ', err);
+                    } else {
+                        resolve(newData);
+                    }
+                });
+            } else {
+                reject('[ERROR] Already have such record!');
+            }
+        });
     });
 };
 
@@ -103,7 +97,6 @@ UserManager.prototype.getUser = function(email) {
 // Update User
 // =====================================================================================================================
 UserManager.prototype.updateUser = function(userObj) {
-
     return new Promise(function (resolve, reject) {
         db.update({
             email: userObj.email
@@ -113,7 +106,7 @@ UserManager.prototype.updateUser = function(userObj) {
                 "name": userObj.name,
                 "birthdate": userObj.birthdate,
                 "age": userObj.age,
-                "bio": userObj.bio,
+                "bio": userObj.bio
             }
         }, {}, function (err, numReplaced) {
             if (numReplaced) {
@@ -125,6 +118,24 @@ UserManager.prototype.updateUser = function(userObj) {
         });
 
     });
+};
+
+// Update User
+// =====================================================================================================================
+UserManager.prototype.deleteUser = function(login) {
+	return new Promise(function (resolve, reject) {
+		db.remove({
+			email: login
+		}, {}, function (err, numRemoved) {
+			if (numRemoved) {
+				db.persistence.compactDatafile();
+				resolve(numRemoved);
+			} else {
+				reject(new Error('Error! User not deleted.'));
+			}
+		});
+
+	});
 };
 
 // GET ALL USERS
