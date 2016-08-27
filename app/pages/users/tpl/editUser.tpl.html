@@ -11,7 +11,20 @@
 
         <md-dialog-content ng-cloak>
             <div class="md-dialog-content">
-                <input type="hidden" name="user.email" ng-model="vm.user.name">
+
+                <md-input-container class="md-block" ng-if="vm.user.role !== vm.adminRole">
+                    <label for="email" translate="PROFILE.LABELS.LOGIN_LABEL"></label>
+                    <input type="text" id="email" name="user.email" ng-model="vm.user.email" required="required" at-email-validator>
+                    <div ng-messages="editUserForm['user.email'].$error" multiple>
+                        <div ng-message="required" translate="AUTH.ERRORS.EMAIL_REQUIRED"></div>
+                        <div ng-message="emailValidator" translate="AUTH.ERRORS.EMAIL_INVALID"></div>
+                    </div>
+                </md-input-container>
+
+
+                <input type="hidden" name="user.email" ng-model="vm.user.email" ng-if="vm.user.role == vm.adminRole">
+                <input type="hidden" name="user.role" ng-model="vm.user.role">
+
                 <md-input-container class="md-block">
                     <label for="name" translate="PROFILE.LABELS.NAME_LABEL"></label>
                     <input type="text" id="name" name="user.name" ng-model="vm.user.name" required="required"
@@ -24,6 +37,8 @@
                         <div ng-message="nameWords" translate="PROFILE.ERRORS.NAME_WORDS_VALIDATOR" translate-values="{maxWords: vm.nameMaxWords}"></div>
                     </div>
                 </md-input-container>
+
+
 
                 <md-input-container class="md-block">
                     <label for="birthDate" translate="PROFILE.LABELS.BIRTHDATE_LABEL"></label>

@@ -31,7 +31,7 @@
     "VIEWTAB": "Ваш профиль",
     "EDITTAB": "Редактировать",
     "LABELS": {
-      "LOGIN_LABEL": "Ваш логин",
+      "LOGIN_LABEL": "Логин (E-mail)",
       "NAME_LABEL": "Имя на сайте",
       "BIRTHDATE_LABEL": "Дата рождения",
       "AGE_LABEL": "Возраст на сайте",

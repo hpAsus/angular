@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var editUserCtrlFunc = function (CONST_VALIDATORS, usersService, $mdDialog, loaderService, toastService, login) {
+    var editUserCtrlFunc = function (CONST_VALIDATORS, CONST_USER_ROLES, usersService, $mdDialog, loaderService, toastService, login, userDataService) {
         var vm = this;
 
         //Sending some constants to view
@@ -13,6 +13,10 @@
 
         loaderService.addLoader();
         loaderService.showLoader();
+
+        //check if is admin
+        vm.isAdmin = userDataService.isAdmin(userDataService.getUserRole());
+        vm.adminRole = CONST_USER_ROLES.ROLE_ADMIN;
 
         //Get user model from server
         usersService.getUser(login).then(function (res) {
@@ -51,6 +55,6 @@
 
     };
 
-    angular.module('app.users').controller('editUserCtrl', ['CONST_VALIDATORS', 'usersService', '$mdDialog', 'loaderService', 'toastService', 'login', editUserCtrlFunc]);
+    angular.module('app.users').controller('editUserCtrl', ['CONST_VALIDATORS', 'CONST_USER_ROLES', 'usersService', '$mdDialog', 'loaderService', 'toastService', 'login', 'userDataService', editUserCtrlFunc]);
 
 })();

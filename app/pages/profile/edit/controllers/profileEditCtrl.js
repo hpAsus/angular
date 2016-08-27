@@ -10,7 +10,7 @@
         loaderService.addLoader();
         
         vm.user = userDataService.getUserData();
-        
+
         //Sending some constants to view
         vm.nameMaxWords = CONST_VALIDATORS.MAX_WORDS_IN_NAME;
         vm.minAge = CONST_VALIDATORS.AGE_MINIMUM;
@@ -25,7 +25,7 @@
 
             loaderService.showLoader();
 
-            profileService.updateUserProfile(this.user)
+            profileService.updateUserProfile(vm.user)
                 .then(function (data) {
 
                     userDataService.setUserData(data.data.user);

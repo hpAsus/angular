@@ -31,7 +31,7 @@
     "VIEWTAB": "Your profile",
     "EDITTAB": "Edit profile",
     "LABELS": {
-      "LOGIN_LABEL": "Your Login",
+      "LOGIN_LABEL": "Login (E-mail)",
       "NAME_LABEL": "Display Name",
       "BIRTHDATE_LABEL": "Birth Date",
       "AGE_LABEL": "Display age",

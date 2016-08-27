@@ -5,6 +5,12 @@
     var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService) {
         var vm = this;
 
+        // If not Authorized - go to Login State
+        if (!userDataService.isAuthorized()) {
+            $state.go('login');
+        }
+
+
         // Clear loaders
         // loaderService.clearLoaders();
         loaderService.addLoader();

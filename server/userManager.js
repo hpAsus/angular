@@ -98,18 +98,22 @@ UserManager.prototype.getUser = function(email) {
 // =====================================================================================================================
 UserManager.prototype.updateUser = function(userObj) {
 	var login = userObj.email;
+    var userID = userObj._id;
+
+    console.log(userObj);
 
     return new Promise(function (resolve, reject) {
         db.update({
-            email: userObj.email
+            // email: userObj.email
+            _id: userID
         }, {
             $set: {
                 "email": userObj.email,
                 "name": userObj.name,
                 "birthdate": userObj.birthdate,
                 "age": userObj.age,
-                "bio": userObj.bio
-                // "role": userObj.role
+                "bio": userObj.bio,
+                "role": userObj.role
             }
         }, {}, function (err, numReplaced) {
             if (numReplaced) {

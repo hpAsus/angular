@@ -18,15 +18,11 @@ apiRouter.route('/checksession')
 
             userManager.getUser(req.session.user.email)
                 .then(function (data) {
-                    delete data.password;
-                    delete data._id;
-
                     req.session.touch(req.session.id, req.session);
                     res.send({
                         success: true,
                         user: data
                     });
-
                 })
                 .catch(function (err) {
                     req.session.touch(req.session.id, req.session);
@@ -127,6 +123,7 @@ apiRouter.route('/users/:user_id')
                         user: data
                     });
                 }).catch(function (err) {
+
                 req.session.touch(req.session.id, req.session);
                 res.send({
                     success: false,
