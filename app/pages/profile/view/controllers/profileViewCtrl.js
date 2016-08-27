@@ -12,7 +12,6 @@
         //setting current tab
         $rootScope.currentNavItem = $state.current.name;
 
-        vm.user = currentUser;
         profileService.getUserProfile(currentUser.email)
             .then(function(res) {
                 vm.user = res.data.user;

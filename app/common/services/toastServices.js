@@ -6,7 +6,12 @@
 
         //
         this.show = function (message) {
-            return $mdToast.show($mdToast.simple().position('top right').textContent(message));
+            return $mdToast.show(
+                $mdToast.simple()
+                    .textContent(message)
+                    .position('top right')
+                    .hideDelay(5000)
+            );
         };
 
     };

@@ -7,7 +7,7 @@
     var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService) {
 
         var vm = this;
-
+        
         // Add loader
         loaderService.addLoader();
 
@@ -31,7 +31,7 @@
 	                    userDataService.authorizeUser();
 
                         $state.go('viewProfile');
-                        loaderService.hideLoader();
+                        // loaderService.hideLoader();
                     } else {
                         loaderService.hideLoader();
                         // Show toast with error message

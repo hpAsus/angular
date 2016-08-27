@@ -2,56 +2,61 @@
 // =====================================================================================================================
 (function () {
 
-	var userDataFunc = function ($translate, localStorageService) {
-		var self = this;
+    var userDataFunc = function (CONST_USER_ROLES, $translate, localStorageService) {
+        var self = this;
 
-		self._user = null;
-		self._authorized = false;
-		self._language = localStorageService.get('language') || $translate.preferredLanguage();
+        self._user = null;
+        self._authorized = false;
+        self._language = localStorageService.get('language') || $translate.preferredLanguage();
 
-		// Setting User Data Object
-		self.setUserData = function (userObj) {
-			self._user = userObj;
-		};
+        // Setting User Data Object
+        self.setUserData = function (userObj) {
+            self._user = userObj;
+        };
 
-		// Get User Data
-		self.getUserData = function () {
-			return self._user;
-		};
+        // Get User Data
+        self.getUserData = function () {
+            return self._user;
+        };
 
-		// Clear User Data
-		self.clearUserData = function () {
-			self._user = null;
-			self._authorized = false;
-		};
+        // Clear User Data
+        self.clearUserData = function () {
+            self._user = null;
+            self._authorized = false;
+        };
 
-		// Authorize User
-		self.authorizeUser = function () {
-			self._authorized = true;
-		};
+        // Authorize User
+        self.authorizeUser = function () {
+            self._authorized = true;
+        };
 
-		// Check if authorized
-		self.isAuthorized = function () {
-			return self._authorized;
-		};
+        // Check if authorized
+        self.isAuthorized = function () {
+            return self._authorized;
+        };
 
-		// Get User Role
-		self.getUserRole = function () {
-			return (self._user) ? self._user.role : null;
-		};
+        // Get User Role
+        self.getUserRole = function () {
+            return (self._user) ? self._user.role : null;
+        };
 
-		// Set Language
-		self.setUserLanguage =function (lang) {
-			self._language = lang;
-		};
+        // If Is Admin
+        self.isAdmin = function (userRole) {
+            return userRole === CONST_USER_ROLES.ROLE_ADMIN;
+        };
 
-		// Get User Language
-		this.getUserLanguage = function () {
-			return self._language;
-		}
+        // Set Language
+        self.setUserLanguage = function (lang) {
+            self._language = lang;
+        };
 
-	};
+        // Get User Language
+        this.getUserLanguage = function () {
+            return self._language;
+        }
 
-	angular.module('app').service('userDataService', ['$translate', 'localStorageService', userDataFunc]);
+    };
+
+    angular.module('app').service('userDataService', ['CONST_USER_ROLES', '$translate', 'localStorageService', userDataFunc]);
 
 })();

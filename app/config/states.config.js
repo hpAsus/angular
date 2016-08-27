@@ -34,29 +34,43 @@
             // =========================================================================================================
             .state('dashboard', {
                 abstract: true,
+                resolve: {
+                    userSession: function (profileService, userDataService) {
+                        return profileService.checkUserSession()
+                            .then(function (res) {
+                                if (res.data.success) {
+                                    userDataService.setUserData(res.data.user);
+                                    userDataService.authorizeUser();
+                                }
+                                return res.data;
+                            })
+                            .catch(function (err) {
+                                return null;
+                            });
+                    }
+                },
                 data: {
                     secure: true,
                     roles: [CONST_USER_ROLES.ROLE_USER, CONST_USER_ROLES.ROLE_ADMIN]
                 },
                 templateUrl: 'app/pages/dashboard/tpl/dashboard.tpl.html',
                 controller: 'dashboardCtrl',
-                controllerAs: 'dashboard'
+                controllerAs: 'vm'
             })
 
-			// User Management
-			// =========================================================================================================
-			.state('userList', {
-				parent: 'dashboard',
-				url: '/users-list',
+            // User Management
+            // =========================================================================================================
+            .state('userList', {
+                parent: 'dashboard',
+                url: '/users-list',
                 data: {
                     secure: true,
-                    // roles: ['padovan']
                     roles: [CONST_USER_ROLES.ROLE_ADMIN]
                 },
-				templateUrl: 'app/pages/users/tpl/usersList.tpl.html',
-				controller: 'usersListCtrl',
-				controllerAs: 'vm'
-			})
+                templateUrl: 'app/pages/users/tpl/usersList.tpl.html',
+                controller: 'usersListCtrl',
+                controllerAs: 'vm'
+            })
 
             // Treeview Pages
             // =========================================================================================================

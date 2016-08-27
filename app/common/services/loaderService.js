@@ -23,6 +23,8 @@
 
                 this._loader = angular.element(loaderContainer);
                 body.append(this._loader);
+            } else {
+                this.hideLoader();
             }
 
         };
@@ -35,6 +37,16 @@
         //Hide loader
         this.hideLoader = function () {
             this._loader.addClass('none');
+        };
+
+        // Clear loaders on page
+        this.clearLoaders = function () {
+            var loaders = document.getElementsByClassName('loader-overlay');
+            if (loaders.length) {
+                // console.log(loaders[0]);
+                // loaders[0].addClass('none');
+                document.body.removeChild(loaders[0]);
+            }
         };
 
     };

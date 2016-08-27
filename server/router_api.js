@@ -21,12 +21,10 @@ apiRouter.route('/checksession')
                     delete data.password;
                     delete data._id;
 
-                    res.setTimeout(timeOut, function () {
-                        req.session.touch(req.session.id, req.session);
-                        res.send({
-                            success: true,
-                            user: data
-                        });
+                    req.session.touch(req.session.id, req.session);
+                    res.send({
+                        success: true,
+                        user: data
                     });
 
                 })
