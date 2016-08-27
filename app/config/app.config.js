@@ -2,7 +2,11 @@
 // =====================================================================================================================
 (function () {
 
-    var appConfig = function ($mdThemingProvider, localStorageServiceProvider, $httpProvider) {
+    var appConfig = function ($mdThemingProvider, localStorageServiceProvider, $httpProvider, userDataService) {
+
+        // LocalStorage config
+        // =============================================================================================================
+        console.log('FIRED');
 
         // LocalStorage config
         // =============================================================================================================
@@ -34,6 +38,6 @@
 
     };
 
-    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', '$httpProvider', appConfig]);
+    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', '$httpProvider', 'userDataService', appConfig]);
 
 })();

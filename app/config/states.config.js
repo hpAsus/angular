@@ -1,7 +1,7 @@
 //Config for ui router
 // =====================================================================================================================
 (function () {
-    var appConfigFunc = function ($stateProvider, $urlRouterProvider) {
+    var appConfigFunc = function ($stateProvider, $urlRouterProvider, CONST_USER_ROLES) {
 
         $urlRouterProvider.otherwise('/');
 
@@ -34,15 +34,9 @@
             // =========================================================================================================
             .state('dashboard', {
                 abstract: true,
-                resolve: {
-                    userData: function (profileService) {
-                        return profileService.checkUserSession().then(function (res) {
-                            return res.data;
-                        });
-                    }
-                },
                 data: {
-                    secure: true
+                    secure: true,
+                    roles: [CONST_USER_ROLES.ROLE_USER, CONST_USER_ROLES.ROLE_ADMIN]
                 },
                 templateUrl: 'app/pages/dashboard/tpl/dashboard.tpl.html',
                 controller: 'dashboardCtrl',
@@ -54,6 +48,11 @@
 			.state('userList', {
 				parent: 'dashboard',
 				url: '/users-list',
+                data: {
+                    secure: true,
+                    // roles: ['padovan']
+                    roles: [CONST_USER_ROLES.ROLE_ADMIN]
+                },
 				templateUrl: 'app/pages/users/tpl/usersList.tpl.html',
 				controller: 'usersListCtrl',
 				controllerAs: 'vm'
@@ -105,6 +104,6 @@
             });
     };
 
-    angular.module('app').config(['$stateProvider', '$urlRouterProvider', appConfigFunc]);
+    angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'CONST_USER_ROLES', appConfigFunc]);
 
 })();

@@ -97,6 +97,8 @@ UserManager.prototype.getUser = function(email) {
 // Update User
 // =====================================================================================================================
 UserManager.prototype.updateUser = function(userObj) {
+	var login = userObj.email;
+
     return new Promise(function (resolve, reject) {
         db.update({
             email: userObj.email
@@ -112,7 +114,17 @@ UserManager.prototype.updateUser = function(userObj) {
         }, {}, function (err, numReplaced) {
             if (numReplaced) {
                 db.persistence.compactDatafile();
-                resolve(numReplaced);
+
+	            db.findOne({
+		            email: login
+	            }, function (err, found) {
+		            if (found) {
+			            resolve(found);
+		            } else {
+			            reject(new Error('User not found'));
+		            }
+	            });
+
             } else {
                 reject(new Error('User not found'));
             }

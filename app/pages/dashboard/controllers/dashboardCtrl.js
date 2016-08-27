@@ -2,25 +2,19 @@
 // =====================================================================================================================
 (function () {
 
-    var dashboardCtrlFunc = function ($scope, $rootScope, userData, localStorageService) {
+    var dashboardCtrlFunc = function (userDataService) {
+        var vm = this;
 
-
-
-        // if we have session on serverside - pass data to local variables
-        if (userData.success) {
-
-            // update on localstorage
-            localStorageService.set('loggedIn', true);
-            localStorageService.set('user', angular.toJson(userData.user));
+	    if (userDataService.getUserData()) {
 
             // set locals
-            this.loggedIn = localStorageService.get('loggedIn');
-            this.user = angular.fromJson(localStorageService.get('user'));
+            vm.loggedIn = userDataService.isAuthorized();
+            vm.user = userDataService.getUserData();
 
         }
 
     };
 
-    angular.module('app').controller('dashboardCtrl', ['$scope', '$rootScope', 'userData', 'localStorageService', dashboardCtrlFunc]);
+    angular.module('app').controller('dashboardCtrl', ['userDataService', dashboardCtrlFunc]);
 
 })();

@@ -1,6 +1,12 @@
 // MAIN APP CONSTANTS
 // =====================================================================================================================
 (function () {
+
+    angular.module('app').constant('CONST_USER_ROLES', {
+        'ROLE_USER': 'user',
+        'ROLE_ADMIN': 'admin'
+    });
+
     angular.module('app').constant('CONST_VALIDATORS', {
         // Age validator
         'AGE_MINIMUM': 18,

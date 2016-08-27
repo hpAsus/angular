@@ -16,9 +16,11 @@
         // reset password
         this.resetPassword = function (login) {
             return $http({
-                url: '/forgot',
-                method: 'GET',
-                data: login
+	            method: 'GET',
+	            url: '/forgot',
+                params: {
+	                user: login
+                }
             });
         };
 
@@ -28,6 +30,22 @@
                 method: 'GET',
                 url: '/logout'
             });
+        };
+
+        //check if user has access
+        this.checkUserAccess = function (userRole, accessRoles) {
+	        if (accessRoles) {
+		        var access = accessRoles.findIndex(function (role) {
+			        return role === userRole;
+		        });
+	        } else {
+		        var access = false;
+	        }
+
+	        return !!access;
+            // return (accessRoles) ? !!accessRoles.findIndex(function (role) {
+            //     return role === userRole;
+            // }) : false;
         };
     };
 

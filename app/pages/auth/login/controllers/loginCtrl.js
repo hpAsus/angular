@@ -4,13 +4,12 @@
 
 (function () {
 
-    var loginUser = function ($rootScope, $http, $state, localStorageService, authService, loaderService, toastService) {
+    var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService) {
 
         var vm = this;
 
         // Add loader
         loaderService.addLoader();
-
 
         // Defaul user data is empty
         vm.user = {};
@@ -21,21 +20,18 @@
         }
 
         vm.submitLoginForm = function () {
-            loaderService.showLoader();
+            
+	        loaderService.showLoader();
 
-            vm.loading = true;
             authService.userLogin(vm.user)
                 .then(function (res) {
-
                     if (res.data.success) {
 
-                        // setting user to localStorage
-                        localStorageService.set('loggedIn', true);
-                        localStorageService.set('user', angular.toJson(res.data.user));
+	                    userDataService.setUserData(res.data.user);
+	                    userDataService.authorizeUser();
 
                         $state.go('viewProfile');
                         loaderService.hideLoader();
-
                     } else {
                         loaderService.hideLoader();
                         // Show toast with error message
@@ -53,6 +49,14 @@
 
     };
 
-    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$state', 'localStorageService', 'authService', 'loaderService', 'toastService', loginUser]);
+    angular.module('app.auth').controller('loginCtrl', [
+	    '$rootScope',
+	    '$http',
+	    '$state',
+	    'authService',
+	    'loaderService',
+	    'toastService',
+	    'userDataService',
+	    loginUser]);
 
 })();

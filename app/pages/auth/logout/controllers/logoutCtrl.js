@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var logoutUser = function ($http, $state, localStorageService, authService, toastService, loaderService) {
+    var logoutUser = function ($http, $state, authService, toastService, loaderService, userDataService) {
 
         loaderService.addLoader();
 	    loaderService.showLoader();
@@ -10,10 +10,8 @@
         authService.userLogout().then(function (res) {
             if (res.data.success) {
 
-                //successfully deleted session
-                //delete local user info
-                localStorageService.remove('loggedIn');
-                localStorageService.remove('user');
+	            // Clearing Local User Data
+	            userDataService.clearUserData();
 
                 loaderService.hideLoader();
 
@@ -25,6 +23,6 @@
 
     };
 
-    angular.module('app').controller('logoutCtrl', ['$http', '$state', 'localStorageService', 'authService', 'toastService', 'loaderService', logoutUser]);
+    angular.module('app').controller('logoutCtrl', ['$http', '$state', 'authService', 'toastService', 'loaderService', 'userDataService', logoutUser]);
 
 })();

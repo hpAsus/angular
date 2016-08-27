@@ -181,7 +181,7 @@ gulp.task('COMMON_server_app', function () {
 		options.src.root + 'app.js'
 	];
 	return gulp.src(serverFiles)
-		.pipe(changed(options.dist.root + 'app.js'))
+		.pipe(changed(options.dist.root))
 		.pipe(babel({
 			presets: ['es2015']
 		}))
@@ -192,7 +192,7 @@ gulp.task('COMMON_index', function () {
 		options.src.root + 'index.html'
 	];
 	return gulp.src(index)
-		.pipe(changed(options.dist.root + 'index.html'))
+		.pipe(changed(options.dist.root))
 		.pipe(gulp.dest(options.dist.root));
 });
 

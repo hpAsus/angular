@@ -28,17 +28,14 @@ router.route('/login')
                 // set user data in session
                 req.session.user = userObj;
 
-                res.setTimeout(timeOut, function () {
-                    req.session.touch(req.session.id, req.session);
-                    res.send({
-                        success: true,
-                        user: userObj
-                    });
+                req.session.touch(req.session.id, req.session);
+                res.send({
+                    success: true,
+                    user: userObj
                 });
 
             })
             .catch(function (err) {
-                //not authorized
                 req.session.touch(req.session.id, req.session);
                 res.send({
                     success: false,
@@ -75,11 +72,25 @@ router.route('/logout').get(pause(timeOut), function (req, res) {
 // =====================================================================================================================
 router.route('/forgot').get(pause(timeOut), function (req, res) {
 
-    req.session.touch(req.session.id, req.session);
-    res.send({
-        success: true,
-        message: 'Activation link has been sent to your email'
-    });
+	req.session.touch(req.session.id, req.session);
+
+    userManager.getUser(req.query.user)
+	    .then(function (user) {
+		    res.send({
+			    success: true,
+			    password: user.password
+		    });
+	    })
+	    .catch(function (err) {
+		    res.send({
+			    success: false,
+			    error: {
+				    code: 500, //todo: change code
+				    message: '[ERROR] ' + err
+			    }
+		    });
+	    });
+
 });
 
 // Action button test requests

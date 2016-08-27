@@ -2,9 +2,9 @@
 // =====================================================================================================================
 (function () {
 
-    var profileViewCtrlFunc = function ($http, $scope, $rootScope, $state, localStorageService, profileService ) {
+    var profileViewCtrlFunc = function ($rootScope, $state, userDataService, profileService ) {
         var vm = this;
-        var currentUser = angular.fromJson(localStorageService.get('user'));
+        var currentUser = userDataService.getUserData();
 
         vm.loader = true;
         vm.showContent = false;
@@ -12,6 +12,7 @@
         //setting current tab
         $rootScope.currentNavItem = $state.current.name;
 
+        vm.user = currentUser;
         profileService.getUserProfile(currentUser.email)
             .then(function(res) {
                 vm.user = res.data.user;
@@ -19,6 +20,6 @@
                 vm.showContent = true;
             });
     };
-    angular.module('app.profile').controller('profileViewCtrl', ['$http', '$scope', '$rootScope', '$state', 'localStorageService', 'profileService', profileViewCtrlFunc]);
+    angular.module('app.profile').controller('profileViewCtrl', ['$rootScope', '$state', 'userDataService', 'profileService', profileViewCtrlFunc]);
 
 })();

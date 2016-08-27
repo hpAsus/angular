@@ -3,13 +3,13 @@
 
 (function () {
 
-    var profileEditCtrlFunc = function (CONST_VALIDATORS, loaderService, $state, $rootScope, toastService, userData, profileService) {
+    var profileEditCtrlFunc = function (CONST_VALIDATORS, loaderService, $state, $rootScope, toastService, userDataService, profileService) {
 
         var vm = this;
 
         loaderService.addLoader();
         
-        vm.user = angular.fromJson(userData.user);
+        vm.user = userDataService.getUserData();
         
         //Sending some constants to view
         vm.nameMaxWords = CONST_VALIDATORS.MAX_WORDS_IN_NAME;
@@ -26,7 +26,10 @@
             loaderService.showLoader();
 
             profileService.updateUserProfile(this.user)
-                .then(function () {
+                .then(function (data) {
+
+                    userDataService.setUserData(data.data.user);
+
                     $state.go('viewProfile');
                     loaderService.hideLoader();
                 }).catch(function (err) {
@@ -36,7 +39,7 @@
         };
     };
 
-    angular.module('app.profile').controller('profileEditCtrl', ['CONST_VALIDATORS', 'loaderService', '$state', '$rootScope', 'toastService', 'userData', 'profileService', profileEditCtrlFunc]);
+    angular.module('app.profile').controller('profileEditCtrl', ['CONST_VALIDATORS', 'loaderService', '$state', '$rootScope', 'toastService', 'userDataService', 'profileService', profileEditCtrlFunc]);
 
 })();
 

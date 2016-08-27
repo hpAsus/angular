@@ -23,12 +23,12 @@
         };
 
         // check user session
-        this.checkUserSession = function() {
-            return $http({
-                method: 'GET',
-                url: '/api/checksession'
-            });
-        };
+        // this.checkUserSession = function() {
+        //     return $http({
+        //         method: 'GET',
+        //         url: '/api/checksession'
+        //     });
+        // };
 
     };
 
