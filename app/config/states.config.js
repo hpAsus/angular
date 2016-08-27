@@ -58,6 +58,15 @@
                 controllerAs: 'vm'
             })
 
+            // Feedback Page
+            // =========================================================================================================
+            .state('feedback', {
+                parent: 'dashboard',
+                url: '/feedback',
+                templateUrl: 'app/pages/feedback/tpl/feedback.tpl.html',
+                controller: 'feedbackCtrl',
+                controllerAs: 'vm'
+            })
             // User Management
             // =========================================================================================================
             .state('userList', {

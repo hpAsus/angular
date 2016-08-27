@@ -68,5 +68,8 @@
   },
   "USERS": {
     "MANAGE_TITLE": "Manage users"
+  },
+  "FEEDBACK": {
+    "TITLE": "Feedback"
   }
 }

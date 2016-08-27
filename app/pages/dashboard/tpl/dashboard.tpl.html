@@ -23,6 +23,7 @@
         <md-nav-item md-nav-sref="treeview" name="treeview">{{ 'TREEVIEW.TITLE' | translate }}</md-nav-item>
         <md-nav-item md-nav-sref="actionTest" name="actionTest">{{ 'ACTIONTEST.TITLE' | translate }}</md-nav-item>
         <md-nav-item md-nav-sref="userList" name="userList" ng-if="vm.isAdmin">{{ 'USERS.MANAGE_TITLE' | translate }}</md-nav-item>
+        <md-nav-item md-nav-sref="feedback" name="feedback" ng-if="vm.isAdmin">{{ 'FEEDBACK.TITLE' | translate }}</md-nav-item>
     </md-nav-bar>
 
     <md-content class="dashboard-content">
