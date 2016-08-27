@@ -1,20 +1,20 @@
-// Bio Validator
+// Message Validator
 // =====================================================================================================================
 (function () {
-    var atBioValidatorFunc = function (CONST) {
+    var atMessageValidatorFunc = function (CONST) {
         return {
             require: 'ngModel',
             restrict: 'A',
             link: function (scope, elem, attrs, ctrl) {
 
                 // check for minimum length
-                ctrl.$validators.bioValidator = function (modelValue) {
+                ctrl.$validators.messageValidator = function (modelValue) {
                     if (modelValue) {
-                        return modelValue.length >= CONST.MIN_BIO_LENGTH;
+                        return modelValue.length >= CONST.MIN_MESSAGE_LENGTH;
                     }
                 };
             }
         };
     };
-    angular.module('app.profile').directive('atBioValidator', ['CONST', atBioValidatorFunc]);
+    angular.module('app.feedback').directive('atMessageValidator', ['CONST', atMessageValidatorFunc]);
 })();

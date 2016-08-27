@@ -10,9 +10,7 @@
             $state.go('login');
         }
 
-
         // Clear loaders
-        // loaderService.clearLoaders();
         loaderService.addLoader();
 
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
@@ -25,7 +23,7 @@
             if ((stateIsProtected && !userIsLoggedIn) || ( stateIsProtected && !userHasAccess)) {
                 userDataService.clearUserData();
                 event.preventDefault();
-                // $state.go('login'); // if using $state.go - error
+                // $state.go('login'); // if using $state.go - strange error in Angular Material
                 $window.location = '/';
             }
         });

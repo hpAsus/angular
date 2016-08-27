@@ -70,6 +70,12 @@
     "MANAGE_TITLE": "Manage users"
   },
   "FEEDBACK": {
-    "TITLE": "Feedback"
+    "TITLE": "Feedback",
+    "LABELS": {
+      "NAME": "Your Name",
+      "EMAIL": "E-mail",
+      "MESSAGE": "Message"
+    },
+    "SEND_BUTTON": "Send message"
   }
 }

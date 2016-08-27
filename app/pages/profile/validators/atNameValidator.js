@@ -1,7 +1,7 @@
 // Name Validator
 // =====================================================================================================================
 (function () {
-    var atNameValidatorFunc = function (CONST_VALIDATORS) {
+    var atNameValidatorFunc = function (CONST) {
 
         return {
             require: 'ngModel',
@@ -26,14 +26,14 @@
                     if (modelValue) {
                         mValue = modelValue || '';
                         words = mValue.split(' ');
-                        return _.inRange(words.length, 1, CONST_VALIDATORS.MAX_WORDS_IN_NAME + 1);
+                        return _.inRange(words.length, 1, CONST.MAX_WORDS_IN_NAME + 1);
                     }
                 };
 
                 // Validate minimum name length
                 ctrl.$validators.minNameLength = function (modelValue) {
                     var mValue = modelValue || '';
-                    return mValue.length > CONST_VALIDATORS.MIN_NAME_LENGTH;
+                    return mValue.length > CONST.MIN_NAME_LENGTH;
                 };
 
             }
@@ -41,5 +41,5 @@
 
     };
 
-    angular.module('app.profile').directive('atNameValidator', ['CONST_VALIDATORS', atNameValidatorFunc]);
+    angular.module('app.profile').directive('atNameValidator', ['CONST', atNameValidatorFunc]);
 })();

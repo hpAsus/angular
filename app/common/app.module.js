@@ -18,6 +18,7 @@
 		'app.auth',
 		'app.profile',
 		'app.users',
+		'app.feedback',
 		'atActionButton'
 	]);
 

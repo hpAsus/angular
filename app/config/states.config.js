@@ -1,7 +1,7 @@
 //Config for ui router
 // =====================================================================================================================
 (function () {
-    var appConfigFunc = function ($stateProvider, $urlRouterProvider, CONST_USER_ROLES) {
+    var appConfigFunc = function ($stateProvider, $urlRouterProvider, CONST) {
 
         $urlRouterProvider.otherwise('/');
 
@@ -51,7 +51,7 @@
                 },
                 data: {
                     secure: true,
-                    roles: [CONST_USER_ROLES.ROLE_USER, CONST_USER_ROLES.ROLE_ADMIN]
+                    roles: [CONST.ROLE_USER, CONST.ROLE_ADMIN]
                 },
                 templateUrl: 'app/pages/dashboard/tpl/dashboard.tpl.html',
                 controller: 'dashboardCtrl',
@@ -74,7 +74,7 @@
                 url: '/users-list',
                 data: {
                     secure: true,
-                    roles: [CONST_USER_ROLES.ROLE_ADMIN]
+                    roles: [CONST.ROLE_ADMIN]
                 },
                 templateUrl: 'app/pages/users/tpl/usersList.tpl.html',
                 controller: 'usersListCtrl',
@@ -127,6 +127,6 @@
             });
     };
 
-    angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'CONST_USER_ROLES', appConfigFunc]);
+    angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'CONST', appConfigFunc]);
 
 })();

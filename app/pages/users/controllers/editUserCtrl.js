@@ -2,21 +2,21 @@
 // =====================================================================================================================
 (function () {
 
-    var editUserCtrlFunc = function (CONST_VALIDATORS, CONST_USER_ROLES, usersService, $mdDialog, loaderService, toastService, login, userDataService) {
+    var editUserCtrlFunc = function (CONST, usersService, $mdDialog, loaderService, toastService, login, userDataService) {
         var vm = this;
 
         //Sending some constants to view
-        vm.nameMaxWords = CONST_VALIDATORS.MAX_WORDS_IN_NAME;
-        vm.minAge = CONST_VALIDATORS.AGE_MINIMUM;
-        vm.maxAge = CONST_VALIDATORS.AGE_MAXIMUM;
-        vm.bioMaxLength = CONST_VALIDATORS.MAX_BIO_LENGTH;
+        vm.nameMaxWords = CONST.MAX_WORDS_IN_NAME;
+        vm.minAge = CONST.AGE_MINIMUM;
+        vm.maxAge = CONST.AGE_MAXIMUM;
+        vm.bioMaxLength = CONST.MAX_BIO_LENGTH;
 
         loaderService.addLoader();
         loaderService.showLoader();
 
         //check if is admin
         vm.isAdmin = userDataService.isAdmin(userDataService.getUserRole());
-        vm.adminRole = CONST_USER_ROLES.ROLE_ADMIN;
+        vm.adminRole = CONST.ROLE_ADMIN;
 
         //Get user model from server
         usersService.getUser(login).then(function (res) {
@@ -55,6 +55,6 @@
 
     };
 
-    angular.module('app.users').controller('editUserCtrl', ['CONST_VALIDATORS', 'CONST_USER_ROLES', 'usersService', '$mdDialog', 'loaderService', 'toastService', 'login', 'userDataService', editUserCtrlFunc]);
+    angular.module('app.users').controller('editUserCtrl', ['CONST', 'usersService', '$mdDialog', 'loaderService', 'toastService', 'login', 'userDataService', editUserCtrlFunc]);
 
 })();

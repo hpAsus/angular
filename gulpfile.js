@@ -206,6 +206,7 @@ gulp.task('START', ['_BUILD', 'browser-sync'], function () {
 	gulp.watch(options.src.images + '**/*', ['ASSETS_images']);
 	gulp.watch(options.src.icons + '**/*',  ['ASSETS_icons']);
 	gulp.watch(options.src.fonts + '**/*',  ['ASSETS_fonts']);
+	gulp.watch(options.src.lang + '**/*',  ['COMMON_lang']);
 	gulp.watch(options.src.rootApp + '**/*.scss', ['ASSETS_styles']);
 
 	// Scripts & Templates & Index

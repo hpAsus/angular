@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var userDataFunc = function (CONST_USER_ROLES, $translate, localStorageService) {
+    var userDataFunc = function (CONST, $translate, localStorageService) {
         var self = this;
 
         self._user = null;
@@ -42,7 +42,7 @@
 
         // If Is Admin
         self.isAdmin = function (userRole) {
-            return userRole === CONST_USER_ROLES.ROLE_ADMIN;
+            return userRole === CONST.ROLE_ADMIN;
         };
 
         // Set Language
@@ -57,6 +57,6 @@
 
     };
 
-    angular.module('app').service('userDataService', ['CONST_USER_ROLES', '$translate', 'localStorageService', userDataFunc]);
+    angular.module('app').service('userDataService', ['CONST', '$translate', 'localStorageService', userDataFunc]);
 
 })();
