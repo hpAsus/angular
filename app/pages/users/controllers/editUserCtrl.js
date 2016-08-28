@@ -14,7 +14,6 @@
         vm.loader = true;
         vm.showContent = false;
 
-
         //check if is admin
         vm.isAdmin = userDataService.isAdmin(userDataService.getUserRole());
         vm.adminRole = CONST.ROLE_ADMIN;

@@ -9,6 +9,7 @@
         var firstTimeout, lastTimeout;
         var clicked = false;
         var actionPromise;
+        var callback, errorCallback;
         var statuses;
 
         //Statuses
@@ -29,10 +30,11 @@
             if (!clicked) {
                 setStatus(1);
                 actionPromise = scope.ngModel();
+                callback = scope.callback;
+                errorCallback = scope.errorCallback;
 
                 firstTimeout = $timeout(angular.noop, firstDelay);
                 lastTimeout = $timeout(angular.noop, finalCheckDelay);
-
 
                 firstTimeout.then(function () {
                         return $q.race([actionPromise,lastTimeout]);
@@ -45,11 +47,18 @@
                             // final check error with no response
                             setStatus(3);
                         }
+                        if (callback) {
+                            callback();
+                        }
+                        clicked = false;
                         // clear last timeout
                         $timeout.cancel(lastTimeout);
                     })
                     .catch(function (err) {
                         // if something go wrong on serverside
+                        if (errorCallback) {
+                            errorCallback();
+                        }
                         setStatus(3);
                     });
 
