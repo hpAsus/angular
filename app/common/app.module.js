@@ -10,7 +10,7 @@
 
 	// Main App module
 	angular.module('app', [
-		// 'controllerServiceDecorator',
+		'controllerServiceDecorator',
 		'ui.router',
 		'pascalprecht.translate',
 		'ngMaterial',

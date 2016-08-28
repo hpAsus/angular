@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService) {
+    var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService, $log) {
         var vm = this;
 
         // If not Authorized - go to Login State
@@ -21,14 +21,11 @@
             var userRole = userDataService.getUserRole() || 'user';
             var userHasAccess = authService.checkUserAccess(userRole, stateAccessRoles);
 
-	        console.log(userHasAccess);
-
             if ((stateIsProtected && !userIsLoggedIn) || ( stateIsProtected && !userHasAccess)) {
                 userDataService.clearUserData();
                 event.preventDefault();
-	            console.log('REDIRECT...');
                 // $state.go('login'); // if using $state.go - strange error in Angular Material
-                // $window.location = '/';
+                $window.location = '/';
             }
         });
 
@@ -41,6 +38,6 @@
 
     };
 
-    angular.module('app').controller('dashboardCtrl', ['userSession', 'userDataService', 'authService', '$rootScope', '$window', '$state', 'loaderService', dashboardCtrlFunc]);
+    angular.module('app').controller('dashboardCtrl', ['userSession', 'userDataService', 'authService', '$rootScope', '$window', '$state', 'loaderService', '$log', dashboardCtrlFunc]);
 
 })();
