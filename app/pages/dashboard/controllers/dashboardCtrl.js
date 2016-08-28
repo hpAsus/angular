@@ -13,6 +13,7 @@
         // Clear loaders
         loaderService.addLoader();
 
+        // User Rights Check
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             var stateIsProtected = toState.data && toState.data.secure;
             var userIsLoggedIn = userDataService.isAuthorized();
@@ -20,11 +21,14 @@
             var userRole = userDataService.getUserRole() || 'user';
             var userHasAccess = authService.checkUserAccess(userRole, stateAccessRoles);
 
+	        console.log(userHasAccess);
+
             if ((stateIsProtected && !userIsLoggedIn) || ( stateIsProtected && !userHasAccess)) {
                 userDataService.clearUserData();
                 event.preventDefault();
+	            console.log('REDIRECT...');
                 // $state.go('login'); // if using $state.go - strange error in Angular Material
-                $window.location = '/';
+                // $window.location = '/';
             }
         });
 

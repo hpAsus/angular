@@ -34,18 +34,9 @@
 
         //check if user has access
         this.checkUserAccess = function (userRole, accessRoles) {
-	        if (accessRoles) {
-		        var access = accessRoles.findIndex(function (role) {
-			        return role === userRole;
-		        });
-	        } else {
-		        var access = false;
-	        }
+	        var access = (accessRoles) ? accessRoles.findIndex((role) => (role === userRole)) : 0;
+	        return access >= 0;
 
-	        return !!access;
-            // return (accessRoles) ? !!accessRoles.findIndex(function (role) {
-            //     return role === userRole;
-            // }) : false;
         };
     };
 

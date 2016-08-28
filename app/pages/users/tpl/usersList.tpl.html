@@ -10,7 +10,7 @@
 <md-content>
 
 <div class="t-table">
-<div ng-repeat="user in vm.users" class="t-row">
+<div ng-repeat="user in vm.users | orderBy:'email'" class="t-row">
 
     <div class="t-cell cell-email">{{user.email}} <span ng-if="user.role=='admin'" class="label label-admin">{{ 'USERS.LIST.ADMIN_BADGE' | translate}}</span></div>
     <div class="t-cell cell-name">{{user.name}}</div>

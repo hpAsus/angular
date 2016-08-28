@@ -40,7 +40,6 @@
 						.then(function (status) {
 							console.log(status);
 							vm.feedback = {};
-							// loaderService.hideLoader();
 						})
 						.finally(function () {
 
