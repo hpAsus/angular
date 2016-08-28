@@ -11,8 +11,9 @@
         vm.maxAge = CONST.AGE_MAXIMUM;
         vm.bioMaxLength = CONST.MAX_BIO_LENGTH;
 
-        loaderService.addLoader();
-        loaderService.showLoader();
+        vm.loader = true;
+        vm.showContent = false;
+
 
         //check if is admin
         vm.isAdmin = userDataService.isAdmin(userDataService.getUserRole());
@@ -21,7 +22,8 @@
         //Get user model from server
         usersService.getUser(login).then(function (res) {
             vm.user = res.data.user;
-            loaderService.hideLoader();
+            vm.loader = false;
+            vm.showContent = true;
         });
 
         // Cancel Dialog

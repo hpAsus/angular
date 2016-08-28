@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var usersListCtrlFunc = function ($state, $mdDialog, usersService, loaderService, toastService) {
+    var usersListCtrlFunc = function ($state, $mdDialog, usersService, loaderService, toastService, httpLoggerService, $filter) {
         var vm = this;
 
         // // setting current tab
@@ -16,8 +16,10 @@
         loaderService.showLoader();
 
         // Get All Users
-        usersService.getAllUsers().then(function (data) {
-            vm.users = data.data.users;
+        usersService.getAllUsers().then(function (res) {
+            httpLoggerService.logRequestTime(res);
+            // $log.info('getAllUsers() [' + res.config.method + '] [' + res.config.url + '] [Params: ' + res.config.params + '] took ' + time + ' seconds.');
+            vm.users = res.data.users;
             loaderService.hideLoader();
         });
 
@@ -71,11 +73,11 @@
 
         // Delete User
         vm.deleteUser = function (login) {
-            var confirm = $mdDialog.confirm().title('User Delete Confirm')
-                .textContent('Are you really want to remove this user from database ')
-                .ariaLabel('Delete user')
-                .ok('Please do it!')
-                .cancel('No, I changed my mind');
+            var confirm = $mdDialog.confirm().title($filter('translate')('USERS.DELETE.TITLE'))
+                .textContent($filter('translate')('USERS.DELETE.MESSAGE'))
+                .ariaLabel($filter('translate')('USERS.DELETE.TITLE'))
+                .ok($filter('translate')('USERS.DELETE.BUTTON_OK'))
+                .cancel($filter('translate')('USERS.DELETE.BUTTON_CANCEL'));
 
             $mdDialog.show(confirm).then(function () {
                 usersService.deleteUser(login)
@@ -109,6 +111,6 @@
 
     };
 
-    angular.module('app.users').controller('usersListCtrl', ['$state', '$mdDialog', 'usersService', 'loaderService', 'toastService', usersListCtrlFunc]);
+    angular.module('app.users').controller('usersListCtrl', ['$state', '$mdDialog', 'usersService', 'loaderService', 'toastService', 'httpLoggerService', '$filter',usersListCtrlFunc]);
 
 })();

@@ -4,7 +4,7 @@
     </h2>
 </md-toolbar>
 <md-content>
-    <md-button class="md-raised" ng-click="vm.createNewUser()">Create New User</md-button>
+    <md-button class="md-raised" ng-click="vm.createNewUser()">{{ 'USERS.LIST.NEW_USER' | translate}}</md-button>
 </md-content>
 
 <md-content>
@@ -12,12 +12,12 @@
 <div class="t-table">
 <div ng-repeat="user in vm.users" class="t-row">
 
-    <div class="t-cell cell-email">{{user.email}} <span ng-if="user.role=='admin'">ADMIN</span></div>
+    <div class="t-cell cell-email">{{user.email}} <span ng-if="user.role=='admin'" class="label label-admin">{{ 'USERS.LIST.ADMIN_BADGE' | translate}}</span></div>
     <div class="t-cell cell-name">{{user.name}}</div>
     <div class="t-cell cell-age">{{user.age}}</div>
     <div class="t-cell cell-actions">
-        <md-button class="md-raised" ng-click="vm.editUser(user.email)">Edit</md-button>
-        <md-button class="md-raised md-warn" ng-if="user.role!=='admin'"  ng-click="vm.deleteUser(user.email)">Delete</md-button>
+        <md-button class="md-raised" ng-click="vm.editUser(user.email)">{{ 'USERS.LIST.EDIT' | translate}}</md-button>
+        <md-button class="md-raised md-warn" ng-if="user.role!=='admin'"  ng-click="vm.deleteUser(user.email)">{{ 'USERS.LIST.DELETE' | translate}}</md-button>
     </div>
 </div>
 </div>

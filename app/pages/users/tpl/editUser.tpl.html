@@ -2,22 +2,28 @@
     <form name="editUserForm" class="editUserForm" method="post" ng-submit="vm.submitForm()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{vm.user.email}}</h2>
+                <h2>{{ 'USERS.EDIT.TITLE' | translate}}</h2>
                 <span flex></span>
-                <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
-                <md-button class="md-icon-button" ng-click="vm.cancel()">X</md-button>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <md-icon md-svg-src="app/assets/icons/cancel_icon.svg" aria-label="USERS.EDIT.BUTTON_CLOSE_TITLE"></md-icon>
+                </md-button>
             </div>
         </md-toolbar>
 
         <md-dialog-content ng-cloak>
+
+            <!--<md-progress-circular md-mode="indeterminate" md-diameter="50" ng-show="vm.loader"></md-progress-circular>-->
+            <md-progress-linear md-mode="indeterminate" ng-show="vm.loader"></md-progress-linear>
+
             <div class="md-dialog-content">
+                <div ng-show="vm.showContent">
 
                 <md-input-container class="md-block" ng-if="vm.user.role !== vm.adminRole">
-                    <label for="email" translate="PROFILE.LABELS.LOGIN_LABEL"></label>
+                    <label for="email" translate="USERS.EDIT.LABEL_LOGIN"></label>
                     <input type="text" id="email" name="user.email" ng-model="vm.user.email" required="required" at-email-validator>
                     <div ng-messages="editUserForm['user.email'].$error" multiple>
-                        <div ng-message="required" translate="AUTH.ERRORS.EMAIL_REQUIRED"></div>
-                        <div ng-message="emailValidator" translate="AUTH.ERRORS.EMAIL_INVALID"></div>
+                        <div ng-message="required" translate="USERS.EDIT.ERRORS.EMAIL_REQUIRED"></div>
+                        <div ng-message="emailValidator" translate="USERS.EDIT.ERRORS.EMAIL_INVALID"></div>
                     </div>
                 </md-input-container>
 
@@ -26,65 +32,60 @@
                 <input type="hidden" name="user.role" ng-model="vm.user.role">
 
                 <md-input-container class="md-block">
-                    <label for="name" translate="PROFILE.LABELS.NAME_LABEL"></label>
+                    <label for="name" translate="USERS.EDIT.LABEL_NAME"></label>
                     <input type="text" id="name" name="user.name" ng-model="vm.user.name" required="required"
                            at-name-validator>
 
                     <div ng-messages="editUserForm['user.name'].$error" multiple>
-                        <div ng-message="minNameLength" translate="PROFILE.ERRORS.MIN_LENGTH_VALIDATOR"></div>
-                        <div ng-message="required" translate="PROFILE.ERRORS.NAME_REQUIRED"></div>
-                        <div ng-message="nameValidator" translate="PROFILE.ERRORS.NAME_VALIDATOR"></div>
-                        <div ng-message="nameWords" translate="PROFILE.ERRORS.NAME_WORDS_VALIDATOR" translate-values="{maxWords: vm.nameMaxWords}"></div>
+                        <div ng-message="minNameLength" translate="USERS.EDIT.ERRORS.MIN_LENGTH_VALIDATOR"></div>
+                        <div ng-message="required" translate="USERS.EDIT.ERRORS.NAME_REQUIRED"></div>
+                        <div ng-message="nameValidator" translate="USERS.EDIT.ERRORS.NAME_VALIDATOR"></div>
+                        <div ng-message="nameWords" translate="USERS.EDIT.ERRORS.NAME_WORDS_VALIDATOR" translate-values="{maxWords: vm.nameMaxWords}"></div>
                     </div>
                 </md-input-container>
 
 
                 <md-input-container class="md-block">
-                    <label for="birthDate" translate="PROFILE.LABELS.BIRTHDATE_LABEL"></label>
+                    <label for="birthDate" translate="USERS.EDIT.LABEL_BIRTHDATE"></label>
                     <input type="text" id="birthDate" required="required" name="user.birthdate" at-date-validator
                            ng-model="vm.user.birthdate" date-format="DD-MM-YYYY">
 
                     <div ng-messages="editUserForm['user.birthdate'].$error" multiple>
-                        <div ng-message="required" translate="PROFILE.ERRORS.DATE_REQUIRED"></div>
-                        <div ng-message="dateValidator" translate="PROFILE.ERRORS.DATE_VALIDATOR"
-                             translate-values="{dateformat: 'DD-MM-YYYY'}"></div>
+                        <div ng-message="required" translate="USERS.EDIT.ERRORS.DATE_REQUIRED"></div>
+                        <div ng-message="dateValidator" translate="USERS.EDIT.ERRORS.DATE_VALIDATOR" translate-values="{dateformat: 'DD-MM-YYYY'}"></div>
                     </div>
                 </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label for="age" translate="PROFILE.LABELS.AGE_LABEL"></label>
+                    <label for="age" translate="USERS.EDIT.LABEL_AGE"></label>
                     <input type="text" id="age" required="required" name="user.age" ng-model="vm.user.age"
                            at-age-validator>
 
                     <div ng-messages="editUserForm['user.age'].$error" multiple>
-                        <div ng-message="required" translate="PROFILE.ERRORS.AGE_REQUIRED"></div>
-                        <div ng-message="ageValidator" translate="PROFILE.ERRORS.AGE_VALIDATOR"
-                             translate-values="{min:vm.minAge,max:vm.maxAge}"></div>
-                        <div ng-message="ageInteger" translate="PROFILE.ERRORS.AGE_INT_VALIDATOR"></div>
+                        <div ng-message="required" translate="USERS.EDIT.ERRORS.AGE_REQUIRED"></div>
+                        <div ng-message="ageValidator" translate="USERS.EDIT.ERRORS.AGE_VALIDATOR" translate-values="{min:vm.minAge,max:vm.maxAge}"></div>
+                        <div ng-message="ageInteger" translate="USERS.EDIT.ERRORS.AGE_INT_VALIDATOR"></div>
                     </div>
                 </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label for="bio" translate="PROFILE.LABELS.BIO_LABEL"></label>
-                <textarea required="required" md-maxlength="vm.bioMaxLength" name="user.bio" id="bio"
-                          ng-model="vm.user.bio" at-bio-validator
-                          md-select-on-focus></textarea>
+                    <label for="bio" translate="USERS.EDIT.LABEL_BIO"></label>
+                <textarea required="required" md-maxlength="vm.bioMaxLength" name="user.bio" id="bio" ng-model="vm.user.bio" at-bio-validator md-select-on-focus></textarea>
 
                     <div ng-messages="editUserForm['user.bio'].$error" multiple>
-                        <div ng-message="required" translate="PROFILE.ERRORS.BIO_REQUIRED">This is required.</div>
-                        <div ng-message="bioValidator" translate="PROFILE.ERRORS.BIO_VALIDATOR">Your bio is too short
-                        </div>
+                        <div ng-message="required" translate="USERS.EDIT.ERRORS.BIO_REQUIRED"></div>
+                        <div ng-message="bioValidator" translate="USERS.EDIT.ERRORS.BIO_VALIDATOR"></div>
                     </div>
                 </md-input-container>
 
-
+                </div>
             </div>
 
         </md-dialog-content>
 
         <md-dialog-actions class="md-dialog-actions" layout="row">
-            <md-button type="submit" class="md-raised md-primary" ng-disabled="editUserForm.$invalid">Update User</md-button>
-            <md-button class="md-raised" ng-click="vm.cancel()">Cancel</md-button>
+            <md-button type="submit" class="md-raised md-primary" ng-disabled="editUserForm.$invalid || editUserForm.$pristine">{{ 'USERS.EDIT.BUTTON_UPDATE' | translate}}</md-button>
+            <md-button class="md-raised" ng-click="vm.cancel()">{{ 'USERS.EDIT.BUTTON_CANCEL' | translate}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

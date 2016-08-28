@@ -100,8 +100,6 @@ UserManager.prototype.updateUser = function(userObj) {
 	var login = userObj.email;
     var userID = userObj._id;
 
-    console.log(userObj);
-
     return new Promise(function (resolve, reject) {
         db.update({
             // email: userObj.email

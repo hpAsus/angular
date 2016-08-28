@@ -20,6 +20,7 @@
 
         // HTTP Interceptor for 401 Status code
         // =============================================================================================================
+        $httpProvider.interceptors.push('httpLoggerInterceptor');
         $httpProvider.interceptors.push(['$q', '$window', function($q, $window) {
             return {
                 'responseError': function(rejection) {
