@@ -3,8 +3,8 @@
 (function () {
 
 	var emailServiceDecorator = function ($delegate, $q) {
+		var self = $delegate;
 
-		var originalSEND = $delegate.SEND;
 		$delegate._mail = {
 			from: null,
 			to: [],
@@ -12,64 +12,54 @@
 			signature: null
 		};
 
-		var newToArray = ['second@angularproject.com'];
-		newToArray.push($delegate._mail.to);
-		$delegate._mail.to = [];
-		$delegate._mail.signature = '';
+		// var newToArray = ['second@angularproject.com'];
+		// newToArray.push($delegate._mail.to);
+		// $delegate._mail.to = [];
+		// $delegate._mail.signature = '';
 
 
 		// Set Content
 		$delegate.setContent = function (content) {
 			$delegate._mail.content = content;
+			return self;
 		};
 
 		// Set From
 		$delegate.setFrom = function (from) {
 			$delegate._mail.from = from;
+			return self;
 		};
 
 		// Set To
 		$delegate.setTo = function (to) {
 			$delegate._mail.to.push(to);
+
+			return self;
 		};
 
 		// Set Signature
 		$delegate.setSignature = function (signature) {
 			$delegate._mail.signature = signature;
+
+			return self;
 		};
 
 
 		// Send from decorator method
-		$delegate.sendFromDecorator = function (from = '', to = [], signature = '') {
-			// console.log(arguments);
+		$delegate.sendFromDecorator = function (from = $delegate._mail.from, to = $delegate._mail.to, signature = $delegate._mail.signature) {
+			
 			//
-			// $delegate.setFrom(arguments[0]);
-			// $delegate.setTo(arguments[1]);
-			// $delegate.setTo(to);
-			// $delegate.setContent(arguments[2]);
-			// $delegate.setSignature(signature);
+			$delegate.setFrom(arguments[0]);
+			$delegate.setTo(arguments[1]);
+			$delegate.setSignature(signature);
 
 			console.log($delegate._mail);
-
-			// console.log('originalSEND', originalSEND);
 
 			var deferred = $q.defer();
 			deferred.resolve($delegate._mail);
 			return deferred.promise;
 		};
 
-		$delegate.SEND = function () {
-			// var deferred = $q.defer();
-
-			$delegate.setFrom(arguments[0]);
-			$delegate.setTo(arguments[1]);
-			$delegate.setContent(arguments[2]);
-
-			// deferred.resolve();
-
-			return $delegate.sendFromDecorator($delegate._mail.from, $delegate._mail.to[0], $delegate._mail.signature);
-			// return deferred.promise;
-		};
 
 		return $delegate;
 	};

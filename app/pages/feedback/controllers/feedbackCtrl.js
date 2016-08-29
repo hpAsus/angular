@@ -10,6 +10,7 @@
 		vm.feedback = {};
 		vm.feedback.name = currentUser.name;
 		vm.feedback.email = currentUser.email;
+		vm.feedback.message = 'Test message! Just for Test!';
 
 		//Sending some constants to view
 		vm.nameMaxWords = CONST.MAX_WORDS_IN_NAME;
@@ -19,11 +20,37 @@
 		// Submit Feedback Form
 		vm.submitForm = function () {
 			// loaderService.showLoader();
-			
-			// emailService.setTo(vm.feedback.email);
+
+			console.log(vm.feedback.email);
+
+			emailService.setFrom(vm.feedback.email)
+				.setTo(CONST.FEEDBACK_EMAIL)
+				.setTo('jackass@mail.ru')
+				.setContent(vm.feedback.message)
+				.setSignature('---\nAngular Project')
+				.sendFromDecorator()
+				.then(function (mail) {
+
+					var alert = $mdDialog.alert({
+						title: 'Sending Feedback...',
+						textContent: mail,
+						ok: 'Close'
+					});
+
+					$mdDialog
+						.show(alert)
+						.then(function (status) {
+							console.log('status', status);
+							// vm.feedback = {};
+						})
+						.finally(function () {
+							alert = undefined;
+						});
+
+				});
 			
 
-			emailService.SEND(vm.feedback.email, CONST.FEEDBACK_EMAIL, vm.feedback.message)
+			/*emailService.SEND(vm.feedback.email, CONST.FEEDBACK_EMAIL, vm.feedback.message)
 				.then(function (data) {
 
 					var alert = $mdDialog.alert({
@@ -43,7 +70,7 @@
 							alert = undefined;
 						});
 
-				});
+				});*/
 
 
 		};

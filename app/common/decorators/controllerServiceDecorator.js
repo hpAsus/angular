@@ -7,6 +7,7 @@
 		return function () {
 			var constructor = arguments[0];
 			var locals = arguments[1];
+			var logOrNot = false;
 
 			var ctrl = $delegate.apply(null, arguments);
 
@@ -16,15 +17,18 @@
 				// ctrl.constructor.$inject = ['$log'];
 			}
 
-			//Custom decorator code
-			console.groupCollapsed(_.isString(constructor) ? constructor : 'Anonymous controller');
-			$log.info('Controller', constructor);
-			$log.info('Locals', locals);
-			$log.info('Arguments', arguments);
-			if (_.isString(constructor)) {
-				$log.info('Injections', listOfInjections);
+			if(logOrNot) {
+				//Custom decorator code
+				console.groupCollapsed(_.isString(constructor) ? constructor : 'Anonymous controller');
+				$log.info('Controller', constructor);
+				$log.info('Locals', locals);
+				$log.info('Arguments', arguments);
+				if (_.isString(constructor)) {
+					$log.info('Injections', listOfInjections);
+				}
+				console.groupEnd();
 			}
-			console.groupEnd();
+
 
 			return ctrl;
 		};
