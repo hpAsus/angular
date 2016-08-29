@@ -20,6 +20,7 @@
 		'app.profile',
 		'app.users',
 		'app.feedback',
+		'app.feedbackDecorated',
 		'atActionButton'
 	]);
 

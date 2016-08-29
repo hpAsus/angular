@@ -50,28 +50,6 @@
 				});
 			
 
-			/*emailService.SEND(vm.feedback.email, CONST.FEEDBACK_EMAIL, vm.feedback.message)
-				.then(function (data) {
-
-					var alert = $mdDialog.alert({
-						title: 'Sending Feedback...',
-						textContent: data,
-						ok: 'Close'
-					});
-
-					$mdDialog
-						.show(alert)
-						.then(function (status) {
-							console.log(status);
-							vm.feedback = {};
-						})
-						.finally(function () {
-
-							alert = undefined;
-						});
-
-				});*/
-
 
 		};
 	};

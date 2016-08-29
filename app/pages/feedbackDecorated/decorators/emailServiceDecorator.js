@@ -12,11 +12,6 @@
 			signature: null
 		};
 
-		// var newToArray = ['second@angularproject.com'];
-		// newToArray.push($delegate._mail.to);
-		// $delegate._mail.to = [];
-		// $delegate._mail.signature = '';
-
 
 		// Set Content
 		$delegate.setContent = function (content) {
@@ -64,7 +59,7 @@
 		return $delegate;
 	};
 
-	angular.module('app.feedback').config(['$provide', function ($provide) {
+	angular.module('app.feedbackDecorated').config(['$provide', function ($provide) {
 		$provide.decorator('emailService', ['$delegate', '$q', emailServiceDecorator]);
 	}]);
 
