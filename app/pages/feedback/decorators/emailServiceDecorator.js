@@ -5,6 +5,12 @@
 	var emailServiceDecorator = function ($delegate, $q) {
 
 		var originalSEND = $delegate.SEND;
+		$delegate._mail = {
+			from: null,
+			to: [],
+			content: null,
+			signature: null
+		};
 
 		var newToArray = ['second@angularproject.com'];
 		newToArray.push($delegate._mail.to);
@@ -12,24 +18,28 @@
 		$delegate._mail.signature = '';
 
 
+		// Set Content
 		$delegate.setContent = function (content) {
 			$delegate._mail.content = content;
 		};
 
+		// Set From
 		$delegate.setFrom = function (from) {
 			$delegate._mail.from = from;
 		};
 
+		// Set To
 		$delegate.setTo = function (to) {
 			$delegate._mail.to.push(to);
 		};
 
+		// Set Signature
 		$delegate.setSignature = function (signature) {
 			$delegate._mail.signature = signature;
 		};
 
 
-		// Should extend original SEND method
+		// Send from decorator method
 		$delegate.sendFromDecorator = function (from = '', to = [], signature = '') {
 			// console.log(arguments);
 			//
