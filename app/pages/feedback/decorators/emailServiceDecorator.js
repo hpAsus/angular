@@ -4,7 +4,11 @@
 
 	var emailServiceDecorator = function ($delegate, $q) {
 
-		var SEND = $delegate.SEND;
+		var originalSEND = $delegate.SEND;
+
+		var newToArray = [];
+		newToArray.push($delegate._mail.to);
+		$delegate._mail.to = newToArray;
 		$delegate._mail.signature = '';
 
 
@@ -25,7 +29,8 @@
 		};
 
 		// Should extend original SEND method
-		$delegate.sendFromDecorator = function (from, to, signature) {
+		$delegate.SEND = function (from, to, signature) {
+			console.log('originalSEND', originalSEND);
 			var deferred = $q.defer();
 			deferred.resolve($delegate._mail);
 			return deferred.promise;

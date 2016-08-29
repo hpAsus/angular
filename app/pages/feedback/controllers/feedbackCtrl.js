@@ -20,10 +20,7 @@
 		vm.submitForm = function () {
 			// loaderService.showLoader();
 			
-			emailService
-				.setTo(vm.feedback.email).then(function (data) {
-				console.log(data);
-			});
+			// emailService.setTo(vm.feedback.email);
 			
 
 			emailService.SEND(vm.feedback.email, CONST.FEEDBACK_EMAIL, vm.feedback.message)
