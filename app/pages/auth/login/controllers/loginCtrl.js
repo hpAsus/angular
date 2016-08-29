@@ -1,7 +1,5 @@
 // Login controller
 // =====================================================================================================================
-
-
 (function () {
 
     var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService) {
@@ -49,14 +47,6 @@
 
     };
 
-    angular.module('app.auth').controller('loginCtrl', [
-	    '$rootScope',
-	    '$http',
-	    '$state',
-	    'authService',
-	    'loaderService',
-	    'toastService',
-	    'userDataService',
-	    loginUser]);
+    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$state', 'authService', 'loaderService', 'toastService', 'userDataService', loginUser]);
 
 })();
