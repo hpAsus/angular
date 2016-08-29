@@ -2,8 +2,10 @@
 // =====================================================================================================================
 (function () {
 
-    var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService, $log) {
+    var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService, startupAppTime) {
         var vm = this;
+
+        console.log('App started at', startupAppTime.getAppStartupTime());
 
         // If not Authorized - go to Login State
         if (!userDataService.isAuthorized()) {
@@ -38,6 +40,6 @@
 
     };
 
-    angular.module('app').controller('dashboardCtrl', ['userSession', 'userDataService', 'authService', '$rootScope', '$window', '$state', 'loaderService', '$log', dashboardCtrlFunc]);
+    angular.module('app').controller('dashboardCtrl', ['userSession', 'userDataService', 'authService', '$rootScope', '$window', '$state', 'loaderService', 'startupAppTime', dashboardCtrlFunc]);
 
 })();

@@ -2,7 +2,12 @@
 // =====================================================================================================================
 (function () {
 
-    var appConfig = function ($mdThemingProvider, localStorageServiceProvider, $httpProvider) {
+    var appConfig = function ($mdThemingProvider, localStorageServiceProvider, $httpProvider, startupAppTimeProvider) {
+
+        //startupAppTimeProvider
+        // =============================================================================================================
+        startupAppTimeProvider
+			.setDateFormat('dddd, MMMM Do YYYY, h:mm:ss a');
 
         // LocalStorage config
         // =============================================================================================================
@@ -35,6 +40,6 @@
 
     };
 
-    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', '$httpProvider', appConfig]);
+    angular.module('app').config(['$mdThemingProvider', 'localStorageServiceProvider', '$httpProvider', 'startupAppTimeProvider', appConfig]);
 
 })();

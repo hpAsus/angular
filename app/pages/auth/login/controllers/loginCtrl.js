@@ -2,9 +2,12 @@
 // =====================================================================================================================
 (function () {
 
-    var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService) {
+    var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService, startupAppTime) {
 
         var vm = this;
+        
+        //startupAppTime Provider test
+		console.log('App started at', startupAppTime.getAppStartupTime());
         
         // Add loader
         loaderService.addLoader();
@@ -47,6 +50,6 @@
 
     };
 
-    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$state', 'authService', 'loaderService', 'toastService', 'userDataService', loginUser]);
+    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$state', 'authService', 'loaderService', 'toastService', 'userDataService', 'startupAppTime', loginUser]);
 
 })();
