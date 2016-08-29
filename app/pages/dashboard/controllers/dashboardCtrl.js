@@ -2,10 +2,12 @@
 // =====================================================================================================================
 (function () {
 
-    var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService, startupAppTime) {
+    var dashboardCtrlFunc = function (userSession, userDataService, authService, $rootScope, $window, $state, loaderService, startupAppTime, localStorageService) {
         var vm = this;
 
         console.log('App started at', startupAppTime.getAppStartupTime());
+
+		vm.currentNavItem = localStorageService.get('currentNavItem');
 
         // If not Authorized - go to Login State
         if (!userDataService.isAuthorized()) {
@@ -28,7 +30,9 @@
                 event.preventDefault();
                 // $state.go('login'); // if using $state.go - strange error in Angular Material
                 $window.location = '/';
-            }
+            } else {
+				localStorageService.set('currentNavItem', toState.name);
+			}
         });
 
 	    if (userDataService.getUserData()) {
@@ -40,6 +44,6 @@
 
     };
 
-    angular.module('app').controller('dashboardCtrl', ['userSession', 'userDataService', 'authService', '$rootScope', '$window', '$state', 'loaderService', 'startupAppTime', dashboardCtrlFunc]);
+    angular.module('app').controller('dashboardCtrl', ['userSession', 'userDataService', 'authService', '$rootScope', '$window', '$state', 'loaderService', 'startupAppTime', 'localStorageService', dashboardCtrlFunc]);
 
 })();

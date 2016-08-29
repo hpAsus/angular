@@ -19,7 +19,7 @@
         </div>
     </md-toolbar>
 
-    <md-nav-bar md-selected-nav-item="" nav-bar-aria-label="navigation links">
+    <md-nav-bar md-selected-nav-item="vm.currentNavItem" nav-bar-aria-label="navigation links">
         <md-nav-item md-nav-sref="treeview" name="treeview">{{ 'TREEVIEW.TITLE' | translate }}</md-nav-item>
         <md-nav-item md-nav-sref="actionTest" name="actionTest">{{ 'ACTIONTEST.TITLE' | translate }}</md-nav-item>
         <md-nav-item md-nav-sref="userList" name="userList" ng-if="vm.isAdmin">{{ 'USERS.MANAGE_TITLE' | translate }}</md-nav-item>

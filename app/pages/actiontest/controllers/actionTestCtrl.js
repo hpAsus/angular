@@ -7,6 +7,7 @@
 		var button1 = 'button1';
 		var button2 = 'button2';
 
+
         // Test 1 Function that returns promise (fast no delay)
         var testAction1 = function () {
           return $http({
