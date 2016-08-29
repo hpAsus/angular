@@ -29,6 +29,7 @@
         vm.actionStart = function () {
             if (!clicked) {
                 setStatus(1);
+                vm.loadingActiveClass = 'at-action-loading';
                 actionPromise = scope.ngModel();
                 callback = scope.callback;
                 errorCallback = scope.errorCallback;
@@ -43,9 +44,11 @@
                         if (res) {
                             //setting status based on res success
                             setStatus(res.data.success ? 2 : 3);
+                            vm.loadingActiveClass = '';
                         } else {
                             // final check error with no response
                             setStatus(3);
+                            vm.loadingActiveClass = '';
                         }
                         if (callback) {
                             callback();
@@ -60,6 +63,7 @@
                             errorCallback();
                         }
                         setStatus(3);
+                        vm.loadingActiveClass = '';
                     });
 
                 clicked = true;

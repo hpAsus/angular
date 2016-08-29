@@ -3,12 +3,9 @@
         <span>{{ 'USERS.MANAGE_TITLE' | translate}}</span>
     </h2>
 </md-toolbar>
-<md-content>
+
+<md-content class="dashboard-content-inner">
     <md-button class="md-raised" ng-click="vm.createNewUser()">{{ 'USERS.LIST.NEW_USER' | translate}}</md-button>
-</md-content>
-
-<md-content>
-
 <div class="t-table">
 <div ng-repeat="user in vm.users | orderBy:'email'" class="t-row">
 
