@@ -9,9 +9,7 @@
 
                 // check for minimum length
                 ctrl.$validators.messageValidator = function (modelValue) {
-                    if (modelValue) {
-                        return modelValue.length >= CONST.MIN_MESSAGE_LENGTH;
-                    }
+                    return (modelValue) ? modelValue.length >= CONST.MIN_MESSAGE_LENGTH : false;
                 };
             }
         };

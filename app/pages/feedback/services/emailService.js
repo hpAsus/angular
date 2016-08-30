@@ -2,36 +2,21 @@
 // =====================================================================================================================
 (function () {
 
-	var emailServiceFunc = function ($q, CONST) {
+	var emailServiceFunc = function ($q, CONST, $timeout) {
 
 		// SEND method
 		this.SEND = function (from, to = CONST.FEEDBACK_EMAIL, content) {
 			var deferred = $q.defer();
 
-			if (to === 'support_2@mail.ru') {
+			if (to === 'jackass@mail.ru') {
 				var email = from + '\n' + to + '\n' + content;
-				setTimeout(() => {
-					deferred.resolve(email);
-				}, 1000);
-
+				$timeout(() => deferred.resolve(email), 1000);
 			} else {
-				deferred.reject('no-no-no');
+				$timeout(() => deferred.reject('FEEDBACK.ERRORS.SEND_ERROR'), 1000);
 			}
-
-			// if (from && content) {
-			// 	var email = from + '\n' + to + '\n' + content;
-			// 	setTimeout(() => {
-			// 		deferred.resolve(email);
-			// 	}, 1000);
-			// } else {
-			// 	setTimeout(() => {
-			// 		deferred.reject('Not enough data');
-			// 	}, 1000);
-			//
-			// }
 			return deferred.promise;
 		};
 	};
-	angular.module('app.feedback').service('emailService', ['$q', 'CONST', emailServiceFunc]);
+	angular.module('app.feedback').service('emailService', ['$q', 'CONST', '$timeout', emailServiceFunc]);
 
 })();

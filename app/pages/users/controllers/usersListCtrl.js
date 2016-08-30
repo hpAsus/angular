@@ -5,22 +5,18 @@
     var usersListCtrlFunc = function ($state, $mdDialog, usersService, loaderService, toastService, httpLoggerService, $filter) {
         var vm = this;
 
-        // // setting current tab
-        // vm.currentNavItem = $state.current.name;
-        //
-        // $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        // 	vm.currentNavItem = toState.name;
-        // });
-
         loaderService.addLoader();
-        loaderService.showLoader();
+
+        vm.loader = true;
+        vm.showContent = false;
 
         // Get All Users
         usersService.getAllUsers().then(function (res) {
             httpLoggerService.logRequestTime(res);
             // $log.info('getAllUsers() [' + res.config.method + '] [' + res.config.url + '] [Params: ' + res.config.params + '] took ' + time + ' seconds.');
             vm.users = res.data.users;
-            loaderService.hideLoader();
+            vm.loader = false;
+            vm.showContent = true;
         });
 
 
@@ -83,7 +79,6 @@
                 usersService.deleteUser(login)
                     .then(function (res) {
                         if (res.data.success) {
-                            console.log('Here we delete User');
                             toastService.show('User successfully deleted!');
                             $mdDialog.hide('ok');
                             loaderService.showLoader();

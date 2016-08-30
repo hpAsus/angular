@@ -2,9 +2,13 @@
 // =====================================================================================================================
 (function () {
 
-	var feedbackCtrlFunc = function (CONST, userDataService, emailService, $mdDialog, loaderService) {
+	var feedbackCtrlFunc = function (CONST, userDataService, emailService, $mdDialog, loaderService, $filter) {
 		var vm = this;
-		loaderService.addLoader();
+
+		vm.loader = false;
+		vm.showContent = true;
+
+		vm.form = 'feedbackForm';
 
 		var currentUser = userDataService.getUserData();
 		vm.feedback = {};
@@ -17,7 +21,7 @@
 		vm.minMessageLength = CONST.MIN_MESSAGE_LENGTH;
 		vm.maxMessageLength = CONST.MAX_MESSAGE_LENGTH;
 
-		// Submit Feedback Form
+		// Submit Feedback Form Success
 		vm.submitForm = function () {
 			var supportEmails = [
 				'support_1@mail.ru',
@@ -26,32 +30,83 @@
 				'jackass@mail.ru',
 				CONST.FEEDBACK_EMAIL
 			];
-			var signature = '\n---\nAngular Project';
+			var signature = '\n---------\nAngular Project';
+
+			vm.loader = true;
+			vm.showContent = false;
 
 			emailService.setContent(vm.feedback.message);
-			emailService.sendFromDecorator(vm.feedback.email, supportEmails, signature).then(function (mail) {
-				var alert = $mdDialog.alert({
-					title: 'Sending Feedback...',
-					textContent: mail,
-					ok: 'Close'
+			emailService.sendFromDecorator(vm.feedback.email, supportEmails, signature)
+				.then((mail) => {
+					vm.feedback.message = '';
+					vm.loader = false;
+					vm.showContent = true;
+
+					var alert = $mdDialog.alert({ title: $filter('translate')('FEEDBACK.MODAL.TITLE'), textContent: mail, ok: $filter('translate')('FEEDBACK.MODAL.CLOSE')});
+					$mdDialog
+						.show(alert)
+						.finally(function () {
+							alert = null;
+						});
+				})
+				.catch((err) => {
+					vm.feedback.message = '';
+					vm.loader = false;
+					vm.showContent = true;
+
+					console.log('[' + $filter('translate')('FEEDBACK.ERRORS.FINALLY') + ']', $filter('translate')(err));
+					var alert = $mdDialog.alert({ title: $filter('translate')('FEEDBACK.MODAL.TITLE_ERROR'), textContent: $filter('translate')(err), ok: $filter('translate')('FEEDBACK.MODAL.CLOSE')});
+					$mdDialog
+						.show(alert)
+						.finally(function () {
+							alert = null;
+						});
 				});
-
-				$mdDialog
-					.show(alert)
-					.then(function (status) {
-						console.log('status', status);
-						// vm.feedback = {};
-					})
-					.finally(function () {
-						alert = undefined;
-					});
-
-			});
+		};
 
 
+		vm.submitFormError = function () {
+			var supportEmails = [
+				'support_1@mail.ru',
+				'support_2@mail.ru',
+				'support_3@mail.ru',
+				CONST.FEEDBACK_EMAIL
+			];
+			var signature = '\n---------\nAngular Project';
+
+			vm.loader = true;
+			vm.showContent = false;
+
+			emailService.setContent(vm.feedback.message);
+			emailService.sendFromDecorator(vm.feedback.email, supportEmails, signature)
+				.then((mail) => {
+					vm.feedback.message = '';
+					vm.loader = false;
+					vm.showContent = true;
+
+					var alert = $mdDialog.alert({ title: $filter('translate')('FEEDBACK.MODAL.TITLE'), textContent: mail, ok: $filter('translate')('FEEDBACK.MODAL.CLOSE')});
+					$mdDialog
+						.show(alert)
+						.finally(function () {
+							alert = null;
+						});
+				})
+				.catch((err) => {
+					vm.feedback.message = '';
+					vm.loader = false;
+					vm.showContent = true;
+
+					console.log('[' + $filter('translate')('FEEDBACK.ERRORS.FINALLY') + ']', $filter('translate')(err));
+					var alert = $mdDialog.alert({ title: $filter('translate')('FEEDBACK.MODAL.TITLE_ERROR'), textContent: $filter('translate')(err), ok: $filter('translate')('FEEDBACK.MODAL.CLOSE')});
+					$mdDialog
+						.show(alert)
+						.finally(function () {
+							alert = null;
+						});
+				});
 		};
 	};
 
-	angular.module('app.feedback').controller('feedbackCtrl', ['CONST', 'userDataService', 'emailService', '$mdDialog', 'loaderService', feedbackCtrlFunc]);
+	angular.module('app.feedback').controller('feedbackCtrl', ['CONST', 'userDataService', 'emailService', '$mdDialog', 'loaderService', '$filter', feedbackCtrlFunc]);
 
 })();

@@ -14,9 +14,7 @@
                         return false;
                     }
                     var REGEXP = new RegExp('^(([A-Z][a-zA-Z]+)|([A-Z][a-zA-Z]+\\s+[A-Z][a-zA-Z]+))$');
-                    if (modelValue) {
-                        return REGEXP.test(modelValue);
-                    }
+                    return (modelValue) ? REGEXP.test(modelValue) : false;
                 };
 
                 // Validate Number of words
@@ -27,6 +25,8 @@
                         mValue = modelValue || '';
                         words = mValue.split(' ');
                         return _.inRange(words.length, 1, CONST.MAX_WORDS_IN_NAME + 1);
+                    } else {
+                        return false;
                     }
                 };
 

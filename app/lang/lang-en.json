@@ -127,6 +127,16 @@
       "EMAIL": "E-mail",
       "MESSAGE": "Message"
     },
-    "SEND_BUTTON": "Send message"
+    "SEND_BUTTON": "Send message",
+    "SEND_BUTTON_TEST": "Unsuccess Test",
+    "ERRORS": {
+      "SEND_ERROR": "Send failed(",
+      "FINALLY": "FINALLY"
+    },
+    "MODAL" : {
+      "TITLE": "Sending Feedback...",
+      "CLOSE": "Close",
+      "TITLE_ERROR": "Send Error"
+    }
   }
 }
