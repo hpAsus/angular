@@ -4,54 +4,68 @@
 
 	var emailServiceDecorator = function ($delegate, $q) {
 		var self = $delegate;
+		var originalSEND = $delegate.SEND;
 
-		$delegate._mail = {
+		var _mail = {
 			from: null,
 			to: [],
 			content: null,
 			signature: null
 		};
 
-
 		// Set Content
 		$delegate.setContent = function (content) {
-			$delegate._mail.content = content;
-			return self;
+			_mail.content = content;
 		};
 
 		// Set From
-		$delegate.setFrom = function (from) {
-			$delegate._mail.from = from;
-			return self;
+		$delegate.setFrom = function (fromEmail) {
+			_mail.from = fromEmail;
 		};
 
 		// Set To
 		$delegate.setTo = function (to) {
-			$delegate._mail.to.push(to);
-
-			return self;
+			_mail.to = to;
 		};
 
 		// Set Signature
 		$delegate.setSignature = function (signature) {
-			$delegate._mail.signature = signature;
-
-			return self;
+			_mail.signature = signature;
 		};
 
 
 		// Send from decorator method
-		$delegate.sendFromDecorator = function (from = $delegate._mail.from, to = $delegate._mail.to, signature = $delegate._mail.signature) {
-			
+		$delegate.sendFromDecorator = function (from, to, signature) {
+			var deferred = $q.defer();
+			var index = 0;
+
 			//
 			$delegate.setFrom(arguments[0]);
 			$delegate.setTo(arguments[1]);
 			$delegate.setSignature(signature);
 
-			console.log($delegate._mail);
+			let p = $q.resolve();
 
-			var deferred = $q.defer();
-			deferred.resolve($delegate._mail);
+			var action = function (i) {
+				return function () {
+					return $q(function (resolve, reject) {
+						originalSEND(_mail.from, i, _mail.content+_mail.signature).then(function (data) {
+							console.log(i);
+							console.log(data);
+							console.log('\n\n');
+							resolve(data);
+						}).catch(function (err) {
+							console.log(err);
+							reject(err);
+						});
+					});
+				}
+			};
+
+			for (let i of _mail.to) {
+				p = p.then(action(i)).catch(action(i));
+			}
+
 			return deferred.promise;
 		};
 

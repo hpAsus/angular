@@ -19,36 +19,34 @@
 
 		// Submit Feedback Form
 		vm.submitForm = function () {
-			// loaderService.showLoader();
+			var supportEmails = [
+				'support_1@mail.ru',
+				'support_2@mail.ru',
+				'support_3@mail.ru',
+				'jackass@mail.ru',
+				CONST.FEEDBACK_EMAIL
+			];
+			var signature = '\n---\nAngular Project';
 
-			console.log(vm.feedback.email);
+			emailService.setContent(vm.feedback.message);
+			emailService.sendFromDecorator(vm.feedback.email, supportEmails, signature).then(function (mail) {
+				var alert = $mdDialog.alert({
+					title: 'Sending Feedback...',
+					textContent: mail,
+					ok: 'Close'
+				});
 
-			emailService.setFrom(vm.feedback.email)
-				.setTo(CONST.FEEDBACK_EMAIL)
-				.setTo('jackass@mail.ru')
-				.setContent(vm.feedback.message)
-				.setSignature('---\nAngular Project')
-				.sendFromDecorator()
-				.then(function (mail) {
-
-					var alert = $mdDialog.alert({
-						title: 'Sending Feedback...',
-						textContent: mail,
-						ok: 'Close'
+				$mdDialog
+					.show(alert)
+					.then(function (status) {
+						console.log('status', status);
+						// vm.feedback = {};
+					})
+					.finally(function () {
+						alert = undefined;
 					});
 
-					$mdDialog
-						.show(alert)
-						.then(function (status) {
-							console.log('status', status);
-							// vm.feedback = {};
-						})
-						.finally(function () {
-							alert = undefined;
-						});
-
-				});
-			
+			});
 
 
 		};

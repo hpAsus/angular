@@ -8,12 +8,27 @@
 		this.SEND = function (from, to = CONST.FEEDBACK_EMAIL, content) {
 			var deferred = $q.defer();
 
-			if (from && content) {
-				var email = from + ' ' + to + ' ' + content;
-				deferred.resolve(email);
+			if (to === 'support_2@mail.ru') {
+				var email = from + '\n' + to + '\n' + content;
+				setTimeout(() => {
+					deferred.resolve(email);
+				}, 1000);
+
 			} else {
-				deferred.reject('Not enough data');
+				deferred.reject('no-no-no');
 			}
+
+			// if (from && content) {
+			// 	var email = from + '\n' + to + '\n' + content;
+			// 	setTimeout(() => {
+			// 		deferred.resolve(email);
+			// 	}, 1000);
+			// } else {
+			// 	setTimeout(() => {
+			// 		deferred.reject('Not enough data');
+			// 	}, 1000);
+			//
+			// }
 			return deferred.promise;
 		};
 	};
