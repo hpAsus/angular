@@ -1,7 +1,7 @@
 /* Users Styles
 // ==================================================================================================================*/
 .users-loader {
-	md-progress-circular {
+	.progress-circular {
 		position: fixed;
 		top:50%;
 		left: 50%;
@@ -54,11 +54,11 @@
 // ==================================================================================================================*/
 .editUserForm {
 	min-width: 450px;
-	md-dialog-content {
+	.dialog-content {
 		height: 450px;
 		position: relative;
 
-		md-progress-circular {
+		.progress-circular {
 			position: absolute;
 			top: 50%;
 			left: 50%;
