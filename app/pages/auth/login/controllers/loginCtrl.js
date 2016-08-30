@@ -2,7 +2,7 @@
 // =====================================================================================================================
 (function () {
 
-    var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService, startupAppTime) {
+    var loginUser = function ($rootScope, $http, $state, authService, loaderService, toastService, userDataService, startupAppTime, localStorageService) {
 
         var vm = this;
         
@@ -31,6 +31,8 @@
 	                    userDataService.setUserData(res.data.user);
 	                    userDataService.authorizeUser();
 
+
+
                         $state.go('viewProfile');
                         // loaderService.hideLoader();
                     } else {
@@ -50,6 +52,6 @@
 
     };
 
-    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$state', 'authService', 'loaderService', 'toastService', 'userDataService', 'startupAppTime', loginUser]);
+    angular.module('app.auth').controller('loginCtrl', ['$rootScope', '$http', '$state', 'authService', 'loaderService', 'toastService', 'userDataService', 'startupAppTime', 'localStorageService',loginUser]);
 
 })();

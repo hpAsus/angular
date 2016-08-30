@@ -198,7 +198,7 @@ gulp.task('COMMON_index', function () {
 
 // DEFAULT
 // =====================================================================================================================
-gulp.task('START', ['_BUILD', 'browser-sync'], function () {
+gulp.task('start', ['build', 'browser-sync'], function () {
 
 	//watchers
 
@@ -229,6 +229,6 @@ var buildPreTasks = [
 	'COMMON_server', 'COMMON_server_app',
 	'COMMON_index'
 ];
-gulp.task('_BUILD', buildPreTasks, function () {
+gulp.task('build', buildPreTasks, function () {
 
 });
