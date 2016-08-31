@@ -1,7 +1,7 @@
 exports.config = {
     framework: "jasmine2",
     allScriptsTimeout: 30000,
-    includeStackTrace: true,
+    // includeStackTrace: true,
     getPageTimeout: 30000,
     jasmineNodeOpts: {defaultTimeoutInterval: 120000},
 
