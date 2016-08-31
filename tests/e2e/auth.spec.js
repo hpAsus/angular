@@ -38,10 +38,10 @@ describe('AUTH Specs', function () {
 		submit.click();
 
 		// md-toast
-		var toast = element(by.css('.md-toast-text');
+		var toast = element(by.css('.md-toast-text'));
 		browser.wait(toast.isPresent);
 
-		expect(mdToast.getText()).toEqual('Error: User not found');
+		expect(toast.getText()).toEqual('Error: User not found');
 		done();
 	});
 
