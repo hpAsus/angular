@@ -244,10 +244,10 @@ gulp.task('e2e', ['webdriver_update'], function (cb) {
 });
 
 gulp.task('run-e2e', function (done) {
-	var server = require("./dist/app");
+	var server = require("./dist/app.js");
 	var exec = require('child_process').exec;
 	var child = exec('gulp e2e', function (err, stdErr, stdOut) {
-		// server.http.close();
+		server.http.close();
 		done();
 	});
 	child.stdout.pipe(process.stdout);

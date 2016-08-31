@@ -43,6 +43,7 @@
     "jasmine-reporters": "2.2.0",
     "nconf": "0.8.4",
     "nodemon": "1.10.0",
+    "protractor-linkuisref-locator": "1.1.2",
     "vinyl-fs": "2.4.3"
   }
 }
