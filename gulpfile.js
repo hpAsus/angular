@@ -238,7 +238,8 @@ gulp.task('build', buildPreTasks, function () {
 // =====================================================================================================================
 
 gulp.task('webdriver_update', function (cb) { return require('gulp-protractor').webdriver_update(cb)});
-gulp.task('e2e', ['webdriver_update'], function (cb) {
+// 'webdriver_update'
+gulp.task('e2e', [], function (cb) {
 	var protractor = require('gulp-protractor').protractor;
 	gulp.src(['./tests/e2e/*.spec.js']).pipe(protractor({configFile: './tests/protractor.config.js'})).on('end', cb);
 });

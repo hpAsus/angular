@@ -26,6 +26,8 @@ describe('AUTH Specs', function () {
 	});
 
 	it('incorrect login error message with mdToast', function (done) {
+		// browser.ignoreSynchronization = true;
+
 		var login = element(by.model('vm.user.email'));
 		var password = element(by.model('vm.user.password'));
 		var submit = element(by.css('button[type="submit"]'));
@@ -36,13 +38,12 @@ describe('AUTH Specs', function () {
 		submit.click();
 
 		// md-toast
-		browser.ignoreSynchronization = true;
 		var toast = element(by.css('.md-toast-text'));
 		browser.wait(function () {
 			return browser.isElementPresent(toast);
 		});
 		expect(toast.getText()).toBe('Error: User not found');
-		browser.ignoreSynchronization = false;
+		// browser.ignoreSynchronization = false;
 		done();
 	});
 

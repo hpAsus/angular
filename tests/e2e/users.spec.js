@@ -41,12 +41,21 @@ describe('Create New User by Admin', function () {
 		password.clear();
 		password.sendKeys(admin.password);
 		submit.click();
-		browser.sleep(2000);
+		browser.wait(function () {
+			return browser.getCurrentUrl().then(function(url) {
+				return url === (site+'#/profile/view');
+			});
+		});
 	});
 
 	afterEach(function () {
 		element(by.linkUiSref('logout')).click();
-		browser.sleep(2000);
+		browser.wait(function () {
+			return browser.getCurrentUrl().then(function(url) {
+				return url === (site+'#/');
+			});
+		});
+		browser.wait(element(by.css('[name="loginForm"]')).isPresent());
 		expect(element(by.css('[name="loginForm"]')).isPresent()).toBe(true);
 	});
 
@@ -64,9 +73,9 @@ describe('Create New User by Admin', function () {
 		var submit = element(by.css('.createUserForm button[type="submit"]'));
 
 		login.clear();
-		login.sendKeys(admin.login);
+		login.sendKeys(newUser.login);
 		password.clear();
-		password.sendKeys(admin.password);
+		password.sendKeys(newUser.password);
 		submit.click();
 		browser.sleep(2000);
 
